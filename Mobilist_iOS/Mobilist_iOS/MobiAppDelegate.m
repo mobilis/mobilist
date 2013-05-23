@@ -1,4 +1,3 @@
-//
 //  MobiAppDelegate.m
 //  Mobilist_iOS
 //
@@ -112,8 +111,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	connection = [MXiConnection connectionWithJabberID:@"gannimet@jabber.ccc.de"
-											  password:@"dRit!g!zW"
+	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
+											  password:@"abc"
 									  presenceDelegate:self
 										stanzaDelegate:nil];
 }
