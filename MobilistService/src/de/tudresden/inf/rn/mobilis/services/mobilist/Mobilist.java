@@ -7,8 +7,16 @@ import org.jivesoftware.smack.packet.Packet;
 
 import de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent;
 import de.tudresden.inf.rn.mobilis.server.services.MobilisService;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateEntryRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateListRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteEntryRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.PingRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.PingResponse;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.SyncRequest;
 import de.tudresden.inf.rn.mobilis.xmpp.beans.ProxyBean;
 import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 import de.tudresden.inf.rn.mobilis.xmpp.server.BeanIQAdapter;
@@ -19,7 +27,14 @@ public class Mobilist extends MobilisService {
 	@Override
 	protected void registerPacketListener() {
 		(new BeanProviderAdapter(new ProxyBean(PingRequest.NAMESPACE, PingRequest.CHILD_ELEMENT))).addToProviderManager();
-		(new BeanProviderAdapter(new ProxyBean(PingResponse.NAMESPACE, PingResponse.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(SyncRequest.NAMESPACE, SyncRequest.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(CreateEntryRequest.NAMESPACE, CreateEntryRequest.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(CreateListRequest.NAMESPACE, CreateListRequest.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(DeleteListRequest.NAMESPACE, DeleteListRequest.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(DeleteEntryRequest.NAMESPACE, DeleteEntryRequest.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(EditListRequest.NAMESPACE, EditListRequest.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(EditEntryRequest.NAMESPACE, EditEntryRequest.CHILD_ELEMENT))).addToProviderManager();
+		(new BeanProviderAdapter(new ProxyBean(GetListRequest.NAMESPACE, GetListRequest.CHILD_ELEMENT))).addToProviderManager();
 		
 		IQListener listener = new IQListener();
 		PacketTypeFilter filter = new PacketTypeFilter(IQ.class);
