@@ -114,7 +114,7 @@
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"
 									  presenceDelegate:self
-										stanzaDelegate:nil];
+										stanzaDelegate:self];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

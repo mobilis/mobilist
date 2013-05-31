@@ -24,6 +24,7 @@
 		79768E9F171AD42800F5DDA1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 79768E9E171AD42800F5DDA1 /* Default.png */; };
 		79768EA1171AD42800F5DDA1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79768EA0171AD42800F5DDA1 /* Default@2x.png */; };
 		79768EA3171AD42800F5DDA1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79768EA2171AD42800F5DDA1 /* Default-568h@2x.png */; };
+		798AF1751754F1C300ADA0E6 /* ListEntryRemovalDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 798AF1741754F1C300ADA0E6 /* ListEntryRemovalDelegate.m */; };
 		7999F6AA171D658E00B74031 /* Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6A6171D658E00B74031 /* Button.png */; };
 		7999F6AB171D658E00B74031 /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6A7171D658E00B74031 /* Button@2x.png */; };
 		7999F6AC171D658E00B74031 /* ButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6A8171D658E00B74031 /* ButtonHighlighted.png */; };
@@ -37,6 +38,7 @@
 		7999F6C0171D86CD00B74031 /* ListDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6BE171D86CD00B74031 /* ListDetailViewController.xib */; };
 		7999F6C5171DAB3A00B74031 /* TodoListEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7999F6C4171DAB3A00B74031 /* TodoListEntryCell.m */; };
 		7999F6C7171DAB5F00B74031 /* TodoListEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6C6171DAB5F00B74031 /* TodoListEntryCell.xib */; };
+		79A4DD7B1755085900E6BDE4 /* libMXi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A4DD7A1755085900E6BDE4 /* libMXi.a */; };
 		79AE3B851735AF1C000A5CA8 /* mobilist-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */; };
 		79AE3B871735AF22000A5CA8 /* mobilist-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */; };
 		79BA8D351726C73B007FB4B3 /* TodoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D341726C73B007FB4B3 /* TodoListCell.xib */; };
@@ -46,7 +48,6 @@
 		79BA8D40172AF3D2007FB4B3 /* EntryDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D3E172AF3D2007FB4B3 /* EntryDetailViewController.xib */; };
 		79BA8D47172B17B0007FB4B3 /* text_view_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D45172B17B0007FB4B3 /* text_view_background.png */; };
 		79BA8D48172B17B0007FB4B3 /* text_view_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D46172B17B0007FB4B3 /* text_view_background@2x.png */; };
-		79E7273317266958003DC9F2 /* libMXi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E7273217266958003DC9F2 /* libMXi.a */; };
 		79FF6A7E171D3C2F00A3202F /* bit-tile-blue.gif in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */; };
 		79FF6A87171D3E3000A3202F /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF6A85171D3E3000A3202F /* DashboardViewController.m */; };
 		79FF6A88171D3E3000A3202F /* DashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A86171D3E3000A3202F /* DashboardViewController.xib */; };
@@ -77,6 +78,8 @@
 		79768E9E171AD42800F5DDA1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		79768EA0171AD42800F5DDA1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		79768EA2171AD42800F5DDA1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		798AF1731754F1C300ADA0E6 /* ListEntryRemovalDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListEntryRemovalDelegate.h; sourceTree = "<group>"; };
+		798AF1741754F1C300ADA0E6 /* ListEntryRemovalDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListEntryRemovalDelegate.m; sourceTree = "<group>"; };
 		7999F6A6171D658E00B74031 /* Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button.png; sourceTree = "<group>"; };
 		7999F6A7171D658E00B74031 /* Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button@2x.png"; sourceTree = "<group>"; };
 		7999F6A8171D658E00B74031 /* ButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonHighlighted.png; sourceTree = "<group>"; };
@@ -93,6 +96,7 @@
 		7999F6C3171DAB3A00B74031 /* TodoListEntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoListEntryCell.h; sourceTree = "<group>"; };
 		7999F6C4171DAB3A00B74031 /* TodoListEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoListEntryCell.m; sourceTree = "<group>"; };
 		7999F6C6171DAB5F00B74031 /* TodoListEntryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListEntryCell.xib; sourceTree = "<group>"; };
+		79A4DD7A1755085900E6BDE4 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libMXi.a; path = "../../mobilis/MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
 		79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon.png"; path = "../mobilist-icon.png"; sourceTree = "<group>"; };
 		79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon@2x.png"; path = "../mobilist-icon@2x.png"; sourceTree = "<group>"; };
 		79BA8D341726C73B007FB4B3 /* TodoListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListCell.xib; sourceTree = "<group>"; };
@@ -117,7 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79E7273317266958003DC9F2 /* libMXi.a in Frameworks */,
+				79A4DD7B1755085900E6BDE4 /* libMXi.a in Frameworks */,
 				7972141217212C7300D63C38 /* libiconv.dylib in Frameworks */,
 				7915201D1720524100AB33F0 /* libresolv.dylib in Frameworks */,
 				7915201B1720523100AB33F0 /* CFNetwork.framework in Frameworks */,
@@ -135,6 +139,7 @@
 		79768E80171AD42800F5DDA1 = {
 			isa = PBXGroup;
 			children = (
+				79A4DD7A1755085900E6BDE4 /* libMXi.a */,
 				79768E92171AD42800F5DDA1 /* Mobilist_iOS */,
 				79768E8B171AD42800F5DDA1 /* Frameworks */,
 				79768E8A171AD42800F5DDA1 /* Products */,
@@ -252,6 +257,8 @@
 				79FF6A85171D3E3000A3202F /* DashboardViewController.m */,
 				79BA8D3917290423007FB4B3 /* TodoListViewController.h */,
 				79BA8D3A17290423007FB4B3 /* TodoListViewController.m */,
+				798AF1731754F1C300ADA0E6 /* ListEntryRemovalDelegate.h */,
+				798AF1741754F1C300ADA0E6 /* ListEntryRemovalDelegate.m */,
 				7999F6B7171D84BE00B74031 /* XMPPSettingsViewController.h */,
 				7999F6B8171D84BE00B74031 /* XMPPSettingsViewController.m */,
 				7999F6BC171D86CC00B74031 /* ListDetailViewController.h */,
@@ -371,6 +378,7 @@
 				79BA8D381726C784007FB4B3 /* TodoListCell.m in Sources */,
 				79BA8D3B17290423007FB4B3 /* TodoListViewController.m in Sources */,
 				79BA8D3F172AF3D2007FB4B3 /* EntryDetailViewController.m in Sources */,
+				798AF1751754F1C300ADA0E6 /* ListEntryRemovalDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

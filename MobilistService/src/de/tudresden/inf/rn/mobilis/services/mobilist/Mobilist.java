@@ -10,6 +10,7 @@ import de.tudresden.inf.rn.mobilis.server.services.MobilisService;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.PingRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.PingResponse;
 import de.tudresden.inf.rn.mobilis.xmpp.beans.ProxyBean;
+import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 import de.tudresden.inf.rn.mobilis.xmpp.server.BeanIQAdapter;
 import de.tudresden.inf.rn.mobilis.xmpp.server.BeanProviderAdapter;
 
@@ -38,15 +39,25 @@ public class Mobilist extends MobilisService {
 			System.out.println("Incoming packet: " + packet.toXML());
 			
 			if (packet instanceof BeanIQAdapter) {
-				System.out.println("Packet is a BeanIQAdapter");
 				
-				PingRequest inBean = (PingRequest) ((BeanIQAdapter) packet).getBean();
+				XMPPBean inBean = ((BeanIQAdapter) packet).getBean();
+				if (inBean instanceof ProxyBean) {
+					
+					ProxyBean proxyBean = (ProxyBean) inBean;
+					if (proxyBean.isTypeOf(PingRequest.NAMESPACE, PingRequest.CHILD_ELEMENT)) {
+						
+						PingRequest request = (PingRequest) proxyBean.parsePayload(new PingRequest());
+						
+						PingResponse response = new PingResponse(request.getContent());
+						response.setFrom(request.getTo());
+						response.setTo(request.getFrom());
+						
+						getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+						
+					}
+					
+				}
 				
-				System.out.println("Assuming a PingRequest was sent…");
-				
-				PingResponse outBean = new PingResponse(inBean.getContent());
-				
-				getAgent().getConnection().sendPacket(new BeanIQAdapter(outBean));
 			}
 		}
 		

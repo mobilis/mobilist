@@ -100,28 +100,35 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+		MobiListEntry* theEntry = [theList entryAtIndex:[indexPath row]];
+		NSString* message = [[@"Do you really want to delete the entry '"
+							  stringByAppendingString:[theEntry title]]
+							 stringByAppendingString:@"'?"];
+		ListEntryRemovalDelegate* alertDelegate = [[ListEntryRemovalDelegate alloc] initWithList:theList
+																					 removeIndex:[indexPath row]];
+		
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Delete todo entry"
+															message:message
+														   delegate:alertDelegate
+												  cancelButtonTitle:@"Don't delete"
+												  otherButtonTitles:@"Delete", nil];
+		[alertView show];
+		
+		[theList removeListEntry:theEntry];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+						 withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
 /*
 // Override to support rearranging the table view.

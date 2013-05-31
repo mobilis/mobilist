@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MobiList.h"
+#import "MobiListEntry.h"
 
-@interface ListEntryRemovalDelegate : NSObject
+@interface ListEntryRemovalDelegate : NSObject <UIAlertViewDelegate>
+{
+	MobiList* theList;
+	NSInteger index;
+}
+
+- (id)initWithList:(MobiList* )aList removeIndex:(NSInteger)anIndex;
 
 @end

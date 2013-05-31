@@ -10,4 +10,21 @@
 
 @implementation ListEntryRemovalDelegate
 
+- (id)initWithList:(MobiList *)aList removeIndex:(NSInteger)anIndex {
+	self = [super init];
+	
+	if (self) {
+		theList = aList;
+		index = anIndex;
+	}
+	
+	return self;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	MobiListEntry* theEntry = [theList entryAtIndex:index];
+	
+	NSLog(@"%d", buttonIndex);
+}
+
 @end

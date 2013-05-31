@@ -11,6 +11,7 @@
 #import "MobiListEntry.h"
 #import "TodoListEntryCell.h"
 #import "EntryDetailViewController.h"
+#import "ListEntryRemovalDelegate.h"
 
 @interface TodoListViewController : UITableViewController
 
