@@ -16,33 +16,21 @@
  */
 
 - (void)didAuthenticate {
-	//[connection sendTestMessageWithContent:@"Hey! How are you?" to:@"kallistoo@jabber.ccc.de"];
-	NSLog(@"Authenticated");
-	
-	NSXMLElement* pingRequest = [NSXMLElement elementWithName:@"PingRequest" xmlns:@"mobilist:iq:ping"];
-	
-	NSXMLElement* content = [NSXMLElement elementWithName:@"content" xmlns:@"mobilist:iq:ping"];
-	[content setStringValue:@"Hallo Welt"];
-	
-	[pingRequest addChild:content];
-	
-	NSXMLElement* iq = [NSXMLElement elementWithName:@"iq" xmlns:@"mobilist:iq:ping"];
+	/*NSXMLElement* syncRequest = [NSXMLElement elementWithName:@"SyncRequest" xmlns:@"mobilist:iq:sync"];
+	NSXMLElement* iq = [NSXMLElement elementWithName:@"iq" xmlns:@"mobilist:iq:sync"];
 	[iq addAttributeWithName:@"type" stringValue:@"get"];
 	[iq addAttributeWithName:@"to" stringValue:@"mobilis@mymac.box/Mobilist_v1#1"];
 	[iq addAttributeWithName:@"from" stringValue:[connection jabberID]];
-	[iq addChild:pingRequest];
+	[iq addChild:syncRequest];
 	
+	[connection send:iq];*/
 	
-	
-	/*NSXMLElement* getLocationRequest = [NSXMLElement elementWithName:@"GetLocationResponse"
-															   xmlns:@"treasurehunt:iq:getlocation"];
-	NSXMLElement* iq = [NSXMLElement elementWithName:@"iq" xmlns:@"treasurehunt:iq:getlocation"];
-	[iq addAttributeWithName:@"type" stringValue:@"result"];
-	[iq addAttributeWithName:@"to" stringValue:@"mobilis@mymac.box/TreasureHunt_v1#1"];
-	[iq addAttributeWithName:@"from" stringValue:[connection jabberID]];
-	[iq addChild:getLocationRequest];*/
-	
-	[connection send:iq];
+	SyncRequest* syncRequest = [[SyncRequest alloc] initWithElementName:@"SyncRequest" iqNamespace:@"mobilist:iq:sync"];
+	[syncRequest setTo:[XMPPJID jidWithString:@"mobilis@mymac.box/Mobilist_v1#1"]];
+	[syncRequest setFrom:[XMPPJID jidWithString:[connection jabberID]]];
+	[syncRequest setBeanType:GET];
+
+	[connection sendBean:syncRequest];
 }
 
 - (void)didDisconnectWithError:(NSError* )error {

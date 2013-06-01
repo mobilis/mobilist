@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MXi/MXi.h>
+#import "SyncRequest.h"
 
 @interface MobiAppDelegate : UIResponder <UIApplicationDelegate, PresenceDelegate, StanzaDelegate>
 {

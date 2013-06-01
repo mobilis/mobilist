@@ -22,6 +22,11 @@ public class MobiListEntry extends XMPPBean {
 		this.done = done;
 	}
 
+	@Override
+	public String toString() {
+		return title;
+	}
+
 	public String getId() {
 		return id;
 	}

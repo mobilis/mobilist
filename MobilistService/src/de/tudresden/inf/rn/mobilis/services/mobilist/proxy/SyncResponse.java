@@ -36,6 +36,7 @@ public class SyncResponse extends XMPPBean {
 				}
 				else if (tagName.equals( "lists" ) ) {
 					// TODO implement
+					System.out.println("Trying to parse lists element from xml");
 					//this.lists = List<MobiList>( parser.nextText() );
 				}
 				else if (tagName.equals("error")) {

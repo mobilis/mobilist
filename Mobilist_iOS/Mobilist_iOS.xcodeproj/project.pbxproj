@@ -39,6 +39,8 @@
 		7999F6C5171DAB3A00B74031 /* TodoListEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7999F6C4171DAB3A00B74031 /* TodoListEntryCell.m */; };
 		7999F6C7171DAB5F00B74031 /* TodoListEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6C6171DAB5F00B74031 /* TodoListEntryCell.xib */; };
 		79A4DD7B1755085900E6BDE4 /* libMXi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A4DD7A1755085900E6BDE4 /* libMXi.a */; };
+		79A4DD8B175A599F00E6BDE4 /* SyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DD8A175A599F00E6BDE4 /* SyncRequest.m */; };
+		79A4DD9D175A800000E6BDE4 /* GetListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DD9C175A800000E6BDE4 /* GetListRequest.m */; };
 		79AE3B851735AF1C000A5CA8 /* mobilist-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */; };
 		79AE3B871735AF22000A5CA8 /* mobilist-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */; };
 		79BA8D351726C73B007FB4B3 /* TodoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D341726C73B007FB4B3 /* TodoListCell.xib */; };
@@ -97,6 +99,10 @@
 		7999F6C4171DAB3A00B74031 /* TodoListEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoListEntryCell.m; sourceTree = "<group>"; };
 		7999F6C6171DAB5F00B74031 /* TodoListEntryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListEntryCell.xib; sourceTree = "<group>"; };
 		79A4DD7A1755085900E6BDE4 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libMXi.a; path = "../../mobilis/MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
+		79A4DD89175A599F00E6BDE4 /* SyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncRequest.h; sourceTree = "<group>"; };
+		79A4DD8A175A599F00E6BDE4 /* SyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncRequest.m; sourceTree = "<group>"; };
+		79A4DD9B175A800000E6BDE4 /* GetListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetListRequest.h; sourceTree = "<group>"; };
+		79A4DD9C175A800000E6BDE4 /* GetListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetListRequest.m; sourceTree = "<group>"; };
 		79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon.png"; path = "../mobilist-icon.png"; sourceTree = "<group>"; };
 		79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon@2x.png"; path = "../mobilist-icon@2x.png"; sourceTree = "<group>"; };
 		79BA8D341726C73B007FB4B3 /* TodoListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListCell.xib; sourceTree = "<group>"; };
@@ -215,6 +221,17 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		79A4DD88175A597400E6BDE4 /* Beans */ = {
+			isa = PBXGroup;
+			children = (
+				79A4DD89175A599F00E6BDE4 /* SyncRequest.h */,
+				79A4DD8A175A599F00E6BDE4 /* SyncRequest.m */,
+				79A4DD9B175A800000E6BDE4 /* GetListRequest.h */,
+				79A4DD9C175A800000E6BDE4 /* GetListRequest.m */,
+			);
+			name = Beans;
+			sourceTree = "<group>";
+		};
 		79BA8D321726C6AF007FB4B3 /* ListEntry */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +289,7 @@
 		79FF6A79171C411300A3202F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				79A4DD88175A597400E6BDE4 /* Beans */,
 				7915200D17203EE100AB33F0 /* MobiListEntry.h */,
 				7915200E17203EE100AB33F0 /* MobiListEntry.m */,
 				79152010172040D400AB33F0 /* MobiList.h */,
@@ -379,6 +397,8 @@
 				79BA8D3B17290423007FB4B3 /* TodoListViewController.m in Sources */,
 				79BA8D3F172AF3D2007FB4B3 /* EntryDetailViewController.m in Sources */,
 				798AF1751754F1C300ADA0E6 /* ListEntryRemovalDelegate.m in Sources */,
+				79A4DD8B175A599F00E6BDE4 /* SyncRequest.m in Sources */,
+				79A4DD9D175A800000E6BDE4 /* GetListRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
