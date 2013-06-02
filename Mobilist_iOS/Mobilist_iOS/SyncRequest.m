@@ -10,11 +10,15 @@
 
 @implementation SyncRequest
 
-- (NSXMLElement *)payloadToXML {
-	return nil;
+- (id)init {
+	self = [super initWithElementName:@"SyncRequest"
+						  iqNamespace:@"mobilist:iq:sync"
+							 beanType:GET];
+	
+	return self;
 }
 
-- (NSDictionary *)beanAttributes {
+- (NSXMLElement *)payloadToXML {
 	return nil;
 }
 

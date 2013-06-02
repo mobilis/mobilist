@@ -12,13 +12,19 @@
 
 @synthesize listId;
 
-- (NSXMLElement* )payloadToXML {
-	return nil;
+- (id)init {
+	self = [super initWithElementName:@"GetListRequest"
+						  iqNamespace:@"mobilist:iq:getlist"
+							 beanType:GET];
+	
+	return self;
 }
 
-- (NSDictionary *)beanAttributes {
-	NSMutableDictionary* attrs = [NSMutableDictionary dictionaryWithObject:listId forKey:@"id"];
-	return attrs;
+- (NSXMLElement* )payloadToXML {
+	NSXMLElement* listIdElement = [NSXMLElement elementWithName:@"listId"];
+	[listIdElement setStringValue:listId];
+	
+	return listIdElement;
 }
 
 @end

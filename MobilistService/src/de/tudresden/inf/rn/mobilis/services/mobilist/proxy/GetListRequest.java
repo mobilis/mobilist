@@ -6,7 +6,7 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 
 public class GetListRequest extends XMPPBean {
 
-	private String id;
+	private String listId;
 	
 	private static final long serialVersionUID = 5555898058750352953L;
 
@@ -14,12 +14,12 @@ public class GetListRequest extends XMPPBean {
 		this.setType( XMPPBean.TYPE_GET );
 	}
 
-	public String getId() {
-		return id;
+	public String getListId() {
+		return listId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setListId(String id) {
+		this.listId = id;
 	}
 
 	@Override
@@ -32,10 +32,9 @@ public class GetListRequest extends XMPPBean {
 					String tagName = parser.getName();
 					
 					if (tagName.equals(getChildElement())) {
-						// get the list id out of the attribute
-						id = parser.getAttributeValue(null, "id");
-						
 						parser.next();
+					} else if (tagName.equals("listId")) {
+						this.listId = parser.nextText();
 					} else if (tagName.equals("error")) {
 						parser = parseErrorAttributes(parser);
 					} else {

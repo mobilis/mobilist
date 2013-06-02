@@ -134,7 +134,7 @@ public class Mobilist extends MobilisService {
 					// GetList
 					if (proxyBean.isTypeOf(GetListRequest.NAMESPACE, GetListRequest.CHILD_ELEMENT)) {
 						GetListRequest request = (GetListRequest) proxyBean.parsePayload(new GetListRequest());
-						String requestedId = request.getId();
+						String requestedId = request.getListId();
 						
 						MobiList requestedList = listStore.getListById(requestedId);
 						

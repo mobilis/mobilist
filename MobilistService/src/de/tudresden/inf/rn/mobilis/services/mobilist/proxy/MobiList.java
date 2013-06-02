@@ -80,7 +80,15 @@ public class MobiList extends XMPPBean {
 
 	@Override
 	public String payloadToXML() {
-		return null;
+		StringBuilder sb = new StringBuilder();
+		
+		for (MobiListEntry entry : entries) {
+			sb.append("<entry>")
+				.append(entry.payloadToXML())
+				.append("</entry>");
+		}
+		
+		return sb.toString();
 	}
 	
 }

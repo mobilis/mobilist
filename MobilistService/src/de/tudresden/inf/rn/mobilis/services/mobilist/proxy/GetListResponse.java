@@ -10,7 +10,7 @@ public class GetListResponse extends XMPPBean {
 
 	private static final long serialVersionUID = 1819890853891088044L;
 
-	public GetListResponse( MobiList list ) {
+	public GetListResponse(MobiList list) {
 		super();
 		this.list = list;
 
@@ -84,9 +84,14 @@ public class GetListResponse extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<list>" )
-			.append( this.list )
-			.append( "</list>" );
+		sb.append("<list ")
+			.append("name=\"")
+			.append(list.getName())
+			.append("\" id=\"")
+			.append(list.getId())
+			.append("\">")
+			.append(list.payloadToXML())
+			.append("</list>");
 
 		sb = appendErrorPayload(sb);
 

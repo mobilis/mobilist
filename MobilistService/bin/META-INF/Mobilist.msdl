@@ -57,7 +57,9 @@
 			
 			<xs:element name="GetListRequest">
 				<xs:complexType>
-					<xs:attribute name="id" type="xs:string" />
+					<xs:sequence>
+						<xs:element name="listId" type="xs:string" />
+					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="GetListResponse">

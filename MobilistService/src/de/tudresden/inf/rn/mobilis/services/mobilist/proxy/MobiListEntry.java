@@ -7,7 +7,7 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 public class MobiListEntry extends XMPPBean {
 
 	private static final long serialVersionUID = -7632223960179120287L;
-	private String id, title, description;
+	private String entryId, title, description;
 	private long dueDate;
 	private boolean done;
 	
@@ -15,7 +15,7 @@ public class MobiListEntry extends XMPPBean {
 	
 	public MobiListEntry(String id, String title, String description,
 			long dueDate, boolean done) {
-		this.id = id;
+		this.entryId = id;
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
@@ -27,12 +27,12 @@ public class MobiListEntry extends XMPPBean {
 		return title;
 	}
 
-	public String getId() {
-		return id;
+	public String getEntryId() {
+		return entryId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setEntryId(String id) {
+		this.entryId = id;
 	}
 
 	public String getTitle() {
@@ -67,8 +67,6 @@ public class MobiListEntry extends XMPPBean {
 		this.done = done;
 	}
 
-	// TODO implement
-	
 	@Override
 	public void fromXML(XmlPullParser parser) throws Exception {
 	}
@@ -90,7 +88,15 @@ public class MobiListEntry extends XMPPBean {
 
 	@Override
 	public String payloadToXML() {
-		return null;
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("<id>").append(entryId).append("</id>")
+			.append("<title>").append(title).append("</title>")
+			.append("<description>").append(description).append("</description>")
+			.append("<dueDate>").append(dueDate).append("</dueDate>")
+			.append("<done>").append(done).append("</done>");
+			
+		return sb.toString();
 	}
 	
 }
