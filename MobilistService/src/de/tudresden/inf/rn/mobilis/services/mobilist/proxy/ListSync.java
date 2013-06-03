@@ -2,29 +2,29 @@ package de.tudresden.inf.rn.mobilis.services.mobilist.proxy;
 
 public class ListSync {
 
-	private String id, crc;
+	private String listId, listCrc;
 	
 	public ListSync() {}
 	
 	public ListSync(String id, String crc) {
-		this.id = id;
-		this.crc = crc;
+		this.listId = id;
+		this.listCrc = crc;
 	}
 	
-	public String getId() {
-		return id;
+	public String getListId() {
+		return listId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setListId(String id) {
+		this.listId = id;
 	}
 
-	public String getCrc() {
-		return crc;
+	public String getListCrc() {
+		return listCrc;
 	}
 
-	public void setCrc(String crc) {
-		this.crc = crc;
+	public void setListCrc(String crc) {
+		this.listCrc = crc;
 	}
 
 }

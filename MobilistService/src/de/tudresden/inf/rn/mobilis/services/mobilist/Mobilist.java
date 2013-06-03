@@ -144,6 +144,8 @@ public class Mobilist extends MobilisService {
 							response.setTo(request.getFrom());
 							
 							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+						} else {
+							// TODO handle error case
 						}
 					}
 					

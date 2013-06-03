@@ -16,6 +16,7 @@
  */
 
 - (void)didAuthenticate {
+	//SyncRequest* request = [[SyncRequest alloc] init];
 	GetListRequest* request = [[GetListRequest alloc] init];
 	[request setListId:@"shopping_list"];
 	
@@ -49,6 +50,17 @@
 
 - (void)didReceiveError:(NSXMLElement* )error {
 	NSLog(@"Received error:\n%@", [error prettyXMLString]);
+}
+
+/*
+ * Bean delegate
+ */
+
+- (void)didReceiveBean:(MXiBean<MXiIncomingBean> *)theBean {
+	NSLog(@"Did receive bean named: %@", [theBean elementName]);
+	
+	/*ListsSyncFromService* listsSync = [((SyncResponse*) theBean) lists];
+	ListSyncFromService* firstList = [[listsSync lists] objectAtIndex:0];*/
 }
 
 /*
@@ -88,10 +100,16 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+	NSMutableArray* incomingBeanPrototypes = [NSMutableArray array];
+	[incomingBeanPrototypes addObject:[[SyncResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[GetListResponse alloc] init]];
+	
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"
 									  presenceDelegate:self
-										stanzaDelegate:self];
+										stanzaDelegate:self
+										  beanDelegate:self
+							 listeningForIncomingBeans:incomingBeanPrototypes];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

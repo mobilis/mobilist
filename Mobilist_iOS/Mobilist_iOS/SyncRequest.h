@@ -10,4 +10,6 @@
 
 @interface SyncRequest : MXiBean <MXiOutgoingBean>
 
+- (id)init;
+
 @end

@@ -20,11 +20,14 @@
 	return self;
 }
 
-- (NSXMLElement* )payloadToXML {
+- (NSXMLElement* )toXML {
+	NSXMLElement* beanElement = [NSXMLElement elementWithName:[self elementName] xmlns:[self iqNamespace]];
 	NSXMLElement* listIdElement = [NSXMLElement elementWithName:@"listId"];
-	[listIdElement setStringValue:listId];
 	
-	return listIdElement;
+	[listIdElement setStringValue:[self listId]];
+	[beanElement addChild:listIdElement];
+	
+	return beanElement;
 }
 
 @end

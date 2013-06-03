@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <MXi/MXi.h>
 #import "SyncRequest.h"
+#import "SyncResponse.h"
 #import "GetListRequest.h"
+#import "GetListResponse.h"
 
-@interface MobiAppDelegate : UIResponder <UIApplicationDelegate, PresenceDelegate, StanzaDelegate>
+@interface MobiAppDelegate : UIResponder <UIApplicationDelegate, MXiPresenceDelegate,
+		MXiStanzaDelegate, MXiBeanDelegate>
 {
 	MXiConnection* connection;
 }

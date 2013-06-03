@@ -18,8 +18,10 @@
 	return self;
 }
 
-- (NSXMLElement *)payloadToXML {
-	return nil;
+- (NSXMLElement *)toXML {
+	NSXMLElement* beanElement = [NSXMLElement elementWithName:[self elementName] xmlns:[self iqNamespace]];
+	
+	return beanElement;
 }
 
 @end

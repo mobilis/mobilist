@@ -81,8 +81,4 @@ public class GetListRequest extends XMPPBean {
 	@Override
 	public String payloadToXML() { return ""; }
 
-
-
-
-
 }

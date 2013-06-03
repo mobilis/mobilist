@@ -48,8 +48,8 @@
 			</xs:element>
 			<xs:element name="ListSyncFromService">
 				<xs:complexType>
-					<xs:attribute name="id" type="xs:integer" />
-					<xs:attribute name="crc" type="xs:string" />
+					<xs:attribute name="listId" type="xs:string" />
+					<xs:attribute name="listCrc" type="xs:string" />
 				</xs:complexType>
 			</xs:element>
 			
