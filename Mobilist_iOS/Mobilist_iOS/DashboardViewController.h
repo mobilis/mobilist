@@ -18,6 +18,7 @@
 	__weak IBOutlet UIButton *xmppSettingsButton;
 	__weak IBOutlet UILabel *existingListsLabel;
 	__weak IBOutlet UITableView *existingsListsTable;
+	MXiConnection* connection;
 }
 
 - (void)showXMPPSettingsView:(id)sender;

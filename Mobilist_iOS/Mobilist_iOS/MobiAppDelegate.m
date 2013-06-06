@@ -11,14 +11,19 @@
 
 @implementation MobiAppDelegate
 
+@synthesize dashBoardController;
+
 /*
  * Presence delegate
  */
 
 - (void)didAuthenticate {
-	//SyncRequest* request = [[SyncRequest alloc] init];
-	GetListRequest* request = [[GetListRequest alloc] init];
-	[request setListId:@"shopping_list"];
+	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:connection forKey:@"connection"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"ConnectionEstablished"
+														object:self
+													  userInfo:userInfo];
+	
+	SyncRequest* request = [[SyncRequest alloc] init];
 	
 	[connection sendBean:request];
 }
@@ -57,10 +62,25 @@
  */
 
 - (void)didReceiveBean:(MXiBean<MXiIncomingBean> *)theBean {
-	NSLog(@"Did receive bean named: %@", [theBean elementName]);
+	if ([theBean class] == [SyncResponse class]) {
+		SyncResponse* syncResponse = (SyncResponse*) theBean;
+		NSArray* lists = [[syncResponse lists] lists];
+		
+		for (ListSyncFromService* list in lists) {
+			NSString* listId = [list listId];
+			// TODO compare local and remote crc
+			
+			GetListRequest* getListRequest = [[GetListRequest alloc] init];
+			[getListRequest setListId:listId];
+			
+			[connection sendBean:getListRequest];
+		}
+	}
 	
-	/*ListsSyncFromService* listsSync = [((SyncResponse*) theBean) lists];
-	ListSyncFromService* firstList = [[listsSync lists] objectAtIndex:0];*/
+	if ([theBean class] == [GetListResponse class]) {
+		GetListResponse* getListResponse = (GetListResponse*) theBean;
+		[[MobiListStore sharedStore] addMobiList:[getListResponse list]];
+	}
 }
 
 /*
@@ -71,9 +91,14 @@
 {
 	//[MxiLog log];
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	DashboardViewController* dvc = [[DashboardViewController alloc] init];
+	dashBoardController = [[DashboardViewController alloc] init];
+	[[NSNotificationCenter defaultCenter] addObserver:dashBoardController
+											 selector:@selector(connectionEstablished:)
+												 name:@"ConnectionEstablished"
+											   object:nil];
 	
-	UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:dvc];
+	UINavigationController* navController = [[UINavigationController alloc]
+											 initWithRootViewController:dashBoardController];
 	[self.window setRootViewController:navController];
 	
 	self.window.backgroundColor = [UIColor whiteColor];
@@ -106,6 +131,7 @@
 	
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"
+											  hostName:@"localhost"
 									  presenceDelegate:self
 										stanzaDelegate:self
 										  beanDelegate:self

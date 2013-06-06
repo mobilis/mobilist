@@ -12,6 +12,8 @@
 #import "SyncResponse.h"
 #import "GetListRequest.h"
 #import "GetListResponse.h"
+#import "CreateListRequest.h"
+#import "DashboardViewController.h"
 
 @interface MobiAppDelegate : UIResponder <UIApplicationDelegate, MXiPresenceDelegate,
 		MXiStanzaDelegate, MXiBeanDelegate>
@@ -20,5 +22,6 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) DashboardViewController* dashBoardController;
 
 @end

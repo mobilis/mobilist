@@ -36,10 +36,21 @@
 
 - (void)addMobiList:(MobiList *)aList {
 	[allLists addObject:aList];
+	
+	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:aList forKey:@"theAddedList"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MobiListAdded"
+														object:self
+													  userInfo:userInfo];
+	
 }
 
 - (void)removeMobiList:(MobiList *)aList {
 	[allLists removeObjectIdenticalTo:aList];
+	
+	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:aList forKey:@"theRemovedList"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MobiListRemoved"
+														object:self
+													  userInfo:userInfo];
 }
 
 @end

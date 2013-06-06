@@ -45,6 +45,8 @@
 		79A4DDAE175CF84D00E6BDE4 /* ListsSyncFromService.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDAD175CF84D00E6BDE4 /* ListsSyncFromService.m */; };
 		79A4DDB1175CFA0100E6BDE4 /* ListSyncFromService.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDB0175CFA0100E6BDE4 /* ListSyncFromService.m */; };
 		79A4DDB4175D2CB500E6BDE4 /* GetListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDB3175D2CB500E6BDE4 /* GetListResponse.m */; };
+		79A4DDC3175F9D4A00E6BDE4 /* NSString+XMLDecoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDC2175F9D4A00E6BDE4 /* NSString+XMLDecoding.m */; };
+		79A4DDC6175FC2AD00E6BDE4 /* CreateListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDC5175FC2AD00E6BDE4 /* CreateListRequest.m */; };
 		79AE3B851735AF1C000A5CA8 /* mobilist-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */; };
 		79AE3B871735AF22000A5CA8 /* mobilist-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */; };
 		79BA8D351726C73B007FB4B3 /* TodoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D341726C73B007FB4B3 /* TodoListCell.xib */; };
@@ -115,6 +117,10 @@
 		79A4DDB0175CFA0100E6BDE4 /* ListSyncFromService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSyncFromService.m; sourceTree = "<group>"; };
 		79A4DDB2175D2CB500E6BDE4 /* GetListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetListResponse.h; sourceTree = "<group>"; };
 		79A4DDB3175D2CB500E6BDE4 /* GetListResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetListResponse.m; sourceTree = "<group>"; };
+		79A4DDC1175F9D4A00E6BDE4 /* NSString+XMLDecoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLDecoding.h"; sourceTree = "<group>"; };
+		79A4DDC2175F9D4A00E6BDE4 /* NSString+XMLDecoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLDecoding.m"; sourceTree = "<group>"; };
+		79A4DDC4175FC2AD00E6BDE4 /* CreateListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateListRequest.h; sourceTree = "<group>"; };
+		79A4DDC5175FC2AD00E6BDE4 /* CreateListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateListRequest.m; sourceTree = "<group>"; };
 		79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon.png"; path = "../mobilist-icon.png"; sourceTree = "<group>"; };
 		79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon@2x.png"; path = "../mobilist-icon@2x.png"; sourceTree = "<group>"; };
 		79BA8D341726C73B007FB4B3 /* TodoListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListCell.xib; sourceTree = "<group>"; };
@@ -264,8 +270,19 @@
 				79A4DD8A175A599F00E6BDE4 /* SyncRequest.m */,
 				79A4DD9B175A800000E6BDE4 /* GetListRequest.h */,
 				79A4DD9C175A800000E6BDE4 /* GetListRequest.m */,
+				79A4DDC4175FC2AD00E6BDE4 /* CreateListRequest.h */,
+				79A4DDC5175FC2AD00E6BDE4 /* CreateListRequest.m */,
 			);
 			name = Outgoing;
+			sourceTree = "<group>";
+		};
+		79A4DDBD175F9D1200E6BDE4 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				79A4DDC1175F9D4A00E6BDE4 /* NSString+XMLDecoding.h */,
+				79A4DDC2175F9D4A00E6BDE4 /* NSString+XMLDecoding.m */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		79BA8D321726C6AF007FB4B3 /* ListEntry */ = {
@@ -325,6 +342,7 @@
 		79FF6A79171C411300A3202F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				79A4DDBD175F9D1200E6BDE4 /* Util */,
 				79A4DD88175A597400E6BDE4 /* Beans */,
 				7915200D17203EE100AB33F0 /* MobiListEntry.h */,
 				7915200E17203EE100AB33F0 /* MobiListEntry.m */,
@@ -439,6 +457,8 @@
 				79A4DDAE175CF84D00E6BDE4 /* ListsSyncFromService.m in Sources */,
 				79A4DDB1175CFA0100E6BDE4 /* ListSyncFromService.m in Sources */,
 				79A4DDB4175D2CB500E6BDE4 /* GetListResponse.m in Sources */,
+				79A4DDC3175F9D4A00E6BDE4 /* NSString+XMLDecoding.m in Sources */,
+				79A4DDC6175FC2AD00E6BDE4 /* CreateListRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,12 @@
 //
 
 #import <MXi/MXi.h>
+#import "MobiList.h"
+#import "MobiListEntry.h"
+#import "NSString+XMLDecoding.h"
 
 @interface GetListResponse : MXiBean <MXiIncomingBean>
+
+@property (nonatomic, strong) MobiList* list;
 
 @end

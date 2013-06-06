@@ -90,7 +90,7 @@ public class MobiListEntry extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("<id>").append(entryId).append("</id>")
+		sb.append("<entryId>").append(entryId).append("</entryId>")
 			.append("<title>").append(title).append("</title>")
 			.append("<description>").append(description).append("</description>")
 			.append("<dueDate>").append(dueDate).append("</dueDate>")

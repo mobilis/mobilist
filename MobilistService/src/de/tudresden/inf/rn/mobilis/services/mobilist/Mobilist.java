@@ -71,7 +71,7 @@ public class Mobilist extends MobilisService {
 		entries1.add(entry1);
 		entries1.add(entry2);
 		entries1.add(entry3);
-		MobiList list1 = new MobiList("shopping_list", "Einkaufsliste", entries1);
+		MobiList list1 = new MobiList("shopping_list", "Einkaufsliste öäü", entries1);
 		
 		MobiListEntry entry4 = new MobiListEntry(
 			"entry1", "Schreiben", "Beleg schreiben", 1372158001, false

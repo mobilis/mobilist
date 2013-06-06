@@ -76,7 +76,7 @@
 	[super viewDidAppear:animated];
 	
 	[titleTextField setText:[entry title]];
-	[descriptionTextField setText:[entry entryDescription]];
+	[descriptionTextField setText:[entry description]];
 	
 	NSDate* dueDate = [entry dueDate];
 	if (dueDate) {
@@ -90,7 +90,7 @@
 	[super viewWillDisappear:animated];
 	
 	[entry setTitle:[titleTextField text]];
-	[entry setEntryDescription:[descriptionTextField text]];
+	[entry setDescription:[descriptionTextField text]];
 	[entry setDueDate:[dueDatePicker date]];
 }
 

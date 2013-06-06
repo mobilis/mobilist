@@ -39,6 +39,15 @@
 		[[self navigationItem] setLeftBarButtonItem:settingsItem];
 		
 		[[self navigationItem] setTitle:@"Mobilist"];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListAddedNotification:)
+													 name:@"MobiListAdded"
+												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListRemovedNotification:)
+													 name:@"MobiListRemoved"
+												   object:nil];
     }
     return self;
 }
@@ -52,6 +61,19 @@
 	[existingsListsTable registerNib:nib forCellReuseIdentifier:@"TodoListCell"];
 }
 
+- (void)connectionEstablished:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	connection = [userInfo objectForKey:@"connection"];
+}
+
+- (void)receivedListAddedNotification:(NSNotification* )notification {
+	[existingsListsTable reloadData];
+}
+
+- (void)receivedListRemovedNotification:(NSNotification* )notification {
+	[existingsListsTable reloadData];
+}
+
 /*
  * Table view data source
  */
@@ -62,7 +84,7 @@
 	
 	TodoListCell* cell = [existingsListsTable dequeueReusableCellWithIdentifier:@"TodoListCell"];
 	
-	[[cell listNameLabel] setText:[list name]];
+	[[cell listNameLabel] setText:[list listName]];
 	
 	return cell;
 }
@@ -108,6 +130,7 @@
 	[nlvc setDismissBlock:^{
 		[existingsListsTable reloadData];
 	}];
+	[nlvc setConnection:connection];
 	
 	UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:nlvc];
 	

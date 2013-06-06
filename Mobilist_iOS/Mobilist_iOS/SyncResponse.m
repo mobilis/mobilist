@@ -11,9 +11,7 @@
 @implementation SyncResponse
 
 - (id)init {
-	self = [super initWithElementName:@"SyncResponse"
-						  iqNamespace:@"mobilist:iq:sync"
-							 beanType:RESULT];
+	self = [super initWithBeanType:RESULT];
 	
 	return self;
 }
@@ -22,18 +20,27 @@
 	NSXMLNode* listsElement = [xml childAtIndex:0];
 	ListsSyncFromService* listsSyncFromService = [[ListsSyncFromService alloc] init];
 	
-	int listsElementChildCount = [listsElement childCount];
-	
-	for (int i = 0; i < listsElementChildCount; i++) {
+	for (int i = 0; i < [listsElement childCount]; i++) {
 		NSXMLNode* listElement = [listsElement childAtIndex:i];
 		ListSyncFromService* listSyncFromService = [[ListSyncFromService alloc] init];
-		[listSyncFromService setListId:[((NSXMLElement*) listElement) attributeStringValueForName:@"listId"]];
-		[listSyncFromService setListCrc:[((NSXMLElement*) listElement) attributeStringValueForName:@"listCrc"]];
+		
+		[listSyncFromService setListId:[[((NSXMLElement*) listElement) attributeStringValueForName:@"listId"]
+										stringByCorrectingXMLDecoding]];
+		[listSyncFromService setListCrc:[[((NSXMLElement*) listElement) attributeStringValueForName:@"listCrc"]
+										 stringByCorrectingXMLDecoding]];
 		
 		[listsSyncFromService addListSyncFromService:listSyncFromService];
 	}
 	
 	[self setLists:listsSyncFromService];
+}
+
++ (NSString *)elementName {
+	return @"SyncResponse";
+}
+
++ (NSString *)iqNamespace {
+	return @"mobilist:iq:sync";
 }
 
 @end

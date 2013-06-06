@@ -8,6 +8,7 @@
 
 #import <MXi/MXi.h>
 #import "ListsSyncFromService.h"
+#import "NSString+XMLDecoding.h"
 
 @interface SyncResponse : MXiBean <MXiIncomingBean>
 

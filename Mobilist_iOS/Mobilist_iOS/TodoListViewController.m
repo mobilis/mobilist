@@ -26,7 +26,7 @@
 		
         theList = aList;
 		
-		[[self navigationItem] setTitle:[theList name]];
+		[[self navigationItem] setTitle:[theList listName]];
 		
 		UIBarButtonItem* addEntryItem = [[UIBarButtonItem alloc]
 			initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -85,7 +85,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[theList allEntries] count];
+    return [[theList listEntries] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,7 +168,13 @@
 		[[self tableView] reloadData];
 	}];
 	
-	MobiListEntry* newEntry = [theList createEntry];
+	MobiListEntry* newEntry = [[MobiListEntry alloc] init];
+	[newEntry setEntryId:@"1"];
+	[newEntry setTitle:@"Hallo"];
+	[newEntry setDescription:@"Beschreibung"];
+	[newEntry setDueDate:[NSDate date]];
+	[newEntry setDone:NO];
+	
 	[edvc setParent:theList];
 	[edvc setEntry:newEntry];
 	

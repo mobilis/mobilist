@@ -10,21 +10,15 @@
 #import "MobiListEntry.h"
 
 @interface MobiList : NSObject
-{
-	NSString* listID;
-	NSString* creator;
-	NSMutableArray* entries;
-}
 
-@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSString* listName;
+@property (nonatomic, strong) NSString* listId;
+@property (nonatomic, strong) NSMutableArray* listEntries;
 
-- (id)initWithListEntries:(NSMutableArray* )theListEntries;
+- (id)init;
 
-- (NSString* )listID;
-- (MobiListEntry* )createEntry;
 - (void)addListEntry:(MobiListEntry* )aListEntry;
 - (void)removeListEntry:(MobiListEntry* )aListEntry;
-- (NSMutableArray* )allEntries;
 - (MobiListEntry* )entryAtIndex:(NSInteger)index;
 
 @end

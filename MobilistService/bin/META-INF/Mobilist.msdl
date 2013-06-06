@@ -77,8 +77,8 @@
 					<xs:sequence>
 						<xs:element name="entry" type="mns:MobiListEntry" maxOccurs="unbounded" />
 					</xs:sequence>
-					<xs:attribute name="name" type="xs:string" />
-					<xs:attribute name="id" type="xs:string" />
+					<xs:attribute name="listName" type="xs:string" />
+					<xs:attribute name="listId" type="xs:string" />
 				</xs:complexType>
 			</xs:element>
 			
@@ -87,7 +87,7 @@
 			<xs:element name="MobiListEntry">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 						<xs:element name="title" type="xs:string" />
 						<xs:element name="description" type="xs:string" />
 						<xs:element name="dueDate" type="xs:long" />

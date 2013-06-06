@@ -9,20 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface MobiListEntry : NSObject
-{
-	NSString* entryID;
-}
 
-@property (nonatomic, retain) NSString* title;
-@property (nonatomic, retain) NSString* entryDescription;
-@property (nonatomic, retain) NSDate* dueDate;
+@property (nonatomic, strong) NSString* entryId;
+@property (nonatomic, strong) NSString* title;
+@property (nonatomic, strong) NSString* description;
+@property (nonatomic, strong) NSDate* dueDate;
 @property (nonatomic) BOOL done;
 
-- (id)initWithTitle:(NSString* )aTitle
-		description:(NSString* )aDescription
-			dueDate:(NSDate* )aDueDate;
-- (id)initWithTitle:(NSString *)aTitle;
-
-- (NSString* )entryID;
+- (id)init;
 
 @end

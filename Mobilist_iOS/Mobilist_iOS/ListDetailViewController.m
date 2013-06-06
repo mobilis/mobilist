@@ -14,7 +14,7 @@
 
 @implementation ListDetailViewController
 
-@synthesize dismissBlock, list;
+@synthesize dismissBlock, list, connection;
 
 - (id)initForNewList:(BOOL)isNew {
 	self = [super initWithNibName:@"ListDetailViewController" bundle:nil];
@@ -87,15 +87,18 @@
 	}
 	
 	MobiList* theNewList = [[MobiList alloc] init];
-	[theNewList setName:listNameText];
-	
-	MobiListEntry* theEntry = [[MobiListEntry alloc] initWithTitle:@"Erster Eintrag"
-													   description:@"Nur ein Beispieleintrag zur Demonstration"
-														   dueDate:[NSDate date]];
-	[theNewList addListEntry:theEntry];
+	[theNewList setListName:listNameText];
+	CFUUIDRef uuid = CFUUIDCreate(NULL);
+	NSString *uuidStr = (__bridge_transfer NSString*) CFUUIDCreateString(NULL, uuid);
+	CFRelease(uuid);
+	[theNewList setListId:uuidStr];
 	
 	MobiListStore* sharedStore = [MobiListStore sharedStore];
 	[sharedStore addMobiList:theNewList];
+	
+	CreateListRequest* request = [[CreateListRequest alloc] init];
+	[request setList:theNewList];
+	[connection sendBean:request];
 	
 	[[self navigationController] dismissViewControllerAnimated:YES completion:dismissBlock];
 }

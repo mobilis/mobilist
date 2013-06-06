@@ -13,21 +13,28 @@
 @synthesize listId;
 
 - (id)init {
-	self = [super initWithElementName:@"GetListRequest"
-						  iqNamespace:@"mobilist:iq:getlist"
-							 beanType:GET];
+	self = [super initWithBeanType:GET];
 	
 	return self;
 }
 
 - (NSXMLElement* )toXML {
-	NSXMLElement* beanElement = [NSXMLElement elementWithName:[self elementName] xmlns:[self iqNamespace]];
+	NSXMLElement* beanElement = [NSXMLElement elementWithName:[[self class] elementName]
+														xmlns:[[self class] iqNamespace]];
 	NSXMLElement* listIdElement = [NSXMLElement elementWithName:@"listId"];
 	
 	[listIdElement setStringValue:[self listId]];
 	[beanElement addChild:listIdElement];
 	
 	return beanElement;
+}
+
++ (NSString *)elementName {
+	return @"GetListRequest";
+}
+
++ (NSString *)iqNamespace {
+	return @"mobilist:iq:getlist";
 }
 
 @end

@@ -10,50 +10,28 @@
 
 @implementation MobiList
 
-@synthesize name;
+@synthesize listId, listName, listEntries;
 
-- (id)initWithListEntries:(NSMutableArray *)theListEntries {
+- (id)init {
 	self = [super init];
 	
 	if (self) {
-		entries = theListEntries;
-		CFUUIDRef uuid = CFUUIDCreate(NULL);
-		listID = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, uuid);
-		CFRelease(uuid);
+		listEntries = [NSMutableArray array];
 	}
 	
 	return self;
 }
 
-- (id)init {
-	return [self initWithListEntries:[NSMutableArray array]];
-}
-
-- (NSString *)listID {
-	return listID;
-}
-
-- (MobiListEntry *)createEntry {
-	MobiListEntry* newEntry = [[MobiListEntry alloc] init];
-	[self addListEntry:newEntry];
-	
-	return newEntry;
-}
-
 - (void)addListEntry:(MobiListEntry *)aListEntry {
-	[entries addObject:aListEntry];
+	[[self listEntries] addObject:aListEntry];
 }
 
 - (void)removeListEntry:(MobiListEntry *)aListEntry {
-	[entries removeObjectIdenticalTo:aListEntry];
-}
-
-- (NSMutableArray *)allEntries {
-	return entries;
+	[[self listEntries] removeObjectIdenticalTo:aListEntry];
 }
 
 - (MobiListEntry *)entryAtIndex:(NSInteger)index {
-	return [entries objectAtIndex:index];
+	return [[self listEntries] objectAtIndex:index];
 }
 
 @end

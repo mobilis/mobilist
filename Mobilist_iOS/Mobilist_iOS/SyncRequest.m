@@ -11,17 +11,24 @@
 @implementation SyncRequest
 
 - (id)init {
-	self = [super initWithElementName:@"SyncRequest"
-						  iqNamespace:@"mobilist:iq:sync"
-							 beanType:GET];
+	self = [super initWithBeanType:GET];
 	
 	return self;
 }
 
 - (NSXMLElement *)toXML {
-	NSXMLElement* beanElement = [NSXMLElement elementWithName:[self elementName] xmlns:[self iqNamespace]];
+	NSXMLElement* beanElement = [NSXMLElement elementWithName:[[self class] elementName]
+														xmlns:[[self class] iqNamespace]];
 	
 	return beanElement;
+}
+
++ (NSString *)elementName {
+	return @"SyncRequest";
+}
+
++ (NSString *)iqNamespace {
+	return @"mobilist:iq:sync";
 }
 
 @end

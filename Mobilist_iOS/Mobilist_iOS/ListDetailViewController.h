@@ -10,6 +10,7 @@
 #import "MobiList.h"
 #import "MobiListStore.h"
 #import "MobiListEntry.h"
+#import "CreateListRequest.h"
 
 @interface ListDetailViewController : UIViewController
 {
@@ -18,6 +19,7 @@
 
 @property (nonatomic, copy) void (^dismissBlock)(void);
 @property (nonatomic, strong) MobiList* list;
+@property (nonatomic, strong) MXiConnection* connection;
 
 - (id)initForNewList:(BOOL)isNew;
 
