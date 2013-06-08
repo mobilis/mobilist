@@ -11,6 +11,7 @@
 #import "MobiListStore.h"
 #import "MobiListEntry.h"
 #import "CreateListRequest.h"
+#import "UUIDCreator.h"
 
 @interface ListDetailViewController : UIViewController
 {

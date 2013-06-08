@@ -51,7 +51,7 @@ public class ListStore {
 	
 	public MobiList getListById(String listId) {
 		for (MobiList list : allLists) {
-			if (listId.equals(list.getId()))
+			if (listId.equals(list.getListId()))
 				return list;
 		}
 		

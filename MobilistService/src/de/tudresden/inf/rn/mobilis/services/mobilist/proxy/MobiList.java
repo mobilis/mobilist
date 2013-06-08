@@ -10,13 +10,13 @@ public class MobiList extends XMPPBean {
 
 	private static final long serialVersionUID = 2317256615233615530L;
 	private List<MobiListEntry> entries;
-	private String id, name;
+	private String listId, listName;
 	
 	public MobiList() {}
 	
 	public MobiList(String id, String name, List<MobiListEntry> entries) {
-		this.setId(id);
-		this.setName(name);
+		this.setListId(id);
+		this.setListName(name);
 		this.setEntries(entries);
 	}
 
@@ -24,7 +24,7 @@ public class MobiList extends XMPPBean {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		
-		s.append(name + " (" + entries.get(0));
+		s.append(listName + " (" + entries.get(0));
 		for (int i = 1; i < entries.size(); i++) {
 			s.append(", " + entries.get(i));
 		}
@@ -33,20 +33,20 @@ public class MobiList extends XMPPBean {
 		return s.toString();
 	}
 
-	public String getId() {
-		return id;
+	public String getListId() {
+		return listId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setListId(String id) {
+		this.listId = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getListName() {
+		return listName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setListName(String name) {
+		this.listName = name;
 	}
 
 	public List<MobiListEntry> getEntries() {
@@ -57,10 +57,45 @@ public class MobiList extends XMPPBean {
 		this.entries = entries;
 	}
 
-	// TODO implement
-	
 	@Override
 	public void fromXML(XmlPullParser parser) throws Exception {
+		boolean done = false;
+		
+		do {
+			switch (parser.getEventType()) {
+			case XmlPullParser.START_TAG:
+				String tagName = parser.getName();
+				
+				if (tagName.equals( "listName" ) ) {
+					listName = parser.nextText();
+					parser.next();
+				} else if (tagName.equals("listId")) {
+					listId = parser.nextText();
+					parser.next();
+				} else if (tagName.equals("entry")) {
+					MobiListEntry entry = new MobiListEntry();
+					entry.fromXML(parser);
+					entries.add(entry);
+					parser.next();
+				} else if (tagName.equals("error")) {
+					parser = parseErrorAttributes(parser);
+				} else {
+					parser.next();
+				}
+				break;
+			case XmlPullParser.END_TAG:
+				if (parser.getName().equals(getChildElement()))
+					done = true;
+				else
+					parser.next();
+				break;
+			case XmlPullParser.END_DOCUMENT:
+				done = true;
+				break;
+			default:
+				parser.next();
+			}
+		} while (!done);
 	}
 
 	@Override
@@ -82,10 +117,12 @@ public class MobiList extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 		
-		for (MobiListEntry entry : entries) {
-			sb.append("<entry>")
-				.append(entry.payloadToXML())
-				.append("</entry>");
+		if (entries != null) {
+			for (MobiListEntry entry : entries) {
+				sb.append("<entry>")
+					.append(entry.payloadToXML())
+					.append("</entry>");
+			}
 		}
 		
 		return sb.toString();

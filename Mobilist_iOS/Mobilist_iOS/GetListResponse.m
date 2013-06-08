@@ -20,16 +20,20 @@
 
 - (void)fromXML:(NSXMLElement *)xml {
 	NSXMLElement* listElement = (NSXMLElement*) [xml childAtIndex:0];
-	NSString* listName = [[listElement attributeStringValueForName:@"listName"] stringByCorrectingXMLDecoding];
-	NSString* listId = [[listElement attributeStringValueForName:@"listId"] stringByCorrectingXMLDecoding];
+	NSXMLElement* listNameElement = [listElement elementForName:@"listName"];
+	NSString* listName = [[listNameElement stringValue] stringByCorrectingXMLDecoding];
+	NSXMLElement* listIdElement = [listElement elementForName:@"listId"];
+	NSString* listId = [[listIdElement stringValue] stringByCorrectingXMLDecoding];
 	
 	MobiList* listObj = [[MobiList alloc] init];
 	
 	[listObj setListName:listName];
 	[listObj setListId:listId];
 	
-	for (int i = 0; i < [listElement childCount]; i++) {
-		NSXMLElement* entryElement = (NSXMLElement*) [listElement childAtIndex:i];
+	NSXMLElement* entriesElement = [listElement elementForName:@"entries"];
+	
+	for (int i = 0; i < [entriesElement childCount]; i++) {
+		NSXMLElement* entryElement = (NSXMLElement*) [entriesElement childAtIndex:i];
 		MobiListEntry* entry = [[MobiListEntry alloc] init];
 		
 		[entry setEntryId:[[[entryElement elementForName:@"id"] stringValue] stringByCorrectingXMLDecoding]];

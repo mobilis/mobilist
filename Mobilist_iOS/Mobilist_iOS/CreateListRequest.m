@@ -23,8 +23,16 @@
 														xmlns:[[self class] iqNamespace]];
 	
 	NSXMLElement* listElement = [NSXMLElement elementWithName:@"list"];
-	[listElement addAttributeWithName:@"listName" stringValue:[list listName]];
-	[listElement addAttributeWithName:@"listId" stringValue:[list listId]];
+	
+	NSXMLElement* listNameElement = [NSXMLElement elementWithName:@"listName"];
+	[listNameElement setStringValue:[list listName]];
+	[listElement addChild:listNameElement];
+	
+	NSXMLElement* listIdElement = [NSXMLElement elementWithName:@"listId"];
+	[listIdElement setStringValue:[list listId]];
+	[listElement addChild:listIdElement];
+	
+	NSXMLElement* entriesElement = [NSXMLElement elementWithName:@"entries"];
 	
 	for (MobiListEntry* entry in [list listEntries]) {
 		NSXMLElement* entryElement = [NSXMLElement elementWithName:@"entry"];
@@ -49,9 +57,11 @@
 		NSXMLElement* doneElement = [NSXMLElement elementWithName:@"done" stringValue:doneStringValue];
 		[entryElement addChild:doneElement];
 		
-		[listElement addChild:entryElement];
+		[entriesElement addChild:entryElement];
 	}
 	
+	[listElement addChild:entriesElement];
+	[beanElement addChild:listElement];
 	return beanElement;
 }
 

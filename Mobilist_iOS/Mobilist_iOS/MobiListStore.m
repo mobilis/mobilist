@@ -25,6 +25,12 @@
 	
 	if (self) {
 		allLists = [NSMutableArray array];
+		notYetSyncedListIds = [NSMutableArray array];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(listCreationConfirmed:)
+													 name:NotificationListCreationConfirmed
+												   object:nil];
 	}
 	
 	return self;
@@ -34,21 +40,46 @@
 	return allLists;
 }
 
-- (void)addMobiList:(MobiList *)aList {
+- (NSMutableArray* )notYetSyncedListIds {
+	return notYetSyncedListIds;
+}
+
+- (BOOL)isSyncedWithService:(MobiList *)aList {
+	for (NSString* listId in notYetSyncedListIds) {
+		if ([listId isEqualToString:[aList listId]]) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+- (void)listCreationConfirmed:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	NSString* listId = [userInfo objectForKey:@"listId"];
+	
+	[notYetSyncedListIds removeObject:listId];
+}
+
+- (void)addMobiList:(MobiList *)aList
+	   newlyCreated:(BOOL)isNew {
 	[allLists addObject:aList];
 	
+	if (isNew) {
+		[notYetSyncedListIds addObject:[aList listId]];
+	}
+	
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:aList forKey:@"theAddedList"];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MobiListAdded"
+	[[NSNotificationCenter defaultCenter] postNotificationName:NotificationMobiListAdded
 														object:self
 													  userInfo:userInfo];
-	
 }
 
 - (void)removeMobiList:(MobiList *)aList {
 	[allLists removeObjectIdenticalTo:aList];
 	
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:aList forKey:@"theRemovedList"];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MobiListRemoved"
+	[[NSNotificationCenter defaultCenter] postNotificationName:NotificationMobiListRemoved
 														object:self
 													  userInfo:userInfo];
 }

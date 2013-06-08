@@ -88,13 +88,11 @@
 	
 	MobiList* theNewList = [[MobiList alloc] init];
 	[theNewList setListName:listNameText];
-	CFUUIDRef uuid = CFUUIDCreate(NULL);
-	NSString *uuidStr = (__bridge_transfer NSString*) CFUUIDCreateString(NULL, uuid);
-	CFRelease(uuid);
+	NSString *uuidStr = [UUIDCreator createUUID];
 	[theNewList setListId:uuidStr];
 	
 	MobiListStore* sharedStore = [MobiListStore sharedStore];
-	[sharedStore addMobiList:theNewList];
+	[sharedStore addMobiList:theNewList newlyCreated:YES];
 	
 	CreateListRequest* request = [[CreateListRequest alloc] init];
 	[request setList:theNewList];

@@ -12,6 +12,7 @@ import de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent;
 import de.tudresden.inf.rn.mobilis.server.services.MobilisService;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateEntryRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateListRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteEntryRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryRequest;
@@ -119,7 +120,7 @@ public class Mobilist extends MobilisService {
 						List<ListSync> allListSyncs = new ArrayList<ListSync>();
 						
 						for (MobiList list : listStore.getAllLists()) {
-							allListSyncs.add(new ListSync(list.getId(), list.hashCode() + ""));
+							allListSyncs.add(new ListSync(list.getListId(), list.hashCode() + ""));
 						}
 						
 						ListsSync listsSync = new ListsSync(allListSyncs);
@@ -147,6 +148,27 @@ public class Mobilist extends MobilisService {
 						} else {
 							// TODO handle error case
 						}
+					}
+					
+					// CreateList
+					if (proxyBean.isTypeOf(CreateListRequest.NAMESPACE, CreateListRequest.CHILD_ELEMENT)) {
+						CreateListRequest request = (CreateListRequest) proxyBean.parsePayload(new CreateListRequest());
+						MobiList theNewList = request.getList();
+						
+						ListStore.getInstance().addList(theNewList);
+						
+						try {
+							Thread.sleep(2000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						
+						CreateListResponse response = new CreateListResponse();
+						response.setListId(theNewList.getListId());
+						response.setTo(request.getFrom());
+						response.setFrom(request.getTo());
+						
+						getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
 					}
 					
 				}

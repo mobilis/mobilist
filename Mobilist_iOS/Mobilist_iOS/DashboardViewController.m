@@ -42,11 +42,15 @@
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(receivedListAddedNotification:)
-													 name:@"MobiListAdded"
+													 name:NotificationMobiListAdded
 												   object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(receivedListRemovedNotification:)
-													 name:@"MobiListRemoved"
+													 name:NotificationMobiListRemoved
+												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListCreationConfirmedNotification:)
+													 name:NotificationListCreationConfirmed
 												   object:nil];
     }
     return self;
@@ -74,6 +78,10 @@
 	[existingsListsTable reloadData];
 }
 
+- (void)receivedListCreationConfirmedNotification:(NSNotification* )notification {
+	[existingsListsTable reloadData];
+}
+
 /*
  * Table view data source
  */
@@ -85,6 +93,11 @@
 	TodoListCell* cell = [existingsListsTable dequeueReusableCellWithIdentifier:@"TodoListCell"];
 	
 	[[cell listNameLabel] setText:[list listName]];
+	if (![[MobiListStore sharedStore] isSyncedWithService:list]) {
+		[[cell syncSpinner] startAnimating];
+	} else {
+		[[cell syncSpinner] stopAnimating];
+	}
 	
 	return cell;
 }

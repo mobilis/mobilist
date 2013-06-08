@@ -19,7 +19,7 @@
 
 - (void)didAuthenticate {
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:connection forKey:@"connection"];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"ConnectionEstablished"
+	[[NSNotificationCenter defaultCenter] postNotificationName:NotificationConnectionEstablished
 														object:self
 													  userInfo:userInfo];
 	
@@ -79,7 +79,17 @@
 	
 	if ([theBean class] == [GetListResponse class]) {
 		GetListResponse* getListResponse = (GetListResponse*) theBean;
-		[[MobiListStore sharedStore] addMobiList:[getListResponse list]];
+		[[MobiListStore sharedStore] addMobiList:[getListResponse list]
+									newlyCreated:NO];
+	}
+	
+	if ([theBean class] == [CreateListResponse class]) {
+		CreateListResponse* createListResponse = (CreateListResponse*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[createListResponse listId]
+															 forKey:@"listId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationListCreationConfirmed
+															object:self
+														  userInfo:userInfo];
 	}
 }
 
@@ -94,7 +104,7 @@
 	dashBoardController = [[DashboardViewController alloc] init];
 	[[NSNotificationCenter defaultCenter] addObserver:dashBoardController
 											 selector:@selector(connectionEstablished:)
-												 name:@"ConnectionEstablished"
+												 name:NotificationConnectionEstablished
 											   object:nil];
 	
 	UINavigationController* navController = [[UINavigationController alloc]
@@ -128,10 +138,11 @@
 	NSMutableArray* incomingBeanPrototypes = [NSMutableArray array];
 	[incomingBeanPrototypes addObject:[[SyncResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[GetListResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[CreateListResponse alloc] init]];
 	
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"
-											  hostName:@"localhost"
+											  hostName:@"192.168.1.51"
 									  presenceDelegate:self
 										stanzaDelegate:self
 										  beanDelegate:self

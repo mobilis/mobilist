@@ -47,6 +47,9 @@
 		79A4DDB4175D2CB500E6BDE4 /* GetListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDB3175D2CB500E6BDE4 /* GetListResponse.m */; };
 		79A4DDC3175F9D4A00E6BDE4 /* NSString+XMLDecoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDC2175F9D4A00E6BDE4 /* NSString+XMLDecoding.m */; };
 		79A4DDC6175FC2AD00E6BDE4 /* CreateListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDC5175FC2AD00E6BDE4 /* CreateListRequest.m */; };
+		79A4DDC91761B82000E6BDE4 /* UUIDCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDC81761B82000E6BDE4 /* UUIDCreator.m */; };
+		79A4DDCC176317EB00E6BDE4 /* CreateListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDCB176317EA00E6BDE4 /* CreateListResponse.m */; };
+		79A4DDCF176326EC00E6BDE4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDCE176326EB00E6BDE4 /* Constants.m */; };
 		79AE3B851735AF1C000A5CA8 /* mobilist-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */; };
 		79AE3B871735AF22000A5CA8 /* mobilist-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */; };
 		79BA8D351726C73B007FB4B3 /* TodoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D341726C73B007FB4B3 /* TodoListCell.xib */; };
@@ -121,6 +124,12 @@
 		79A4DDC2175F9D4A00E6BDE4 /* NSString+XMLDecoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLDecoding.m"; sourceTree = "<group>"; };
 		79A4DDC4175FC2AD00E6BDE4 /* CreateListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateListRequest.h; sourceTree = "<group>"; };
 		79A4DDC5175FC2AD00E6BDE4 /* CreateListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateListRequest.m; sourceTree = "<group>"; };
+		79A4DDC71761B82000E6BDE4 /* UUIDCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUIDCreator.h; sourceTree = "<group>"; };
+		79A4DDC81761B82000E6BDE4 /* UUIDCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUIDCreator.m; sourceTree = "<group>"; };
+		79A4DDCA176317E900E6BDE4 /* CreateListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateListResponse.h; sourceTree = "<group>"; };
+		79A4DDCB176317EA00E6BDE4 /* CreateListResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateListResponse.m; sourceTree = "<group>"; };
+		79A4DDCD176326EA00E6BDE4 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		79A4DDCE176326EB00E6BDE4 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon.png"; path = "../mobilist-icon.png"; sourceTree = "<group>"; };
 		79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon@2x.png"; path = "../mobilist-icon@2x.png"; sourceTree = "<group>"; };
 		79BA8D341726C73B007FB4B3 /* TodoListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListCell.xib; sourceTree = "<group>"; };
@@ -259,6 +268,8 @@
 				79A4DDB0175CFA0100E6BDE4 /* ListSyncFromService.m */,
 				79A4DDB2175D2CB500E6BDE4 /* GetListResponse.h */,
 				79A4DDB3175D2CB500E6BDE4 /* GetListResponse.m */,
+				79A4DDCA176317E900E6BDE4 /* CreateListResponse.h */,
+				79A4DDCB176317EA00E6BDE4 /* CreateListResponse.m */,
 			);
 			name = Incoming;
 			sourceTree = "<group>";
@@ -281,6 +292,8 @@
 			children = (
 				79A4DDC1175F9D4A00E6BDE4 /* NSString+XMLDecoding.h */,
 				79A4DDC2175F9D4A00E6BDE4 /* NSString+XMLDecoding.m */,
+				79A4DDC71761B82000E6BDE4 /* UUIDCreator.h */,
+				79A4DDC81761B82000E6BDE4 /* UUIDCreator.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -350,6 +363,8 @@
 				79152011172040D400AB33F0 /* MobiList.m */,
 				79152013172047E900AB33F0 /* MobiListStore.h */,
 				79152014172047E900AB33F0 /* MobiListStore.m */,
+				79A4DDCD176326EA00E6BDE4 /* Constants.h */,
+				79A4DDCE176326EB00E6BDE4 /* Constants.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -459,6 +474,9 @@
 				79A4DDB4175D2CB500E6BDE4 /* GetListResponse.m in Sources */,
 				79A4DDC3175F9D4A00E6BDE4 /* NSString+XMLDecoding.m in Sources */,
 				79A4DDC6175FC2AD00E6BDE4 /* CreateListRequest.m in Sources */,
+				79A4DDC91761B82000E6BDE4 /* UUIDCreator.m in Sources */,
+				79A4DDCC176317EB00E6BDE4 /* CreateListResponse.m in Sources */,
+				79A4DDCF176326EC00E6BDE4 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

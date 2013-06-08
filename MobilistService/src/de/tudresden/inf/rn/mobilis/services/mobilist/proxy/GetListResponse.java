@@ -84,13 +84,15 @@ public class GetListResponse extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<list ")
-			.append("listName=\"")
-			.append(list.getName())
-			.append("\" listId=\"")
-			.append(list.getId())
-			.append("\">")
+		sb.append("<list>")
+			.append("<listName>")
+			.append(list.getListName())
+			.append("</listName><listId>")
+			.append(list.getListId())
+			.append("</listId>")
+			.append("<entries>")
 			.append(list.payloadToXML())
+			.append("</entries>")
 			.append("</list>");
 
 		sb = appendErrorPayload(sb);

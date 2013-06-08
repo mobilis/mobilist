@@ -11,5 +11,6 @@
 @interface TodoListCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *listNameLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *syncSpinner;
 
 @end

@@ -75,10 +75,18 @@
 			<xs:element name="MobiList">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="listName" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
+						<xs:element name="entries" type="mns:ListOfEntries" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="ListOfEntries">
+				<xs:complexType>
+					<xs:sequence>
 						<xs:element name="entry" type="mns:MobiListEntry" maxOccurs="unbounded" />
 					</xs:sequence>
-					<xs:attribute name="listName" type="xs:string" />
-					<xs:attribute name="listId" type="xs:string" />
 				</xs:complexType>
 			</xs:element>
 			
@@ -108,7 +116,7 @@
 			<xs:element name="CreateListResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -122,7 +130,7 @@
 			<xs:element name="ListCreatedAccept">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -139,7 +147,7 @@
 			<xs:element name="CreateEntryResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -153,7 +161,7 @@
 			<xs:element name="EntryCreatedAccept">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

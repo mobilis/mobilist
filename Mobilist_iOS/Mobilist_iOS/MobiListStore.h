@@ -7,17 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Constants.h"
 #import "MobiList.h"
 
 @interface MobiListStore : NSObject
 {
 	NSMutableArray* allLists;
+	NSMutableArray* notYetSyncedListIds;
 }
 
 + (MobiListStore* )sharedStore;
 
 - (NSMutableArray* )allLists;
-- (void)addMobiList:(MobiList* )aList;
+- (NSArray* )notYetSyncedListIds;
+- (BOOL)isSyncedWithService:(MobiList* )aList;
+- (void)addMobiList:(MobiList* )aList
+	   newlyCreated:(BOOL)isNew;
 - (void)removeMobiList:(MobiList* )aList;
 
 @end

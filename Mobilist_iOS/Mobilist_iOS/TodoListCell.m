@@ -10,7 +10,7 @@
 
 @implementation TodoListCell
 
-@synthesize listNameLabel;
+@synthesize listNameLabel, syncSpinner;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
