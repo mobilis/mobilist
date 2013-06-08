@@ -112,12 +112,10 @@
 		NSString* message = [[@"Do you really want to delete the entry '"
 							  stringByAppendingString:[theEntry title]]
 							 stringByAppendingString:@"'?"];
-		ListEntryRemovalDelegate* alertDelegate = [[ListEntryRemovalDelegate alloc] initWithList:theList
-																					 removeIndex:[indexPath row]];
 		
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Delete todo entry"
 															message:message
-														   delegate:alertDelegate
+														   delegate:self
 												  cancelButtonTitle:@"Don't delete"
 												  otherButtonTitles:@"Delete", nil];
 		[alertView show];
@@ -128,6 +126,10 @@
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	
 }
 
 /*
