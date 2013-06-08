@@ -14,7 +14,8 @@
 
 @implementation DashboardViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString *)nibNameOrNil
+			   bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -60,9 +61,11 @@
 {
     [super viewDidLoad];
     
-	UINib* nib = [UINib nibWithNibName:@"TodoListCell" bundle:nil];
+	UINib* nib = [UINib nibWithNibName:CellTodoList
+								bundle:nil];
 	
-	[existingsListsTable registerNib:nib forCellReuseIdentifier:@"TodoListCell"];
+	[existingsListsTable registerNib:nib
+			  forCellReuseIdentifier:CellTodoList];
 }
 
 - (void)connectionEstablished:(NSNotification* )notification {
@@ -90,7 +93,7 @@
 		  cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	MobiList* list = [[[MobiListStore sharedStore] allLists] objectAtIndex:[indexPath row]];
 	
-	TodoListCell* cell = [existingsListsTable dequeueReusableCellWithIdentifier:@"TodoListCell"];
+	TodoListCell* cell = [existingsListsTable dequeueReusableCellWithIdentifier:CellTodoList];
 	
 	[[cell listNameLabel] setText:[list listName]];
 	if (![[MobiListStore sharedStore] isSyncedWithService:list]) {

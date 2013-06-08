@@ -13,6 +13,9 @@ NSString* const NotificationMobiListRemoved = @"MobiListRemoved";
 NSString* const NotificationConnectionEstablished = @"ConnectionEstablished";
 NSString* const NotificationListCreationConfirmed = @"ListCreationConfirmed";
 
+NSString* const CellTodoListEntry = @"TodoListEntryCell";
+NSString* const CellTodoList = @"TodoListCell";
+
 @implementation Constants
 
 @end

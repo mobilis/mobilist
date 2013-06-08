@@ -56,12 +56,12 @@
     [super viewDidLoad];
 
     // Load the NIB file
-	UINib* nib = [UINib nibWithNibName:@"TodoListEntryCell"
+	UINib* nib = [UINib nibWithNibName:CellTodoListEntry
 								bundle:nil];
 	
 	// Register this NIB file which contains the cell
 	[[self tableView] registerNib:nib
-		   forCellReuseIdentifier:@"TodoListEntryCell"];
+		   forCellReuseIdentifier:CellTodoListEntry];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,7 +90,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     TodoListEntryCell* cell = [tableView dequeueReusableCellWithIdentifier:@"TodoListEntryCell"
+	TodoListEntryCell* cell = [tableView dequeueReusableCellWithIdentifier:CellTodoListEntry
 															forIndexPath:indexPath];
 	MobiListEntry* entry = [theList entryAtIndex:[indexPath row]];
     
@@ -108,9 +108,10 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-		MobiListEntry* theEntry = [theList entryAtIndex:[indexPath row]];
+		entryIndexToBeDeleted = [indexPath row];
+		MobiListEntry* entryToBeDeleted = [theList entryAtIndex:entryIndexToBeDeleted];
 		NSString* message = [[@"Do you really want to delete the entry '"
-							  stringByAppendingString:[theEntry title]]
+							  stringByAppendingString:[entryToBeDeleted title]]
 							 stringByAppendingString:@"'?"];
 		
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Delete todo entry"
@@ -119,17 +120,20 @@
 												  cancelButtonTitle:@"Don't delete"
 												  otherButtonTitles:@"Delete", nil];
 		[alertView show];
-		
-		[theList removeListEntry:theEntry];
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-						 withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	
+	if (buttonIndex == 1) {
+		[[theList listEntries] removeObjectAtIndex:entryIndexToBeDeleted];
+		
+		NSIndexPath* indexPath = [NSIndexPath indexPathForRow:entryIndexToBeDeleted
+													inSection:0];
+		[[self tableView] deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+								withRowAnimation:YES];
+	}
 }
 
 /*

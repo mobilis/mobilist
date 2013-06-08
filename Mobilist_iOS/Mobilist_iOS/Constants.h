@@ -13,6 +13,9 @@ extern NSString* const NotificationMobiListRemoved;
 extern NSString* const NotificationConnectionEstablished;
 extern NSString* const NotificationListCreationConfirmed;
 
+extern NSString* const CellTodoListEntry;
+extern NSString* const CellTodoList;
+
 @interface Constants : NSObject
 
 @end

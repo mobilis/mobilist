@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Constants.h"
 #import "MobiList.h"
 #import "MobiListEntry.h"
 #import "TodoListEntryCell.h"
 #import "EntryDetailViewController.h"
 
 @interface TodoListViewController : UITableViewController <UIAlertViewDelegate>
+{
+	NSInteger entryIndexToBeDeleted;
+}
 
 @property (nonatomic, strong) MobiList* theList;
 
