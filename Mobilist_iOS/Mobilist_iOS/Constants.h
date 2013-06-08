@@ -12,6 +12,7 @@ extern NSString* const NotificationMobiListAdded;
 extern NSString* const NotificationMobiListRemoved;
 extern NSString* const NotificationConnectionEstablished;
 extern NSString* const NotificationListCreationConfirmed;
+extern NSString* const NotificationListDeletionConfirmed;
 
 extern NSString* const CellTodoListEntry;
 extern NSString* const CellTodoList;

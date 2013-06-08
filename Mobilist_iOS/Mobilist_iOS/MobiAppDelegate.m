@@ -91,6 +91,15 @@
 															object:self
 														  userInfo:userInfo];
 	}
+	
+	if ([theBean class] == [DeleteListResponse class]) {
+		DeleteListResponse* deleteListResponse = (DeleteListResponse*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[deleteListResponse listId]
+															 forKey:@"listId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationListDeletionConfirmed
+															object:self
+														  userInfo:userInfo];
+	}
 }
 
 /*
@@ -139,6 +148,7 @@
 	[incomingBeanPrototypes addObject:[[SyncResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[GetListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[CreateListResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[DeleteListResponse alloc] init]];
 	
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"

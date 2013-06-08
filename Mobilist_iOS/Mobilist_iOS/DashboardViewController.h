@@ -12,12 +12,12 @@
 #import "ListDetailViewController.h"
 #import "TodoListCell.h"
 #import "TodoListViewController.h"
+#import "DeleteListRequest.h"
 
 @interface DashboardViewController : UIViewController
 		<UITableViewDataSource, UITableViewDelegate>
 {
 	__weak IBOutlet UIButton *xmppSettingsButton;
-	__weak IBOutlet UILabel *existingListsLabel;
 	__weak IBOutlet UITableView *existingsListsTable;
 	MXiConnection* connection;
 }

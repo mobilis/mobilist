@@ -15,6 +15,7 @@ import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteEntryRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListRequest;
@@ -169,6 +170,23 @@ public class Mobilist extends MobilisService {
 						response.setFrom(request.getTo());
 						
 						getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+					}
+					
+					// DeleteList
+					if (proxyBean.isTypeOf(DeleteListRequest.NAMESPACE, DeleteListRequest.CHILD_ELEMENT)) {
+						DeleteListRequest request = (DeleteListRequest) proxyBean.parsePayload(new DeleteListRequest());
+						String listId = request.getListId();
+						
+						boolean success = ListStore.getInstance().removeList(listId);
+						
+						if (success) {
+							DeleteListResponse response = new DeleteListResponse();
+							response.setListId(listId);
+							response.setTo(request.getFrom());
+							response.setFrom(request.getTo());
+							
+							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+						}
 					}
 					
 				}

@@ -46,12 +46,12 @@
 													 name:NotificationMobiListAdded
 												   object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedListRemovedNotification:)
-													 name:NotificationMobiListRemoved
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(receivedListCreationConfirmedNotification:)
 													 name:NotificationListCreationConfirmed
+												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListDeletionConfirmedNotification:)
+													 name:NotificationListDeletionConfirmed
 												   object:nil];
     }
     return self;
@@ -68,6 +68,10 @@
 			  forCellReuseIdentifier:CellTodoList];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[existingsListsTable reloadData];
+}
+
 - (void)connectionEstablished:(NSNotification* )notification {
 	NSDictionary* userInfo = [notification userInfo];
 	connection = [userInfo objectForKey:@"connection"];
@@ -77,12 +81,13 @@
 	[existingsListsTable reloadData];
 }
 
-- (void)receivedListRemovedNotification:(NSNotification* )notification {
+- (void)receivedListCreationConfirmedNotification:(NSNotification* )notification {
 	[existingsListsTable reloadData];
 }
 
-- (void)receivedListCreationConfirmedNotification:(NSNotification* )notification {
-	[existingsListsTable reloadData];
+- (void)receivedListDeletionConfirmedNotification:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	NSLog(@"List deletion confirmed: %@", [userInfo objectForKey:@"listId"]);
 }
 
 /*
@@ -123,6 +128,40 @@
 				initWithMobiList:[[[MobiListStore sharedStore] allLists] objectAtIndex:[indexPath row]]];
 	
 	[[self navigationController] pushViewController:tlvc animated:YES];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	return @"Existing lists";
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+	MobiList* selectedList = [[[MobiListStore sharedStore] allLists] objectAtIndex:[indexPath row]];
+	
+	ListDetailViewController* ldvc = [[ListDetailViewController alloc] initForNewList:NO];
+	[ldvc setList:selectedList];
+	
+	[[self navigationController] pushViewController:ldvc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+											forRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		MobiListStore* store = [MobiListStore sharedStore];
+		NSArray* allLists = [store allLists];
+		MobiList* selectedList = [allLists objectAtIndex:[indexPath row]];
+		
+		[store removeMobiList:selectedList];
+		DeleteListRequest* request = [[DeleteListRequest alloc] init];
+		[request setListId:[selectedList listId]];
+		[connection sendBean:request];
+		
+		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+						 withRowAnimation:UITableViewRowAnimationMiddle];
+	}
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+	return YES;
 }
 
 /*

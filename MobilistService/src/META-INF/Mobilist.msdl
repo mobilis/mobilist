@@ -171,28 +171,28 @@
 			<xs:element name="DeleteListRequest">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="DeleteListResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="ListDeletedInfo">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="ListDeletedAccept">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

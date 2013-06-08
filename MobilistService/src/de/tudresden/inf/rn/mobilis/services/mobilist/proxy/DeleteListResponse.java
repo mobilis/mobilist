@@ -7,12 +7,12 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 public class DeleteListResponse extends XMPPBean {
 
 	private static final long serialVersionUID = -5357286828001365759L;
-	private String id = null;
+	private String listId = null;
 
 
 	public DeleteListResponse( String id ) {
 		super();
-		this.id = id;
+		this.listId = id;
 
 		this.setType( XMPPBean.TYPE_RESULT );
 	}
@@ -34,8 +34,8 @@ public class DeleteListResponse extends XMPPBean {
 				if (tagName.equals(getChildElement())) {
 					parser.next();
 				}
-				else if (tagName.equals( "id" ) ) {
-					this.id = parser.nextText();
+				else if (tagName.equals( "listId" ) ) {
+					this.listId = parser.nextText();
 				}
 				else if (tagName.equals("error")) {
 					parser = parseErrorAttributes(parser);
@@ -74,7 +74,7 @@ public class DeleteListResponse extends XMPPBean {
 
 	@Override
 	public XMPPBean clone() {
-		DeleteListResponse clone = new DeleteListResponse( id );
+		DeleteListResponse clone = new DeleteListResponse( listId );
 		clone.cloneBasicAttributes( clone );
 
 		return clone;
@@ -84,22 +84,21 @@ public class DeleteListResponse extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<id>" )
-			.append( this.id )
-			.append( "</id>" );
+		sb.append( "<listId>" )
+			.append( this.listId )
+			.append( "</listId>" );
 
 		sb = appendErrorPayload(sb);
 
 		return sb.toString();
 	}
 
-
-	public String getId() {
-		return this.id;
+	public String getListId() {
+		return this.listId;
 	}
 
-	public void setId( String id ) {
-		this.id = id;
+	public void setListId( String id ) {
+		this.listId = id;
 	}
 
 }

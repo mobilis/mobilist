@@ -15,6 +15,8 @@
 #import "GetListResponse.h"
 #import "CreateListRequest.h"
 #import "CreateListResponse.h"
+#import "DeleteListRequest.h"
+#import "DeleteListResponse.h"
 #import "DashboardViewController.h"
 
 @interface MobiAppDelegate : UIResponder <UIApplicationDelegate, MXiPresenceDelegate,

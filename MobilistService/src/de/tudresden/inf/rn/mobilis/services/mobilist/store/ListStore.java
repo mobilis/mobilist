@@ -41,7 +41,7 @@ public class ListStore {
 	
 	public boolean removeList(String id) {
 		for (MobiList list : allLists) {
-			if (list.getId().equals(id)) {
+			if (list.getListId().equals(id)) {
 				return allLists.remove(list);
 			}
 		}

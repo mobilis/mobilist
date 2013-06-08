@@ -58,6 +58,8 @@
 		79BA8D40172AF3D2007FB4B3 /* EntryDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D3E172AF3D2007FB4B3 /* EntryDetailViewController.xib */; };
 		79BA8D47172B17B0007FB4B3 /* text_view_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D45172B17B0007FB4B3 /* text_view_background.png */; };
 		79BA8D48172B17B0007FB4B3 /* text_view_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D46172B17B0007FB4B3 /* text_view_background@2x.png */; };
+		79C7AB901763CD7C00AE4880 /* DeleteListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB8F1763CD7C00AE4880 /* DeleteListRequest.m */; };
+		79C7AB931763CE7D00AE4880 /* DeleteListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */; };
 		79FF6A7E171D3C2F00A3202F /* bit-tile-blue.gif in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */; };
 		79FF6A87171D3E3000A3202F /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF6A85171D3E3000A3202F /* DashboardViewController.m */; };
 		79FF6A88171D3E3000A3202F /* DashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A86171D3E3000A3202F /* DashboardViewController.xib */; };
@@ -104,7 +106,7 @@
 		7999F6C3171DAB3A00B74031 /* TodoListEntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoListEntryCell.h; sourceTree = "<group>"; };
 		7999F6C4171DAB3A00B74031 /* TodoListEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoListEntryCell.m; sourceTree = "<group>"; };
 		7999F6C6171DAB5F00B74031 /* TodoListEntryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListEntryCell.xib; sourceTree = "<group>"; };
-		79A4DD7A1755085900E6BDE4 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libMXi.a; path = "../../mobilis/MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
+		79A4DD7A1755085900E6BDE4 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMXi.a; path = "../../mobilis/MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
 		79A4DD89175A599F00E6BDE4 /* SyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncRequest.h; sourceTree = "<group>"; };
 		79A4DD8A175A599F00E6BDE4 /* SyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncRequest.m; sourceTree = "<group>"; };
 		79A4DD9B175A800000E6BDE4 /* GetListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetListRequest.h; sourceTree = "<group>"; };
@@ -139,6 +141,10 @@
 		79BA8D3E172AF3D2007FB4B3 /* EntryDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryDetailViewController.xib; sourceTree = "<group>"; };
 		79BA8D45172B17B0007FB4B3 /* text_view_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text_view_background.png; sourceTree = "<group>"; };
 		79BA8D46172B17B0007FB4B3 /* text_view_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text_view_background@2x.png"; sourceTree = "<group>"; };
+		79C7AB8E1763CD7C00AE4880 /* DeleteListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteListRequest.h; sourceTree = "<group>"; };
+		79C7AB8F1763CD7C00AE4880 /* DeleteListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteListRequest.m; sourceTree = "<group>"; };
+		79C7AB911763CE7D00AE4880 /* DeleteListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteListResponse.h; sourceTree = "<group>"; };
+		79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteListResponse.m; sourceTree = "<group>"; };
 		79E7273217266958003DC9F2 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMXi.a; path = "../MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
 		79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "bit-tile-blue.gif"; sourceTree = "<group>"; };
 		79FF6A84171D3E3000A3202F /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
@@ -267,6 +273,8 @@
 				79A4DDB3175D2CB500E6BDE4 /* GetListResponse.m */,
 				79A4DDCA176317E900E6BDE4 /* CreateListResponse.h */,
 				79A4DDCB176317EA00E6BDE4 /* CreateListResponse.m */,
+				79C7AB911763CE7D00AE4880 /* DeleteListResponse.h */,
+				79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */,
 			);
 			name = Incoming;
 			sourceTree = "<group>";
@@ -280,6 +288,8 @@
 				79A4DD9C175A800000E6BDE4 /* GetListRequest.m */,
 				79A4DDC4175FC2AD00E6BDE4 /* CreateListRequest.h */,
 				79A4DDC5175FC2AD00E6BDE4 /* CreateListRequest.m */,
+				79C7AB8E1763CD7C00AE4880 /* DeleteListRequest.h */,
+				79C7AB8F1763CD7C00AE4880 /* DeleteListRequest.m */,
 			);
 			name = Outgoing;
 			sourceTree = "<group>";
@@ -471,6 +481,8 @@
 				79A4DDC91761B82000E6BDE4 /* UUIDCreator.m in Sources */,
 				79A4DDCC176317EB00E6BDE4 /* CreateListResponse.m in Sources */,
 				79A4DDCF176326EC00E6BDE4 /* Constants.m in Sources */,
+				79C7AB901763CD7C00AE4880 /* DeleteListRequest.m in Sources */,
+				79C7AB931763CE7D00AE4880 /* DeleteListResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

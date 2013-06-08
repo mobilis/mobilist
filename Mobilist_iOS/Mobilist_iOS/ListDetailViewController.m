@@ -25,10 +25,6 @@
 		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
 		
 		if (isNew) {
-			UIImage* bgImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]
-																 pathForResource:@"light_toast" ofType:@"png"]];
-			self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
-			
 			UIBarButtonItem* doneItem = [[UIBarButtonItem alloc]
 										 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
 										 target:self
@@ -62,8 +58,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+	
 	[listNameTextField becomeFirstResponder];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if (list) {
+		[listNameTextField setText:[list listName]];
+	}
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	[[self view] endEditing:YES];
+	
+	[list setListName:[listNameTextField text]];
 }
 
 - (void)didReceiveMemoryWarning
