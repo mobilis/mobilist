@@ -36,14 +36,14 @@
 		NSXMLElement* entryElement = (NSXMLElement*) [entriesElement childAtIndex:i];
 		MobiListEntry* entry = [[MobiListEntry alloc] init];
 		
-		[entry setEntryId:[[[entryElement elementForName:@"id"] stringValue] stringByCorrectingXMLDecoding]];
+		[entry setEntryId:[[[entryElement elementForName:@"entryId"] stringValue] stringByCorrectingXMLDecoding]];
 		
 		[entry setTitle:[[[entryElement elementForName:@"title"] stringValue] stringByCorrectingXMLDecoding]];
 		
 		[entry setDescription:[[[entryElement elementForName:@"description"] stringValue] stringByCorrectingXMLDecoding]];
 		
-		NSInteger dueDateTimestamp = [[[entryElement elementForName:@"dueDate"] stringValue] integerValue];
-		[entry setDueDate:[NSDate dateWithTimeIntervalSince1970:dueDateTimestamp]];
+		NSInteger dueDate = [[[entryElement elementForName:@"dueDate"] stringValue] integerValue];
+		[entry setDueDate:dueDate];
 		
 		NSString* doneString = [[entryElement elementForName:@"done"] stringValue];
 		if ([[doneString lowercaseString] isEqualToString:@"true"]) {

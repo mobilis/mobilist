@@ -240,7 +240,7 @@
 			<xs:element name="EditListResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -254,7 +254,7 @@
 			<xs:element name="ListEditedAccept">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

@@ -1,5 +1,6 @@
 package de.tudresden.inf.rn.mobilis.services.mobilist.proxy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -9,7 +10,7 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 public class MobiList extends XMPPBean {
 
 	private static final long serialVersionUID = 2317256615233615530L;
-	private List<MobiListEntry> entries;
+	private List<MobiListEntry> entries = new ArrayList<MobiListEntry>();
 	private String listId, listName;
 	
 	public MobiList() {}

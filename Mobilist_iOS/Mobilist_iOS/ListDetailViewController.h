@@ -11,11 +11,13 @@
 #import "MobiListStore.h"
 #import "MobiListEntry.h"
 #import "CreateListRequest.h"
+#import "EditListRequest.h"
 #import "UUIDCreator.h"
 
 @interface ListDetailViewController : UIViewController
 {
 	__weak IBOutlet UITextField *listNameTextField;
+	BOOL isForNewItem;
 }
 
 @property (nonatomic, copy) void (^dismissBlock)(void);

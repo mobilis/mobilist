@@ -51,7 +51,7 @@
 		79A4DDCF176326EC00E6BDE4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDCE176326EB00E6BDE4 /* Constants.m */; };
 		79AE3B851735AF1C000A5CA8 /* mobilist-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */; };
 		79AE3B871735AF22000A5CA8 /* mobilist-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */; };
-		79BA8D351726C73B007FB4B3 /* TodoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D341726C73B007FB4B3 /* TodoListCell.xib */; };
+		79BA8D351726C73B007FB4B3 /* TodoListCell~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D341726C73B007FB4B3 /* TodoListCell~iphone.xib */; };
 		79BA8D381726C784007FB4B3 /* TodoListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BA8D371726C784007FB4B3 /* TodoListCell.m */; };
 		79BA8D3B17290423007FB4B3 /* TodoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BA8D3A17290423007FB4B3 /* TodoListViewController.m */; };
 		79BA8D3F172AF3D2007FB4B3 /* EntryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BA8D3D172AF3D2007FB4B3 /* EntryDetailViewController.m */; };
@@ -60,6 +60,8 @@
 		79BA8D48172B17B0007FB4B3 /* text_view_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D46172B17B0007FB4B3 /* text_view_background@2x.png */; };
 		79C7AB901763CD7C00AE4880 /* DeleteListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB8F1763CD7C00AE4880 /* DeleteListRequest.m */; };
 		79C7AB931763CE7D00AE4880 /* DeleteListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */; };
+		79C7AB981764856000AE4880 /* EditListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB971764856000AE4880 /* EditListRequest.m */; };
+		79C7AB9B1764875D00AE4880 /* EditListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB9A1764875C00AE4880 /* EditListResponse.m */; };
 		79FF6A7E171D3C2F00A3202F /* bit-tile-blue.gif in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */; };
 		79FF6A87171D3E3000A3202F /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF6A85171D3E3000A3202F /* DashboardViewController.m */; };
 		79FF6A88171D3E3000A3202F /* DashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A86171D3E3000A3202F /* DashboardViewController.xib */; };
@@ -131,7 +133,7 @@
 		79A4DDCE176326EB00E6BDE4 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon.png"; path = "../mobilist-icon.png"; sourceTree = "<group>"; };
 		79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon@2x.png"; path = "../mobilist-icon@2x.png"; sourceTree = "<group>"; };
-		79BA8D341726C73B007FB4B3 /* TodoListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListCell.xib; sourceTree = "<group>"; };
+		79BA8D341726C73B007FB4B3 /* TodoListCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TodoListCell~iphone.xib"; sourceTree = "<group>"; };
 		79BA8D361726C784007FB4B3 /* TodoListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoListCell.h; sourceTree = "<group>"; };
 		79BA8D371726C784007FB4B3 /* TodoListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoListCell.m; sourceTree = "<group>"; };
 		79BA8D3917290423007FB4B3 /* TodoListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoListViewController.h; sourceTree = "<group>"; };
@@ -145,6 +147,10 @@
 		79C7AB8F1763CD7C00AE4880 /* DeleteListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteListRequest.m; sourceTree = "<group>"; };
 		79C7AB911763CE7D00AE4880 /* DeleteListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteListResponse.h; sourceTree = "<group>"; };
 		79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteListResponse.m; sourceTree = "<group>"; };
+		79C7AB961764856000AE4880 /* EditListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditListRequest.h; sourceTree = "<group>"; };
+		79C7AB971764856000AE4880 /* EditListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditListRequest.m; sourceTree = "<group>"; };
+		79C7AB991764875C00AE4880 /* EditListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditListResponse.h; sourceTree = "<group>"; };
+		79C7AB9A1764875C00AE4880 /* EditListResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditListResponse.m; sourceTree = "<group>"; };
 		79E7273217266958003DC9F2 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMXi.a; path = "../MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
 		79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "bit-tile-blue.gif"; sourceTree = "<group>"; };
 		79FF6A84171D3E3000A3202F /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
@@ -275,6 +281,8 @@
 				79A4DDCB176317EA00E6BDE4 /* CreateListResponse.m */,
 				79C7AB911763CE7D00AE4880 /* DeleteListResponse.h */,
 				79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */,
+				79C7AB991764875C00AE4880 /* EditListResponse.h */,
+				79C7AB9A1764875C00AE4880 /* EditListResponse.m */,
 			);
 			name = Incoming;
 			sourceTree = "<group>";
@@ -290,6 +298,8 @@
 				79A4DDC5175FC2AD00E6BDE4 /* CreateListRequest.m */,
 				79C7AB8E1763CD7C00AE4880 /* DeleteListRequest.h */,
 				79C7AB8F1763CD7C00AE4880 /* DeleteListRequest.m */,
+				79C7AB961764856000AE4880 /* EditListRequest.h */,
+				79C7AB971764856000AE4880 /* EditListRequest.m */,
 			);
 			name = Outgoing;
 			sourceTree = "<group>";
@@ -320,7 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				7999F6BE171D86CD00B74031 /* ListDetailViewController.xib */,
-				79BA8D341726C73B007FB4B3 /* TodoListCell.xib */,
+				79BA8D341726C73B007FB4B3 /* TodoListCell~iphone.xib */,
 				79BA8D361726C784007FB4B3 /* TodoListCell.h */,
 				79BA8D371726C784007FB4B3 /* TodoListCell.m */,
 			);
@@ -442,7 +452,7 @@
 				7999F6BB171D84BE00B74031 /* XMPPSettingsViewController.xib in Resources */,
 				7999F6C0171D86CD00B74031 /* ListDetailViewController.xib in Resources */,
 				7999F6C7171DAB5F00B74031 /* TodoListEntryCell.xib in Resources */,
-				79BA8D351726C73B007FB4B3 /* TodoListCell.xib in Resources */,
+				79BA8D351726C73B007FB4B3 /* TodoListCell~iphone.xib in Resources */,
 				79BA8D40172AF3D2007FB4B3 /* EntryDetailViewController.xib in Resources */,
 				79BA8D47172B17B0007FB4B3 /* text_view_background.png in Resources */,
 				79BA8D48172B17B0007FB4B3 /* text_view_background@2x.png in Resources */,
@@ -483,6 +493,8 @@
 				79A4DDCF176326EC00E6BDE4 /* Constants.m in Sources */,
 				79C7AB901763CD7C00AE4880 /* DeleteListRequest.m in Sources */,
 				79C7AB931763CE7D00AE4880 /* DeleteListResponse.m in Sources */,
+				79C7AB981764856000AE4880 /* EditListRequest.m in Sources */,
+				79C7AB9B1764875D00AE4880 /* EditListResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

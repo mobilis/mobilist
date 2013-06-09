@@ -103,10 +103,11 @@ public class MobiListEntry extends XMPPBean {
 				}
 				break;
 			case XmlPullParser.END_TAG:
-				if (parser.getName().equals(getChildElement()))
+				if (parser.getName().equals(getChildElement())) {
 					done = true;
-				else
+				} else {
 					parser.next();
+				}
 				break;
 			case XmlPullParser.END_DOCUMENT:
 				done = true;
@@ -119,7 +120,7 @@ public class MobiListEntry extends XMPPBean {
 
 	@Override
 	public String getChildElement() {
-		return null;
+		return "entry";
 	}
 
 	@Override

@@ -18,4 +18,8 @@
 	return self;
 }
 
+- (NSDate* )dueDateAsDate {
+	return [NSDate dateWithTimeIntervalSince1970:dueDate];
+}
+
 @end

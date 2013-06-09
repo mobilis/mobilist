@@ -78,9 +78,9 @@
 	[titleTextField setText:[entry title]];
 	[descriptionTextField setText:[entry description]];
 	
-	NSDate* dueDate = [entry dueDate];
+	NSDate* dueDate = [entry dueDateAsDate];
 	if (dueDate) {
-		[dueDatePicker setDate:[entry dueDate]];
+		[dueDatePicker setDate:[entry dueDateAsDate]];
 	} else {
 		[dueDatePicker setDate:[NSDate date]];
 	}
@@ -91,7 +91,7 @@
 	
 	[entry setTitle:[titleTextField text]];
 	[entry setDescription:[descriptionTextField text]];
-	[entry setDueDate:[dueDatePicker date]];
+	[entry setDueDate:[[dueDatePicker date] timeIntervalSince1970]];
 }
 
 - (void)didReceiveMemoryWarning

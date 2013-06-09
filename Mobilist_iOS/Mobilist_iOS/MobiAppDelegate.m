@@ -100,6 +100,15 @@
 															object:self
 														  userInfo:userInfo];
 	}
+	
+	if ([theBean class] == [EditListResponse class]) {
+		EditListResponse* editListResponse = (EditListResponse*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[editListResponse listId]
+															 forKey:@"listId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationListEditingConfirmed
+															object:self
+														  userInfo:userInfo];
+	}
 }
 
 /*
@@ -149,6 +158,7 @@
 	[incomingBeanPrototypes addObject:[[GetListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[CreateListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[DeleteListResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[EditListResponse alloc] init]];
 	
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"

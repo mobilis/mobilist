@@ -95,7 +95,7 @@
 	MobiListEntry* entry = [theList entryAtIndex:[indexPath row]];
     
     [[cell titleLabel] setText:[entry title]];
-	[[cell dueDateLabel] setText:[[entry dueDate] description]];
+	[[cell dueDateLabel] setText:[[entry dueDateAsDate] description]];
     
     return cell;
 }

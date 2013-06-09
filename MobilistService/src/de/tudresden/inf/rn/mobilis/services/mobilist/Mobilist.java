@@ -18,6 +18,7 @@ import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListSync;
@@ -61,13 +62,13 @@ public class Mobilist extends MobilisService {
 		super.startup(agent);
 		
 		MobiListEntry entry1 = new MobiListEntry(
-			"entry1", "Eier", "Eier kaufen", 1372158001, false
+			"entry1", "Eier", "Eier kaufen", 1372158001000L, false
 		);
 		MobiListEntry entry2 = new MobiListEntry(
-			"entry2", "Mehl", "Mehl kaufen", 1372158001, true
+			"entry2", "Mehl", "Mehl kaufen", 1372158001000L, true
 		);
 		MobiListEntry entry3 = new MobiListEntry(
-			"entry3", "Milch", "Milch kaufen", 1372158001, false
+			"entry3", "Milch", "Milch kaufen", 1372158001000L, false
 		);
 		List<MobiListEntry> entries1 = new ArrayList<MobiListEntry>();
 		entries1.add(entry1);
@@ -186,6 +187,34 @@ public class Mobilist extends MobilisService {
 							response.setFrom(request.getTo());
 							
 							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+						}
+					}
+					
+					// EditList
+					if (proxyBean.isTypeOf(EditListRequest.NAMESPACE, EditListRequest.CHILD_ELEMENT)) {
+						EditListRequest request = (EditListRequest) proxyBean.parsePayload(new EditListRequest());
+						MobiList editedList = request.getList();
+						
+						MobiList oldList = ListStore.getInstance().getListById(editedList.getListId());
+						
+						if (oldList != null) {
+							oldList.setListName(editedList.getListName());
+							oldList.setEntries(editedList.getEntries());
+							
+							try {
+								Thread.sleep(2000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							
+							EditListResponse response = new EditListResponse();
+							response.setListId(oldList.getListId());
+							response.setTo(request.getFrom());
+							response.setFrom(request.getTo());
+							
+							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+						} else {
+							// TODO handle error case
 						}
 					}
 					

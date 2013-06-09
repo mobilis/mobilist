@@ -13,9 +13,11 @@
 @property (nonatomic, strong) NSString* entryId;
 @property (nonatomic, strong) NSString* title;
 @property (nonatomic, strong) NSString* description;
-@property (nonatomic, strong) NSDate* dueDate;
+@property (nonatomic) NSInteger dueDate;
 @property (nonatomic) BOOL done;
 
 - (id)init;
+
+- (NSDate* )dueDateAsDate;
 
 @end

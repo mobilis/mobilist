@@ -53,6 +53,10 @@
 												 selector:@selector(receivedListDeletionConfirmedNotification:)
 													 name:NotificationListDeletionConfirmed
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListEditingConfirmedNotification:)
+													 name:NotificationListEditingConfirmed
+												   object:nil];
     }
     return self;
 }
@@ -88,6 +92,13 @@
 - (void)receivedListDeletionConfirmedNotification:(NSNotification* )notification {
 	NSDictionary* userInfo = [notification userInfo];
 	NSLog(@"List deletion confirmed: %@", [userInfo objectForKey:@"listId"]);
+}
+
+- (void)receivedListEditingConfirmedNotification:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	[[MobiListStore sharedStore] setSyncedStatus:YES forListId:[userInfo objectForKey:@"listId"]];
+	
+	[existingsListsTable reloadData];
 }
 
 /*
@@ -139,6 +150,7 @@
 	
 	ListDetailViewController* ldvc = [[ListDetailViewController alloc] initForNewList:NO];
 	[ldvc setList:selectedList];
+	[ldvc setConnection:connection];
 	
 	[[self navigationController] pushViewController:ldvc animated:YES];
 }

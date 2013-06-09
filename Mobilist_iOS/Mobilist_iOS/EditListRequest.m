@@ -1,14 +1,14 @@
 //
-//  CreateListRequest.m
+//  EditListRequest.m
 //  Mobilist_iOS
 //
-//  Created by Richard Wotzlaw on 05.06.13.
+//  Created by Richard Wotzlaw on 09.06.13.
 //  Copyright (c) 2013 TU Dresden. All rights reserved.
 //
 
-#import "CreateListRequest.h"
+#import "EditListRequest.h"
 
-@implementation CreateListRequest
+@implementation EditListRequest
 
 @synthesize list;
 
@@ -19,6 +19,7 @@
 }
 
 - (NSXMLElement *)toXML {
+	NSLog(@"inside toXML");
 	NSXMLElement* beanElement = [NSXMLElement elementWithName:[[self class] elementName]
 														xmlns:[[self class] iqNamespace]];
 	
@@ -61,15 +62,16 @@
 	
 	[listElement addChild:entriesElement];
 	[beanElement addChild:listElement];
+	
 	return beanElement;
 }
 
 + (NSString *)elementName {
-	return @"CreateListRequest";
+	return @"EditListRequest";
 }
 
 + (NSString *)iqNamespace {
-	return @"mobilist:iq:createlist";
+	return @"mobilist:iq:editlist";
 }
 
 @end

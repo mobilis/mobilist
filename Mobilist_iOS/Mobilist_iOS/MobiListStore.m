@@ -75,6 +75,23 @@
 													  userInfo:userInfo];
 }
 
+- (void)setSyncedStatus:(BOOL )inSync
+			  forListId:(NSString* )listId  {
+	if (inSync) {
+		// Find and remove the supplied listId from the
+		// list of not yet synced ones
+		for (NSString* notYetSyncedId in notYetSyncedListIds) {
+			if ([notYetSyncedId isEqualToString:listId]) {
+				[notYetSyncedListIds removeObject:notYetSyncedId];
+			}
+		}
+	} else {
+		// Add the supplied listId to the list of
+		// not yet synced ones
+		[notYetSyncedListIds addObject:listId];
+	}
+}
+
 - (void)removeMobiList:(MobiList *)aList {
 	[allLists removeObjectIdenticalTo:aList];
 	

@@ -20,6 +20,7 @@
 	self = [super initWithNibName:@"ListDetailViewController" bundle:nil];
 	
     if (self) {
+		isForNewItem = isNew;
 		UIImage* bgImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]
 															 pathForResource:@"light_toast" ofType:@"png"]];
 		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
@@ -75,7 +76,16 @@
 	
 	[[self view] endEditing:YES];
 	
-	[list setListName:[listNameTextField text]];
+	if (!isForNewItem) {
+		[list setListName:[listNameTextField text]];
+	
+		EditListRequest* request = [[EditListRequest alloc] init];
+		[request setList:list];
+		[connection sendBean:request];
+		
+		[[MobiListStore sharedStore] setSyncedStatus:NO
+										   forListId:[list listId]];
+	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,7 +114,8 @@
 	[theNewList setListId:uuidStr];
 	
 	MobiListStore* sharedStore = [MobiListStore sharedStore];
-	[sharedStore addMobiList:theNewList newlyCreated:YES];
+	[sharedStore addMobiList:theNewList
+				newlyCreated:YES];
 	
 	CreateListRequest* request = [[CreateListRequest alloc] init];
 	[request setList:theNewList];
