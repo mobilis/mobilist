@@ -22,7 +22,7 @@
 	<property name="jar.filename" value="MobilistService_v1.jar" />
 	<property name="root.packages" value="de/tudresden/inf/rn/mobilis/services/mobilist/**/*.*" />
 	<!-- all: "**/*.jar"; none: "none"; separate entrylist by ',' -->
-	<property name="required.libraries" value="none" />
+	<property name="required.libraries" value="**/*.jar" />
 	<!-- all: "**/*.*"; none: "none"; separate entrylist by ',' -->
 	<property name="required.resources" value="**/*.*" />
 	

@@ -95,7 +95,14 @@
 	MobiListEntry* entry = [theList entryAtIndex:[indexPath row]];
     
     [[cell titleLabel] setText:[entry title]];
-	[[cell dueDateLabel] setText:[[entry dueDateAsDate] description]];
+	
+	NSDate* dueDate = [entry dueDateAsDate];
+	NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+	[formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
+	[formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Berlin"]];
+	[formatter setDateFormat:@"dd.MM.yyyy, hh:mm"];
+	
+	[[cell dueDateLabel] setText:[formatter stringFromDate:dueDate]];
     
     return cell;
 }

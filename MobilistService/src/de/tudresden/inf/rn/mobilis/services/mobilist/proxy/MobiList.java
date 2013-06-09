@@ -3,6 +3,10 @@ package de.tudresden.inf.rn.mobilis.services.mobilist.proxy;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
@@ -34,6 +38,7 @@ public class MobiList extends XMPPBean {
 		return s.toString();
 	}
 
+	@XmlElement(name = "listId")
 	public String getListId() {
 		return listId;
 	}
@@ -42,6 +47,7 @@ public class MobiList extends XMPPBean {
 		this.listId = id;
 	}
 
+	@XmlElement(name = "listName")
 	public String getListName() {
 		return listName;
 	}
@@ -50,6 +56,8 @@ public class MobiList extends XMPPBean {
 		this.listName = name;
 	}
 
+	@XmlElementWrapper(name = "listEntries")
+	@XmlElement(name = "entry")
 	public List<MobiListEntry> getEntries() {
 		return entries;
 	}
@@ -100,11 +108,13 @@ public class MobiList extends XMPPBean {
 	}
 
 	@Override
+	@XmlTransient
 	public String getChildElement() {
 		return null;
 	}
 
 	@Override
+	@XmlTransient
 	public String getNamespace() {
 		return null;
 	}

@@ -1,7 +1,15 @@
 package de.tudresden.inf.rn.mobilis.services.mobilist;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
@@ -24,7 +32,6 @@ import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListSync;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListsSync;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.MobiList;
-import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.MobiListEntry;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.PingRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.PingResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.SyncRequest;
@@ -38,6 +45,8 @@ import de.tudresden.inf.rn.mobilis.xmpp.server.BeanProviderAdapter;
 public class Mobilist extends MobilisService {
 
 	private ListStore listStore = ListStore.getInstance();
+	
+	private final String XML_FILENAME = "liststore.xml";
 	
 	@Override
 	protected void registerPacketListener() {
@@ -61,34 +70,64 @@ public class Mobilist extends MobilisService {
 	public void startup(MobilisAgent agent) throws Exception {
 		super.startup(agent);
 		
-		MobiListEntry entry1 = new MobiListEntry(
-			"entry1", "Eier", "Eier kaufen", 1372158001000L, false
-		);
-		MobiListEntry entry2 = new MobiListEntry(
-			"entry2", "Mehl", "Mehl kaufen", 1372158001000L, true
-		);
-		MobiListEntry entry3 = new MobiListEntry(
-			"entry3", "Milch", "Milch kaufen", 1372158001000L, false
-		);
-		List<MobiListEntry> entries1 = new ArrayList<MobiListEntry>();
-		entries1.add(entry1);
-		entries1.add(entry2);
-		entries1.add(entry3);
-		MobiList list1 = new MobiList("shopping_list", "Einkaufsliste öäü", entries1);
+//		MobiListEntry entry1 = new MobiListEntry(
+//			"entry1", "Eier", "Eier kaufen", 1372586400L, false
+//		);
+//		MobiListEntry entry2 = new MobiListEntry(
+//			"entry2", "Mehl", "Mehl kaufen", 1372586400L, true
+//		);
+//		MobiListEntry entry3 = new MobiListEntry(
+//			"entry3", "Milch", "Milch kaufen", 1372586400L, false
+//		);
+//		List<MobiListEntry> entries1 = new ArrayList<MobiListEntry>();
+//		entries1.add(entry1);
+//		entries1.add(entry2);
+//		entries1.add(entry3);
+//		MobiList list1 = new MobiList("shopping_list", "Einkaufsliste öäü", entries1);
+//		
+//		MobiListEntry entry4 = new MobiListEntry(
+//			"entry1", "Schreiben", "Beleg schreiben", 1372586400L, false
+//		);
+//		MobiListEntry entry5 = new MobiListEntry(
+//			"entry2", "Implementieren", "Library implementieren", 1372586400L, false
+//		);
+//		List<MobiListEntry> entries2 = new ArrayList<MobiListEntry>();
+//		entries2.add(entry4);
+//		entries2.add(entry5);
+//		MobiList list2 = new MobiList("thesis_list", "Großer Beleg", entries2);
+//		
+//		listStore.addList(list1);
+//		listStore.addList(list2);
 		
-		MobiListEntry entry4 = new MobiListEntry(
-			"entry1", "Schreiben", "Beleg schreiben", 1372158001, false
-		);
-		MobiListEntry entry5 = new MobiListEntry(
-			"entry2", "Implementieren", "Library implementieren", 1372158001, false
-		);
-		List<MobiListEntry> entries2 = new ArrayList<MobiListEntry>();
-		entries2.add(entry4);
-		entries2.add(entry5);
-		MobiList list2 = new MobiList("thesis_list", "Großer Beleg", entries2);
+		try {
+			JAXBContext context = JAXBContext.newInstance(ListStore.class);
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+			listStore = (ListStore) unmarshaller.unmarshal(new FileInputStream(XML_FILENAME));
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			listStore = ListStore.getInstance();
+		}
+	}
+
+	@Override
+	public void shutdown() throws Exception {
+		super.shutdown();
 		
-		listStore.addList(list1);
-		listStore.addList(list2);
+		try {
+			JAXBContext context = JAXBContext.newInstance(ListStore.class);
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_ENCODING, "ISO-8859-1");
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			
+			//marshaller.marshal(this, System.out);
+			marshaller.marshal(listStore, new FileOutputStream(XML_FILENAME));
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	class IQListener implements PacketListener {

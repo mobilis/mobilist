@@ -1,5 +1,8 @@
 package de.tudresden.inf.rn.mobilis.services.mobilist.proxy;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
@@ -27,6 +30,7 @@ public class MobiListEntry extends XMPPBean {
 		return title;
 	}
 
+	@XmlElement(name = "entryId")
 	public String getEntryId() {
 		return entryId;
 	}
@@ -35,6 +39,7 @@ public class MobiListEntry extends XMPPBean {
 		this.entryId = id;
 	}
 
+	@XmlElement(name = "title")
 	public String getTitle() {
 		return title;
 	}
@@ -43,6 +48,7 @@ public class MobiListEntry extends XMPPBean {
 		this.title = title;
 	}
 
+	@XmlElement(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -51,6 +57,7 @@ public class MobiListEntry extends XMPPBean {
 		this.description = description;
 	}
 
+	@XmlElement(name = "dueDate")
 	public long getDueDate() {
 		return dueDate;
 	}
@@ -59,6 +66,7 @@ public class MobiListEntry extends XMPPBean {
 		this.dueDate = dueDate;
 	}
 
+	@XmlElement(name = "done")
 	public boolean isDone() {
 		return done;
 	}
@@ -119,11 +127,13 @@ public class MobiListEntry extends XMPPBean {
 	}
 
 	@Override
+	@XmlTransient
 	public String getChildElement() {
 		return "entry";
 	}
 
 	@Override
+	@XmlTransient
 	public String getNamespace() {
 		return null;
 	}

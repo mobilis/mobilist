@@ -3,14 +3,21 @@ package de.tudresden.inf.rn.mobilis.services.mobilist.store;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.MobiList;
 
+@XmlRootElement(name = "listStore")
+@XmlType(factoryMethod = "getInstance")
 public class ListStore {
 
 	/*
 	 * Singleton
 	 */
-	private ListStore() {}
+	//private ListStore() {}
 	
 	private static ListStore instance;
 	
@@ -27,6 +34,8 @@ public class ListStore {
 	
 	private List<MobiList> allLists = new ArrayList<MobiList>();
 	
+	@XmlElementWrapper(name = "lists")
+	@XmlElement(name = "list")
 	public List<MobiList> getAllLists() {
 		return allLists;
 	}
@@ -56,14 +65,6 @@ public class ListStore {
 		}
 		
 		return null;
-	}
-	
-	public void persist() {
-		
-	}
-	
-	public void load() {
-		
 	}
 	
 }
