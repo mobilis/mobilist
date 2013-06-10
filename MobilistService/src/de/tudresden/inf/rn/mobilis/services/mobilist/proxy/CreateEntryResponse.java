@@ -7,12 +7,12 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 public class CreateEntryResponse extends XMPPBean {
 
 	private static final long serialVersionUID = -4661798313000950876L;
-	private String id = null;
+	private String entryId = null;
 
 
 	public CreateEntryResponse( String id ) {
 		super();
-		this.id = id;
+		this.entryId = id;
 
 		this.setType( XMPPBean.TYPE_RESULT );
 	}
@@ -34,8 +34,8 @@ public class CreateEntryResponse extends XMPPBean {
 				if (tagName.equals(getChildElement())) {
 					parser.next();
 				}
-				else if (tagName.equals( "id" ) ) {
-					this.id = parser.nextText();
+				else if (tagName.equals( "entryId" ) ) {
+					this.entryId = parser.nextText();
 				}
 				else if (tagName.equals("error")) {
 					parser = parseErrorAttributes(parser);
@@ -74,7 +74,7 @@ public class CreateEntryResponse extends XMPPBean {
 
 	@Override
 	public XMPPBean clone() {
-		CreateEntryResponse clone = new CreateEntryResponse( id );
+		CreateEntryResponse clone = new CreateEntryResponse( entryId );
 		clone.cloneBasicAttributes( clone );
 
 		return clone;
@@ -84,9 +84,9 @@ public class CreateEntryResponse extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<id>" )
-			.append( this.id )
-			.append( "</id>" );
+		sb.append( "<entryId>" )
+			.append( this.entryId )
+			.append( "</entryId>" );
 
 		sb = appendErrorPayload(sb);
 
@@ -94,12 +94,12 @@ public class CreateEntryResponse extends XMPPBean {
 	}
 
 
-	public String getId() {
-		return this.id;
+	public String getEntryId() {
+		return this.entryId;
 	}
 
-	public void setId( String id ) {
-		this.id = id;
+	public void setEntryId( String id ) {
+		this.entryId = id;
 	}
 
 }

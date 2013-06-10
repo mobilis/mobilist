@@ -7,6 +7,8 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 public class CreateEntryRequest extends XMPPBean {
 
 	private static final long serialVersionUID = 1936014091017441326L;
+	
+	private String listId;
 	private MobiListEntry entry = new MobiListEntry();
 
 	public CreateEntryRequest(MobiListEntry entry) {
@@ -32,15 +34,16 @@ public class CreateEntryRequest extends XMPPBean {
 				
 				if (tagName.equals(getChildElement())) {
 					parser.next();
-				}
-				else if (tagName.equals( "entry" ) ) {
+				} else if (tagName.equals( "entry" ) ) {
 					this.entry.fromXML(parser);
-				}
-				else if (tagName.equals("error")) {
+				} else if (tagName.equals("error")) {
 					parser = parseErrorAttributes(parser);
-				}
-				else
+				} else if (tagName.equals("listId")) {
+					setListId(parser.nextText());
 					parser.next();
+				} else {
+					parser.next();
+				}
 				break;
 			case XmlPullParser.END_TAG:
 				if (parser.getName().equals(getChildElement()))
@@ -102,6 +105,14 @@ public class CreateEntryRequest extends XMPPBean {
 
 	public void setEntry(MobiListEntry entry) {
 		this.entry = entry;
+	}
+
+	public String getListId() {
+		return listId;
+	}
+
+	public void setListId(String listId) {
+		this.listId = listId;
 	}
 
 }

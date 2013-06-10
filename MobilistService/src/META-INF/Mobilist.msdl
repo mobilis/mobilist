@@ -140,6 +140,7 @@
 			<xs:element name="CreateEntryRequest">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="listId" type="xs:string" />
 						<xs:element name="entry" type="mns:MobiListEntry" />
 					</xs:sequence>
 				</xs:complexType>
@@ -154,6 +155,7 @@
 			<xs:element name="EntryCreatedInfo">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="listId" type="xs:string" />
 						<xs:element name="entry" type="mns:MobiListEntry" />
 					</xs:sequence>
 				</xs:complexType>
@@ -202,28 +204,30 @@
 			<xs:element name="DeleteEntryRequest">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="DeleteEntryResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="EntryDeletedInfo">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="listId" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="EntryDeletedAccept">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -264,6 +268,7 @@
 			<xs:element name="EditEntryRequest">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="listId" type="xs:string" />
 						<xs:element name="entry" type="mns:MobiListEntry" />
 					</xs:sequence>
 				</xs:complexType>
@@ -278,6 +283,7 @@
 			<xs:element name="EntryEditedInfo">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="listId" type="xs:string" />
 						<xs:element name="entry" type="mns:MobiListEntry" />
 					</xs:sequence>
 				</xs:complexType>

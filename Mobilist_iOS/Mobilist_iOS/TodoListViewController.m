@@ -14,7 +14,7 @@
 
 @implementation TodoListViewController
 
-@synthesize theList;
+@synthesize theList, connection;
 
 - (id)initWithMobiList:(MobiList *)aList {
 	self = [super initWithStyle:UITableViewStyleGrouped];
@@ -33,6 +33,11 @@
 								 target:self
 								 action:@selector(showComposeListEntryView:)];
 		[[self navigationItem] setRightBarButtonItem:addEntryItem];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedEntryCreationConfirmed:)
+													 name:NotificationEntryCreationConfirmed
+												   object:nil];
     }
 	
     return self;
@@ -49,6 +54,10 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     return [self init];
+}
+
+- (void)receivedEntryCreationConfirmed:(NSNotification* )notification {
+	NSLog(@"Entry creation confirmed");
 }
 
 - (void)viewDidLoad
@@ -177,19 +186,17 @@
 - (void)showComposeListEntryView:(id)sender {
 	EntryDetailViewController* edvc = [[EntryDetailViewController alloc] initForNewEntry:YES];
 	
+	MobiListEntry* newEntry = [[MobiListEntry alloc] init];
+	[newEntry setEntryId:[UUIDCreator createUUID]];
+	
+	[edvc setConnection:connection];
+	[edvc setParent:theList];
+	[edvc setEntry:newEntry];
+	[theList addListEntry:newEntry];
+	
 	[edvc setDismissBlock:^{
 		[[self tableView] reloadData];
 	}];
-	
-	MobiListEntry* newEntry = [[MobiListEntry alloc] init];
-	[newEntry setEntryId:@"1"];
-	[newEntry setTitle:@"Hallo"];
-	[newEntry setDescription:@"Beschreibung"];
-	[newEntry setDueDate:[NSDate date]];
-	[newEntry setDone:NO];
-	
-	[edvc setParent:theList];
-	[edvc setEntry:newEntry];
 	
 	UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:edvc];
 	

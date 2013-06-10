@@ -109,6 +109,15 @@
 															object:self
 														  userInfo:userInfo];
 	}
+	
+	if ([theBean class] == [CreateEntryResponse class]) {
+		CreateEntryResponse* createEntryResponse = (CreateEntryResponse*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[createEntryResponse entryId]
+															 forKey:@"entryId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryCreationConfirmed
+															object:self
+														  userInfo:userInfo];
+	}
 }
 
 /*
@@ -159,6 +168,7 @@
 	[incomingBeanPrototypes addObject:[[CreateListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[DeleteListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[EditListResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[CreateEntryResponse alloc] init]];
 	
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"

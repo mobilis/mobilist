@@ -12,6 +12,7 @@
 #import "MobiListEntry.h"
 #import "TodoListEntryCell.h"
 #import "EntryDetailViewController.h"
+#import "UUIDCreator.h"
 
 @interface TodoListViewController : UITableViewController <UIAlertViewDelegate>
 {
@@ -19,6 +20,7 @@
 }
 
 @property (nonatomic, strong) MobiList* theList;
+@property (nonatomic, strong) MXiConnection* connection;
 
 - (id)initWithMobiList:(MobiList* )aList;
 - (void)showComposeListEntryView:(id)sender;

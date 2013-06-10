@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MobiListEntry.h"
 #import "MobiList.h"
+#import "CreateEntryRequest.h"
 
 @interface EntryDetailViewController : UIViewController
 {
@@ -19,6 +20,7 @@
 
 @property (nonatomic, strong) MobiListEntry* entry;
 @property (nonatomic, strong) MobiList* parent;
+@property (nonatomic, strong) MXiConnection* connection;
 @property (nonatomic, copy) void (^dismissBlock)(void);
 
 - (id)initForNewEntry:(BOOL)isNew;

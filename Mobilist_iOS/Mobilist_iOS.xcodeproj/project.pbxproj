@@ -62,6 +62,8 @@
 		79C7AB931763CE7D00AE4880 /* DeleteListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */; };
 		79C7AB981764856000AE4880 /* EditListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB971764856000AE4880 /* EditListRequest.m */; };
 		79C7AB9B1764875D00AE4880 /* EditListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB9A1764875C00AE4880 /* EditListResponse.m */; };
+		79C7AB9E17662E8200AE4880 /* CreateEntryRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7AB9D17662E8200AE4880 /* CreateEntryRequest.m */; };
+		79C7ABA1176632E700AE4880 /* CreateEntryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7ABA0176632E600AE4880 /* CreateEntryResponse.m */; };
 		79FF6A7E171D3C2F00A3202F /* bit-tile-blue.gif in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */; };
 		79FF6A87171D3E3000A3202F /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF6A85171D3E3000A3202F /* DashboardViewController.m */; };
 		79FF6A88171D3E3000A3202F /* DashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A86171D3E3000A3202F /* DashboardViewController.xib */; };
@@ -151,6 +153,10 @@
 		79C7AB971764856000AE4880 /* EditListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditListRequest.m; sourceTree = "<group>"; };
 		79C7AB991764875C00AE4880 /* EditListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditListResponse.h; sourceTree = "<group>"; };
 		79C7AB9A1764875C00AE4880 /* EditListResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditListResponse.m; sourceTree = "<group>"; };
+		79C7AB9C17662E8100AE4880 /* CreateEntryRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateEntryRequest.h; sourceTree = "<group>"; };
+		79C7AB9D17662E8200AE4880 /* CreateEntryRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEntryRequest.m; sourceTree = "<group>"; };
+		79C7AB9F176632E600AE4880 /* CreateEntryResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateEntryResponse.h; sourceTree = "<group>"; };
+		79C7ABA0176632E600AE4880 /* CreateEntryResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEntryResponse.m; sourceTree = "<group>"; };
 		79E7273217266958003DC9F2 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMXi.a; path = "../MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
 		79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "bit-tile-blue.gif"; sourceTree = "<group>"; };
 		79FF6A84171D3E3000A3202F /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
@@ -283,6 +289,8 @@
 				79C7AB921763CE7D00AE4880 /* DeleteListResponse.m */,
 				79C7AB991764875C00AE4880 /* EditListResponse.h */,
 				79C7AB9A1764875C00AE4880 /* EditListResponse.m */,
+				79C7AB9F176632E600AE4880 /* CreateEntryResponse.h */,
+				79C7ABA0176632E600AE4880 /* CreateEntryResponse.m */,
 			);
 			name = Incoming;
 			sourceTree = "<group>";
@@ -300,6 +308,8 @@
 				79C7AB8F1763CD7C00AE4880 /* DeleteListRequest.m */,
 				79C7AB961764856000AE4880 /* EditListRequest.h */,
 				79C7AB971764856000AE4880 /* EditListRequest.m */,
+				79C7AB9C17662E8100AE4880 /* CreateEntryRequest.h */,
+				79C7AB9D17662E8200AE4880 /* CreateEntryRequest.m */,
 			);
 			name = Outgoing;
 			sourceTree = "<group>";
@@ -495,6 +505,8 @@
 				79C7AB931763CE7D00AE4880 /* DeleteListResponse.m in Sources */,
 				79C7AB981764856000AE4880 /* EditListRequest.m in Sources */,
 				79C7AB9B1764875D00AE4880 /* EditListResponse.m in Sources */,
+				79C7AB9E17662E8200AE4880 /* CreateEntryRequest.m in Sources */,
+				79C7ABA1176632E700AE4880 /* CreateEntryResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

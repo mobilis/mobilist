@@ -14,7 +14,7 @@
 
 @implementation EntryDetailViewController
 
-@synthesize entry, dismissBlock, parent;
+@synthesize entry, dismissBlock, parent, connection;
 
 - (id)initForNewEntry:(BOOL)isNew {
 	self = [super initWithNibName:@"EntryDetailViewController" bundle:nil];
@@ -79,8 +79,8 @@
 	[descriptionTextField setText:[entry description]];
 	
 	NSDate* dueDate = [entry dueDateAsDate];
-	if (dueDate) {
-		[dueDatePicker setDate:[entry dueDateAsDate]];
+	if ([entry dueDate] != 0) {
+		[dueDatePicker setDate:dueDate];
 	} else {
 		[dueDatePicker setDate:[NSDate date]];
 	}
@@ -102,6 +102,11 @@
 
 - (void)save:(id)sender {
 	[[self navigationController] dismissViewControllerAnimated:YES completion:dismissBlock];
+	
+	CreateEntryRequest* request = [[CreateEntryRequest alloc] init];
+	[request setListId:[parent listId]];
+	[request setEntry:entry];
+	[connection sendBean:request];
 }
 
 - (void)cancel:(id)sender {

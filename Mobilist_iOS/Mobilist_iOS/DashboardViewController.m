@@ -137,6 +137,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	TodoListViewController* tlvc = [[TodoListViewController alloc]
 				initWithMobiList:[[[MobiListStore sharedStore] allLists] objectAtIndex:[indexPath row]]];
+	[tlvc setConnection:connection];
 	
 	[[self navigationController] pushViewController:tlvc animated:YES];
 }

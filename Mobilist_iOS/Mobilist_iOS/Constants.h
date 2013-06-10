@@ -14,6 +14,7 @@ extern NSString* const NotificationConnectionEstablished;
 extern NSString* const NotificationListCreationConfirmed;
 extern NSString* const NotificationListDeletionConfirmed;
 extern NSString* const NotificationListEditingConfirmed;
+extern NSString* const NotificationEntryCreationConfirmed;
 
 extern NSString* const CellTodoListEntry;
 extern NSString* const CellTodoList;
