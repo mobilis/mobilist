@@ -20,5 +20,6 @@
 - (void)addListEntry:(MobiListEntry* )aListEntry;
 - (void)removeListEntry:(MobiListEntry* )aListEntry;
 - (MobiListEntry* )entryAtIndex:(NSInteger)index;
+- (MobiListEntry* )entryById:(NSString* )entryId;
 
 @end

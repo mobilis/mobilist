@@ -68,6 +68,8 @@
 		79C7ABA51766F4BD00AE4880 /* not-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 79C7ABA31766F4BD00AE4880 /* not-checked.png */; };
 		79C7ABA81767380900AE4880 /* EditEntryRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7ABA71767380800AE4880 /* EditEntryRequest.m */; };
 		79C7ABAB17673A2700AE4880 /* EditEntryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7ABAA17673A2600AE4880 /* EditEntryResponse.m */; };
+		79C7ABAE1767A99400AE4880 /* DeleteEntryRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7ABAD1767A99300AE4880 /* DeleteEntryRequest.m */; };
+		79C7ABB11767AC3300AE4880 /* DeleteEntryResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C7ABB01767AC3100AE4880 /* DeleteEntryResponse.m */; };
 		79FF6A7E171D3C2F00A3202F /* bit-tile-blue.gif in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */; };
 		79FF6A87171D3E3000A3202F /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF6A85171D3E3000A3202F /* DashboardViewController.m */; };
 		79FF6A88171D3E3000A3202F /* DashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A86171D3E3000A3202F /* DashboardViewController.xib */; };
@@ -167,6 +169,10 @@
 		79C7ABA71767380800AE4880 /* EditEntryRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditEntryRequest.m; sourceTree = "<group>"; };
 		79C7ABA917673A2500AE4880 /* EditEntryResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditEntryResponse.h; sourceTree = "<group>"; };
 		79C7ABAA17673A2600AE4880 /* EditEntryResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditEntryResponse.m; sourceTree = "<group>"; };
+		79C7ABAC1767A99200AE4880 /* DeleteEntryRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteEntryRequest.h; sourceTree = "<group>"; };
+		79C7ABAD1767A99300AE4880 /* DeleteEntryRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteEntryRequest.m; sourceTree = "<group>"; };
+		79C7ABAF1767AC3000AE4880 /* DeleteEntryResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteEntryResponse.h; sourceTree = "<group>"; };
+		79C7ABB01767AC3100AE4880 /* DeleteEntryResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteEntryResponse.m; sourceTree = "<group>"; };
 		79E7273217266958003DC9F2 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMXi.a; path = "../MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
 		79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "bit-tile-blue.gif"; sourceTree = "<group>"; };
 		79FF6A84171D3E3000A3202F /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
@@ -305,6 +311,8 @@
 				79C7ABA0176632E600AE4880 /* CreateEntryResponse.m */,
 				79C7ABA917673A2500AE4880 /* EditEntryResponse.h */,
 				79C7ABAA17673A2600AE4880 /* EditEntryResponse.m */,
+				79C7ABAF1767AC3000AE4880 /* DeleteEntryResponse.h */,
+				79C7ABB01767AC3100AE4880 /* DeleteEntryResponse.m */,
 			);
 			name = Incoming;
 			sourceTree = "<group>";
@@ -326,6 +334,8 @@
 				79C7AB9D17662E8200AE4880 /* CreateEntryRequest.m */,
 				79C7ABA61767380800AE4880 /* EditEntryRequest.h */,
 				79C7ABA71767380800AE4880 /* EditEntryRequest.m */,
+				79C7ABAC1767A99200AE4880 /* DeleteEntryRequest.h */,
+				79C7ABAD1767A99300AE4880 /* DeleteEntryRequest.m */,
 			);
 			name = Outgoing;
 			sourceTree = "<group>";
@@ -527,6 +537,8 @@
 				79C7ABA1176632E700AE4880 /* CreateEntryResponse.m in Sources */,
 				79C7ABA81767380900AE4880 /* EditEntryRequest.m in Sources */,
 				79C7ABAB17673A2700AE4880 /* EditEntryResponse.m in Sources */,
+				79C7ABAE1767A99400AE4880 /* DeleteEntryRequest.m in Sources */,
+				79C7ABB11767AC3300AE4880 /* DeleteEntryResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

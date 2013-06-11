@@ -192,6 +192,12 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if (buttonIndex == 1) {
+		// Delete button was pressed
+		DeleteEntryRequest* request = [[DeleteEntryRequest alloc] init];
+		[request setListId:[theList listId]];
+		[request setEntryId:[[[theList listEntries] objectAtIndex:entryIndexToBeDeleted] entryId]];
+		[connection sendBean:request];
+		
 		[[theList listEntries] removeObjectAtIndex:entryIndexToBeDeleted];
 		
 		NSIndexPath* indexPath = [NSIndexPath indexPathForRow:entryIndexToBeDeleted

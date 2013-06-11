@@ -34,4 +34,14 @@
 	return [[self listEntries] objectAtIndex:index];
 }
 
+- (MobiListEntry *)entryById:(NSString *)entryId {
+	for (MobiListEntry* entry in listEntries) {
+		if ([[entry entryId] isEqualToString:entryId]) {
+			return entry;
+		}
+	}
+	
+	return nil;
+}
+
 @end

@@ -130,6 +130,16 @@
 															object:self
 														  userInfo:userInfo];
 	}
+	
+	if ([theBean class] == [DeleteEntryRequest class]) {
+		DeleteEntryRequest* deleteEntryRequest = (DeleteEntryRequest*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[deleteEntryRequest entryId]
+															 forKey:@"entryId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryDeletionConfirmed
+															object:self
+														  userInfo:userInfo];
+		NSLog(@"Entry deletion confirmed");
+	}
 }
 
 /*
@@ -182,6 +192,7 @@
 	[incomingBeanPrototypes addObject:[[EditListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[CreateEntryResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[EditEntryResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[DeleteEntryRequest alloc] init]];
 	
 	// 192.168.1.51
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"

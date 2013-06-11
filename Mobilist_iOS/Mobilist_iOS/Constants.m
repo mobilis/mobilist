@@ -16,6 +16,7 @@ NSString* const NotificationListDeletionConfirmed = @"ListDeletionConfirmed";
 NSString* const NotificationListEditingConfirmed = @"ListEditingConfirmed";
 NSString* const NotificationEntryCreationConfirmed = @"EntryCreationConfirmed";
 NSString* const NotificationEntryEditingConfirmed = @"EntryEditingConfirmed";
+NSString* const NotificationEntryDeletionConfirmed = @"EntryDeletionConfirmed";
 
 NSString* const CellTodoListEntry = @"TodoListEntryCell";
 NSString* const CellTodoList = @"TodoListCell";

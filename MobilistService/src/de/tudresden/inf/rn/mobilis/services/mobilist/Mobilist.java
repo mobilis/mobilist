@@ -23,6 +23,7 @@ import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateEntryResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.CreateListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteEntryRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteEntryResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryRequest;
@@ -294,6 +295,31 @@ public class Mobilist extends MobilisService {
 						}
 					}
 					
+					// DeleteEntry
+					if (proxyBean.isTypeOf(DeleteEntryRequest.NAMESPACE, DeleteEntryRequest.CHILD_ELEMENT)) {
+						DeleteEntryRequest request = (DeleteEntryRequest) proxyBean.parsePayload(new DeleteEntryRequest());
+						String listId = request.getListId();
+						String entryId = request.getEntryId();
+						
+						MobiList parent = listStore.getListById(listId);
+						
+						if (parent != null) {
+							boolean success = parent.removeEntryById(entryId);
+							
+							if (success) {
+								DeleteEntryResponse response = new DeleteEntryResponse();
+								response.setEntryId(entryId);
+								response.setTo(request.getFrom());
+								response.setFrom(request.getTo());
+								
+								getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+							} else {
+								// TODO handle error case
+							}
+						} else {
+							// TODO handle error case
+						}
+					}
 				}
 				
 			}
