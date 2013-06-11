@@ -276,7 +276,7 @@
 			<xs:element name="EditEntryResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -291,7 +291,7 @@
 			<xs:element name="EntryEditedAccept">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="id" type="xs:string" />
+						<xs:element name="entryId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

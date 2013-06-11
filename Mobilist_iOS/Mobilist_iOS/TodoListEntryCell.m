@@ -10,7 +10,7 @@
 
 @implementation TodoListEntryCell
 
-@synthesize titleLabel, dueDateLabel, checkedSwitch;
+@synthesize titleLabel, dueDateLabel, checkedSwitch, entry;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
 	reuseIdentifier:(NSString *)reuseIdentifier

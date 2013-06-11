@@ -37,6 +37,16 @@ public class MobiList extends XMPPBean {
 		
 		return s.toString();
 	}
+	
+	public MobiListEntry getEntryById(String entryId) {
+		for (MobiListEntry entry : entries) {
+			if (entry.getEntryId().equals(entryId)) {
+				return entry;
+			}
+		}
+		
+		return null;
+	}
 
 	@XmlElement(name = "listId")
 	public String getListId() {

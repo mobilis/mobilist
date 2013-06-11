@@ -7,11 +7,12 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 public class EditEntryRequest extends XMPPBean {
 
 	private static final long serialVersionUID = 8039539533948206770L;
-	private MobiListEntry list = new MobiListEntry();
+	private String listId;
+	private MobiListEntry entry = new MobiListEntry();
 
 	public EditEntryRequest( MobiListEntry list ) {
 		super();
-		this.list = list;
+		this.entry = list;
 
 		this.setType( XMPPBean.TYPE_SET );
 	}
@@ -33,8 +34,11 @@ public class EditEntryRequest extends XMPPBean {
 				if (tagName.equals(getChildElement())) {
 					parser.next();
 				}
-				else if (tagName.equals( "list" ) ) {
-					this.list.fromXML(parser);
+				else if (tagName.equals( "entry" ) ) {
+					this.entry.fromXML(parser);
+				} else if (tagName.equals("listId")) {
+					this.setListId(parser.nextText());
+					parser.next();
 				}
 				else if (tagName.equals("error")) {
 					parser = parseErrorAttributes(parser);
@@ -73,7 +77,7 @@ public class EditEntryRequest extends XMPPBean {
 
 	@Override
 	public XMPPBean clone() {
-		EditEntryRequest clone = new EditEntryRequest( list );
+		EditEntryRequest clone = new EditEntryRequest( entry );
 		clone.cloneBasicAttributes( clone );
 
 		return clone;
@@ -83,21 +87,29 @@ public class EditEntryRequest extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<list>" )
-			.append( this.list )
-			.append( "</list>" );
+		sb.append( "<entry>" )
+			.append( this.entry )
+			.append( "</entry>" );
 
 		sb = appendErrorPayload(sb);
 
 		return sb.toString();
 	}
 
-	public MobiListEntry getList() {
-		return this.list;
+	public MobiListEntry getEntry() {
+		return this.entry;
 	}
 
-	public void setList( MobiListEntry list ) {
-		this.list = list;
+	public void setEntry( MobiListEntry entry ) {
+		this.entry = entry;
+	}
+
+	public String getListId() {
+		return listId;
+	}
+
+	public void setListId(String listId) {
+		this.listId = listId;
 	}
 
 }

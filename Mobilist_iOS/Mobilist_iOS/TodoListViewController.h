@@ -12,6 +12,7 @@
 #import "MobiListEntry.h"
 #import "TodoListEntryCell.h"
 #import "EntryDetailViewController.h"
+#import "EditEntryRequest.h"
 #import "UUIDCreator.h"
 
 @interface TodoListViewController : UITableViewController <UIAlertViewDelegate>

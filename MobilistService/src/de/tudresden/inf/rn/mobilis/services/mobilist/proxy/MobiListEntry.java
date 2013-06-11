@@ -12,7 +12,7 @@ public class MobiListEntry extends XMPPBean {
 	private static final long serialVersionUID = -7632223960179120287L;
 	private String entryId, title, description;
 	private long dueDate;
-	private boolean done;
+	private boolean mDone;
 	
 	public MobiListEntry() {}
 	
@@ -22,7 +22,7 @@ public class MobiListEntry extends XMPPBean {
 		this.title = title;
 		this.description = description;
 		this.dueDate = dueDate;
-		this.done = done;
+		this.mDone = done;
 	}
 
 	@Override
@@ -68,11 +68,11 @@ public class MobiListEntry extends XMPPBean {
 
 	@XmlElement(name = "done")
 	public boolean isDone() {
-		return done;
+		return mDone;
 	}
 
 	public void setDone(boolean done) {
-		this.done = done;
+		this.mDone = done;
 	}
 
 	@Override
@@ -99,9 +99,9 @@ public class MobiListEntry extends XMPPBean {
 				} else if (tagName.equals("done")) {
 					String doneString = parser.nextText();
 					if ("true".equals(doneString)) {
-						done = true;
+						mDone = true;
 					} else {
-						done = false;
+						mDone = false;
 					}
 					parser.next();
 				} else if (tagName.equals("error")) {
@@ -151,7 +151,7 @@ public class MobiListEntry extends XMPPBean {
 			.append("<title>").append(title).append("</title>")
 			.append("<description>").append(description).append("</description>")
 			.append("<dueDate>").append(dueDate).append("</dueDate>")
-			.append("<done>").append(done).append("</done>");
+			.append("<done>").append(mDone).append("</done>");
 			
 		return sb.toString();
 	}

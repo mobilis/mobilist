@@ -38,6 +38,10 @@
 												 selector:@selector(receivedEntryCreationConfirmed:)
 													 name:NotificationEntryCreationConfirmed
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedEntryEditingConfirmed:)
+													 name:NotificationEntryEditingConfirmed
+												   object:nil];
     }
 	
     return self;
@@ -57,7 +61,21 @@
 }
 
 - (void)receivedEntryCreationConfirmed:(NSNotification* )notification {
-	NSLog(@"Entry creation confirmed");
+	NSDictionary* userInfo = [notification userInfo];
+	NSString* entryId = [userInfo objectForKey:@"entryId"];
+	
+	[[MobiListStore sharedStore] setSyncedStatus:YES
+									  forEntryId:entryId];
+	[[self tableView] reloadData];
+}
+
+- (void)receivedEntryEditingConfirmed:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	NSString* entryId = [userInfo objectForKey:@"entryId"];
+	
+	[[MobiListStore sharedStore] setSyncedStatus:YES
+									  forEntryId:entryId];
+	[[self tableView] reloadData];
 }
 
 - (void)viewDidLoad
@@ -103,6 +121,8 @@
 															forIndexPath:indexPath];
 	MobiListEntry* entry = [theList entryAtIndex:[indexPath row]];
     
+	[cell setEntry:entry];
+	
     [[cell titleLabel] setText:[entry title]];
 	
 	NSDate* dueDate = [entry dueDateAsDate];
@@ -116,8 +136,33 @@
 	[[cell checkedSwitch] setOnImage:[UIImage imageNamed:@"checked.png"]];
 	[[cell checkedSwitch] setOffImage:[UIImage imageNamed:@"not-checked.png"]];
 	[[cell checkedSwitch] setOn:[entry done] animated:YES];
+	[[cell checkedSwitch] addTarget:self
+							 action:@selector(switchTapped:forEvent:)
+				   forControlEvents:UIControlEventValueChanged];
+	
+	if (![[MobiListStore sharedStore] isEntrySyncedWithService:entry]) {
+		[[cell syncIndicator] startAnimating];
+	}
     
     return cell;
+}
+
+- (void)switchTapped:(id)sender forEvent:(UIEvent* )event {
+	UISwitch* theSwitch = (UISwitch*) sender;
+	// TODO this seems a bad solution …
+	TodoListEntryCell* cell = (TodoListEntryCell*) [[theSwitch superview] superview];
+	
+	MobiListEntry* entry = [cell entry];
+	[entry setDone:[theSwitch isOn]];
+	
+	EditEntryRequest* request = [[EditEntryRequest alloc] init];
+	[request setListId:[theList listId]];
+	[request setEntry:entry];
+	[connection sendBean:request];
+	
+	[[MobiListStore sharedStore] setSyncedStatus:NO
+									  forEntryId:[entry entryId]];
+	[[cell syncIndicator] startAnimating];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -183,6 +228,7 @@
 	}];
 	[edvc setParent:theList];
 	[edvc setEntry:[theList entryAtIndex:[indexPath row]]];
+	[edvc setConnection:connection];
 	
 	[[self navigationController] pushViewController:edvc animated:YES];
 }

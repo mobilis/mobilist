@@ -26,6 +26,7 @@ import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteEntryRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.DeleteListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryRequest;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListRequest;
@@ -240,12 +241,54 @@ public class Mobilist extends MobilisService {
 						if (parent != null) {
 							parent.getEntries().add(entry);
 							
+							try {
+								Thread.sleep(2000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							
 							CreateEntryResponse response = new CreateEntryResponse();
 							response.setEntryId(entry.getEntryId());
 							response.setTo(request.getFrom());
 							response.setFrom(request.getTo());
 							
 							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+						} else {
+							// TODO handle error case
+						}
+					}
+					
+					// EditEntry
+					if (proxyBean.isTypeOf(EditEntryRequest.NAMESPACE, EditEntryRequest.CHILD_ELEMENT)) {
+						EditEntryRequest request = (EditEntryRequest) proxyBean.parsePayload(new EditEntryRequest());
+						String listId = request.getListId();
+						MobiListEntry editedEntry = request.getEntry();
+						
+						MobiList parent = listStore.getListById(listId);
+						if (parent != null) {
+							MobiListEntry oldEntry = parent.getEntryById(editedEntry.getEntryId());
+							
+							if (oldEntry != null) {
+								oldEntry.setTitle(editedEntry.getTitle());
+								oldEntry.setDescription(editedEntry.getDescription());
+								oldEntry.setDueDate(editedEntry.getDueDate());
+								oldEntry.setDone(editedEntry.isDone());
+								
+								try {
+									Thread.sleep(2000);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								
+								EditEntryResponse response = new EditEntryResponse();
+								response.setTo(request.getFrom());
+								response.setFrom(request.getTo());
+								response.setEntryId(editedEntry.getEntryId());
+								
+								getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+							} else {
+								// TODO handle error case
+							}
 						} else {
 							// TODO handle error case
 						}

@@ -112,7 +112,7 @@
 	TodoListCell* cell = [existingsListsTable dequeueReusableCellWithIdentifier:CellTodoList];
 	
 	[[cell listNameLabel] setText:[list listName]];
-	if (![[MobiListStore sharedStore] isSyncedWithService:list]) {
+	if (![[MobiListStore sharedStore] isListSyncedWithService:list]) {
 		[[cell syncSpinner] startAnimating];
 	} else {
 		[[cell syncSpinner] stopAnimating];

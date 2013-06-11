@@ -14,18 +14,25 @@
 {
 	NSMutableArray* allLists;
 	NSMutableArray* notYetSyncedListIds;
+	NSMutableArray* notYetSyncedEntryIds;
 }
 
 + (MobiListStore* )sharedStore;
 
 - (NSMutableArray* )allLists;
-- (NSArray* )notYetSyncedListIds;
-- (BOOL)isSyncedWithService:(MobiList* )aList;
 - (MobiList* )listByListId:(NSString* )listId;
-- (void)setSyncedStatus:(BOOL )inSync
-			  forListId:(NSString* )listId;
 - (void)addMobiList:(MobiList* )aList
 	   newlyCreated:(BOOL)isNew;
 - (void)removeMobiList:(MobiList* )aList;
+
+- (NSArray* )notYetSyncedListIds;
+- (NSArray* )notYetSyncedEntryIds;
+- (BOOL)isListSyncedWithService:(MobiList* )aList;
+- (BOOL)isEntrySyncedWithService:(MobiListEntry* )anEntry;
+
+- (void)setSyncedStatus:(BOOL )inSync
+			  forListId:(NSString* )listId;
+- (void)setSyncedStatus:(BOOL)inSync
+			 forEntryId:(NSString* )entryId;
 
 @end

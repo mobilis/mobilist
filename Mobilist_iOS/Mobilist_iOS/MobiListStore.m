@@ -26,6 +26,7 @@
 	if (self) {
 		allLists = [NSMutableArray array];
 		notYetSyncedListIds = [NSMutableArray array];
+		notYetSyncedEntryIds = [NSMutableArray array];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(listCreationConfirmed:)
@@ -44,14 +45,28 @@
 	return notYetSyncedListIds;
 }
 
-- (BOOL)isSyncedWithService:(MobiList *)aList {
+- (NSArray *)notYetSyncedEntryIds {
+	return notYetSyncedEntryIds;
+}
+
+- (BOOL)isListSyncedWithService:(MobiList *)aList {
 	for (NSString* listId in notYetSyncedListIds) {
 		if ([listId isEqualToString:[aList listId]]) {
-			return false;
+			return NO;
 		}
 	}
 	
-	return true;
+	return YES;
+}
+
+- (BOOL)isEntrySyncedWithService:(MobiListEntry *)anEntry {
+	for (NSString* entryId in notYetSyncedEntryIds) {
+		if ([entryId isEqualToString:[anEntry entryId]]) {
+			return NO;
+		}
+	}
+	
+	return YES;
 }
 
 - (void)listCreationConfirmed:(NSNotification* )notification {
@@ -90,15 +105,22 @@
 	if (inSync) {
 		// Find and remove the supplied listId from the
 		// list of not yet synced ones
-		for (NSString* notYetSyncedId in notYetSyncedListIds) {
-			if ([notYetSyncedId isEqualToString:listId]) {
-				[notYetSyncedListIds removeObject:notYetSyncedId];
-			}
-		}
+		[notYetSyncedListIds removeObject:listId];
 	} else {
 		// Add the supplied listId to the list of
 		// not yet synced ones
 		[notYetSyncedListIds addObject:listId];
+	}
+}
+
+- (void)setSyncedStatus:(BOOL)inSync
+			 forEntryId:(NSString *)entryId {
+	if (inSync) {
+		// Find and remove the supplied entryId
+		// from the list of not yet synced ones
+		[notYetSyncedEntryIds removeObject:entryId];
+	} else {
+		[notYetSyncedEntryIds addObject:entryId];
 	}
 }
 

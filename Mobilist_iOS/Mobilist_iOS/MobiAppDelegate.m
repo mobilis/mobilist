@@ -121,6 +121,15 @@
 															object:self
 														  userInfo:userInfo];
 	}
+	
+	if ([theBean class] == [EditEntryResponse class]) {
+		EditEntryResponse* editEntryResponse = (EditEntryResponse*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[editEntryResponse entryId]
+															 forKey:@"entryId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryEditingConfirmed
+															object:self
+														  userInfo:userInfo];
+	}
 }
 
 /*
@@ -172,10 +181,12 @@
 	[incomingBeanPrototypes addObject:[[DeleteListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[EditListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[CreateEntryResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[EditEntryResponse alloc] init]];
 	
+	// 192.168.1.51
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
 											  password:@"abc"
-											  hostName:@"192.168.1.51"
+											  hostName:@"localhost"
 									  presenceDelegate:self
 										stanzaDelegate:self
 										  beanDelegate:self
