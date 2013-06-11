@@ -143,7 +143,11 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return @"Existing lists";
+	if ([[[MobiListStore sharedStore] allLists] count] > 0) {
+		return @"Existing lists";
+	} else {
+		return @"No lists created yet. Click the + button on the right to add one.";
+	}
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {

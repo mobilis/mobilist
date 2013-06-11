@@ -112,6 +112,10 @@
 	[formatter setDateFormat:@"dd.MM.yyyy, hh:mm"];
 	
 	[[cell dueDateLabel] setText:[formatter stringFromDate:dueDate]];
+	
+	[[cell checkedSwitch] setOnImage:[UIImage imageNamed:@"checked.png"]];
+	[[cell checkedSwitch] setOffImage:[UIImage imageNamed:@"not-checked.png"]];
+	[[cell checkedSwitch] setOn:[entry done] animated:YES];
     
     return cell;
 }

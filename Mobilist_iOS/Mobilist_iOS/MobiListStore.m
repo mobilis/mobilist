@@ -75,6 +75,16 @@
 													  userInfo:userInfo];
 }
 
+- (MobiList *)listByListId:(NSString *)aListId {
+	for (MobiList* list in allLists) {
+		if ([[list listId] isEqualToString:aListId]) {
+			return list;
+		}
+	}
+	
+	return nil;
+}
+
 - (void)setSyncedStatus:(BOOL )inSync
 			  forListId:(NSString* )listId  {
 	if (inSync) {

@@ -70,10 +70,13 @@
 			NSString* listId = [list listId];
 			// TODO compare local and remote crc
 			
-			GetListRequest* getListRequest = [[GetListRequest alloc] init];
-			[getListRequest setListId:listId];
-			
-			[connection sendBean:getListRequest];
+			// CHeck if the List store knows this list already
+			if (![[MobiListStore sharedStore] listByListId:listId]) {
+				GetListRequest* getListRequest = [[GetListRequest alloc] init];
+				[getListRequest setListId:listId];
+				
+				[connection sendBean:getListRequest];
+			}
 		}
 	}
 	

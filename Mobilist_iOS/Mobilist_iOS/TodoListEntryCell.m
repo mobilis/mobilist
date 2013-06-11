@@ -12,13 +12,16 @@
 
 @synthesize titleLabel, dueDateLabel, checkedSwitch;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style
+	reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
+    
+	if (self) {
+		
     }
-    return self;
+    
+	return self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

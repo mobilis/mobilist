@@ -21,6 +21,7 @@
 - (NSMutableArray* )allLists;
 - (NSArray* )notYetSyncedListIds;
 - (BOOL)isSyncedWithService:(MobiList* )aList;
+- (MobiList* )listByListId:(NSString* )listId;
 - (void)setSyncedStatus:(BOOL )inSync
 			  forListId:(NSString* )listId;
 - (void)addMobiList:(MobiList* )aList
