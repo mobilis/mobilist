@@ -28,7 +28,7 @@
 }
 
 + (NSString *)iqNamespace {
-	return @"mobilist:iq:sync";
+	return @"http://mobilis.inf.tu-dresden.de/Mobilist";
 }
 
 @end

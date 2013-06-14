@@ -28,7 +28,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+	[jabberIDTextField setText:[userDefaults stringForKey:UserDefaultJabberId]];
+	[passwordTextField setText:[userDefaults stringForKey:UserDefaultPassword]];
+	[hostnameTextField setText:[userDefaults stringForKey:UserDefaultHostname]];
+	[coordinatorServiceTextField setText:[userDefaults stringForKey:UserDefaultCoordinatorService]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setObject:[jabberIDTextField text] forKey:UserDefaultJabberId];
+	[userDefaults setObject:[passwordTextField text] forKey:UserDefaultPassword];
+	[userDefaults setObject:[hostnameTextField text] forKey:UserDefaultHostname];
+	[userDefaults setObject:[coordinatorServiceTextField text] forKey:UserDefaultCoordinatorService];
+	
+	[userDefaults synchronize];
 }
 
 - (void)didReceiveMemoryWarning

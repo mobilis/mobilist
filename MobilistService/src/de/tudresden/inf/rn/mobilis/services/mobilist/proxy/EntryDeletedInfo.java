@@ -64,7 +64,7 @@ public class EntryDeletedInfo extends XMPPBean {
 		return CHILD_ELEMENT;
 	}
 
-	public static final String NAMESPACE = "mobilist:iq:entrydeleted";
+	public static final String NAMESPACE = "http://mobilis.inf.tu-dresden.de/Mobilist";
 
 	@Override
 	public String getNamespace() {

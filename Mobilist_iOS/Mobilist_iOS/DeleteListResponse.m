@@ -28,7 +28,7 @@
 }
 
 + (NSString *)iqNamespace {
-	return @"mobilist:iq:deletelist";
+	return @"http://mobilis.inf.tu-dresden.de/Mobilist";
 }
 
 @end

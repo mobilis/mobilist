@@ -21,6 +21,11 @@ NSString* const NotificationEntryDeletionConfirmed = @"EntryDeletionConfirmed";
 NSString* const CellTodoListEntry = @"TodoListEntryCell";
 NSString* const CellTodoList = @"TodoListCell";
 
+NSString* const UserDefaultJabberId = @"DefaultJabberId";
+NSString* const UserDefaultPassword = @"DefaultPassword";
+NSString* const UserDefaultHostname = @"DefaultHostname";
+NSString* const UserDefaultCoordinatorService = @"DefaultCoordinatorService";
+
 @implementation Constants
 
 @end

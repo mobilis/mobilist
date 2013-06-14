@@ -65,7 +65,7 @@ public class PingRequest extends XMPPBean {
 		return CHILD_ELEMENT;
 	}
 
-	public static final String NAMESPACE = "mobilist:iq:ping";
+	public static final String NAMESPACE = "http://mobilis.inf.tu-dresden.de/Mobilist";
 
 	@Override
 	public String getNamespace() {

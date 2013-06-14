@@ -63,7 +63,7 @@ public class GetListRequest extends XMPPBean {
 		return CHILD_ELEMENT;
 	}
 
-	public static final String NAMESPACE = "mobilist:iq:getlist";
+	public static final String NAMESPACE = "http://mobilis.inf.tu-dresden.de/Mobilist";
 
 	@Override
 	public String getNamespace() {

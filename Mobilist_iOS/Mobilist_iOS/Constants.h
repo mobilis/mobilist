@@ -21,6 +21,11 @@ extern NSString* const NotificationEntryDeletionConfirmed;
 extern NSString* const CellTodoListEntry;
 extern NSString* const CellTodoList;
 
+extern NSString* const UserDefaultJabberId;
+extern NSString* const UserDefaultPassword;
+extern NSString* const UserDefaultHostname;
+extern NSString* const UserDefaultCoordinatorService;
+
 @interface Constants : NSObject
 
 @end

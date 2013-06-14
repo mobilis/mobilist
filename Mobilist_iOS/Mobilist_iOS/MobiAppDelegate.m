@@ -138,7 +138,6 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryDeletionConfirmed
 															object:self
 														  userInfo:userInfo];
-		NSLog(@"Entry deletion confirmed");
 	}
 }
 
@@ -193,6 +192,10 @@
 	[incomingBeanPrototypes addObject:[[CreateEntryResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[EditEntryResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[DeleteEntryRequest alloc] init]];
+	
+	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
+	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
 	
 	// 192.168.1.51
 	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
