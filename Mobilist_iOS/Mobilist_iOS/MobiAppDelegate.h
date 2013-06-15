@@ -21,7 +21,11 @@
 #import "CreateEntryResponse.h"
 #import "EditEntryResponse.h"
 #import "DeleteEntryRequest.h"
-#import "DashboardViewController.h"
+#import "ListCreatedInfo.h"
+#import "ListCreatedAccept.h"
+//#import "DashboardViewController.h"
+
+@class DashboardViewController;
 
 @interface MobiAppDelegate : UIResponder <UIApplicationDelegate, MXiPresenceDelegate,
 		MXiStanzaDelegate, MXiBeanDelegate>
@@ -31,5 +35,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DashboardViewController* dashBoardController;
+@property BOOL areXMPPSettingsSufficient;
 
 @end

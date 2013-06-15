@@ -84,9 +84,16 @@ public class ListEditedInfo extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<list>" )
-			.append( this.list )
-			.append( "</list>" );
+		sb.append("<list>")
+			.append("<listName>")
+			.append(list.getListName())
+			.append("</listName><listId>")
+			.append(list.getListId())
+			.append("</listId>")
+			.append("<entries>")
+			.append(list.payloadToXML())
+			.append("</entries>")
+			.append("</list>");
 
 		sb = appendErrorPayload(sb);
 

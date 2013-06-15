@@ -6,6 +6,7 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 
 public class EntryCreatedInfo extends XMPPBean {
 
+	private String listId;
 	private MobiListEntry entry = new MobiListEntry();
 
 	private static final long serialVersionUID = 6365656680286516810L;
@@ -84,8 +85,11 @@ public class EntryCreatedInfo extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<entry>" )
-			.append( this.entry )
+		sb.append("<listId>")
+			.append(this.listId)
+			.append("</listId>")
+			.append( "<entry>" )
+			.append( this.entry.payloadToXML() )
 			.append( "</entry>" );
 
 		sb = appendErrorPayload(sb);
@@ -100,6 +104,14 @@ public class EntryCreatedInfo extends XMPPBean {
 
 	public void setEntry( MobiListEntry entry ) {
 		this.entry = entry;
+	}
+
+	public String getListId() {
+		return listId;
+	}
+
+	public void setListId(String listId) {
+		this.listId = listId;
 	}
 
 }

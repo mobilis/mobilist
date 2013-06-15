@@ -6,13 +6,14 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 
 public class EntryEditedInfo extends XMPPBean {
 
-	private MobiListEntry list = new MobiListEntry();
+	private String listId;
+	private MobiListEntry entry = new MobiListEntry();
 
 	private static final long serialVersionUID = 7074172343742279453L;
 
-	public EntryEditedInfo( MobiListEntry list ) {
+	public EntryEditedInfo( MobiListEntry entry ) {
 		super();
-		this.list = list;
+		this.entry = entry;
 
 		this.setType( XMPPBean.TYPE_SET );
 	}
@@ -34,8 +35,8 @@ public class EntryEditedInfo extends XMPPBean {
 				if (tagName.equals(getChildElement())) {
 					parser.next();
 				}
-				else if (tagName.equals( "list" ) ) {
-					this.list.fromXML(parser);
+				else if (tagName.equals( "entry" ) ) {
+					this.entry.fromXML(parser);
 				}
 				else if (tagName.equals("error")) {
 					parser = parseErrorAttributes(parser);
@@ -74,7 +75,7 @@ public class EntryEditedInfo extends XMPPBean {
 
 	@Override
 	public XMPPBean clone() {
-		EntryEditedInfo clone = new EntryEditedInfo( list );
+		EntryEditedInfo clone = new EntryEditedInfo( entry );
 		clone.cloneBasicAttributes( clone );
 
 		return clone;
@@ -84,9 +85,12 @@ public class EntryEditedInfo extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<list>" )
-			.append( this.list )
-			.append( "</list>" );
+		sb.append("<listId>")
+			.append(this.listId)
+			.append("</listId>")
+			.append( "<entry>" )
+			.append( this.entry.payloadToXML() )
+			.append( "</entry>" );
 
 		sb = appendErrorPayload(sb);
 
@@ -94,12 +98,20 @@ public class EntryEditedInfo extends XMPPBean {
 	}
 
 
-	public MobiListEntry getList() {
-		return this.list;
+	public MobiListEntry getEntry() {
+		return this.entry;
 	}
 
-	public void setList( MobiListEntry list ) {
-		this.list = list;
+	public void setEntry( MobiListEntry entry) {
+		this.entry = entry;
+	}
+
+	public String getListId() {
+		return listId;
+	}
+
+	public void setListId(String listId) {
+		this.listId = listId;
 	}
 
 }

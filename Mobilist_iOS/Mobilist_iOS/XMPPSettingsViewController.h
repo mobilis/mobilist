@@ -17,5 +17,6 @@
 	__weak IBOutlet UITextField *hostnameTextField;
 }
 
+- (IBAction)backgroundTapped:(id)sender;
 
 @end

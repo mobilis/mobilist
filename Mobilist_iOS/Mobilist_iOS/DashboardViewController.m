@@ -57,6 +57,10 @@
 												 selector:@selector(receivedListEditingConfirmedNotification:)
 													 name:NotificationListEditingConfirmed
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListCreatedInfo:)
+													 name:NotificationListCreatedInformed
+												   object:nil];
     }
     return self;
 }
@@ -98,6 +102,15 @@
 	NSDictionary* userInfo = [notification userInfo];
 	[[MobiListStore sharedStore] setSyncedStatus:YES forListId:[userInfo objectForKey:@"listId"]];
 	
+	[existingsListsTable reloadData];
+}
+
+- (void)receivedListCreatedInfo:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	MobiList* list = [userInfo objectForKey:@"list"];
+	
+	[[MobiListStore sharedStore] addMobiList:list
+								newlyCreated:NO];
 	[existingsListsTable reloadData];
 }
 
@@ -143,6 +156,11 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	MobiAppDelegate* delegate = (MobiAppDelegate*) [[UIApplication sharedApplication] delegate];
+	if (![delegate areXMPPSettingsSufficient]) {
+		return @"Go to the settings view and supply your XMPP account information.";
+	}
+	
 	if ([[[MobiListStore sharedStore] allLists] count] > 0) {
 		return @"Existing lists";
 	} else {

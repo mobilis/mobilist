@@ -13,6 +13,7 @@
 #import "TodoListCell.h"
 #import "TodoListViewController.h"
 #import "DeleteListRequest.h"
+#import "MobiAppDelegate.h"
 
 @interface DashboardViewController : UIViewController
 		<UITableViewDataSource, UITableViewDelegate>

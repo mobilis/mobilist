@@ -11,7 +11,7 @@
 
 @implementation MobiAppDelegate
 
-@synthesize dashBoardController;
+@synthesize dashBoardController, areXMPPSettingsSufficient;
 
 /*
  * Presence delegate
@@ -139,6 +139,18 @@
 															object:self
 														  userInfo:userInfo];
 	}
+	
+	if ([theBean class] == [ListCreatedInfo class]) {
+		ListCreatedInfo* listCreatedInfo = (ListCreatedInfo*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[listCreatedInfo list] forKey:@"list"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationListCreatedInformed
+															object:self
+														  userInfo:userInfo];
+		
+		ListCreatedAccept* accept = [[ListCreatedAccept alloc] init];
+		[accept setListId:[[listCreatedInfo list] listId]];
+		[connection sendBean:accept];
+	}
 }
 
 /*
@@ -147,7 +159,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	//[MxiLog log];
+	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
+	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
+	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
+	
+	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
+		[self setAreXMPPSettingsSufficient:YES];
+	} else {
+		[self setAreXMPPSettingsSufficient:NO];
+	}
+	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	dashBoardController = [[DashboardViewController alloc] init];
 	[[NSNotificationCenter defaultCenter] addObserver:dashBoardController
@@ -192,19 +214,23 @@
 	[incomingBeanPrototypes addObject:[[CreateEntryResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[EditEntryResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[DeleteEntryRequest alloc] init]];
+	[incomingBeanPrototypes addObject:[[ListCreatedInfo alloc] init]];
 	
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
+	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
 	
-	// 192.168.1.51
-	connection = [MXiConnection connectionWithJabberID:@"test@mymac.box/res"
-											  password:@"abc"
-											  hostName:@"localhost"
-									  presenceDelegate:self
-										stanzaDelegate:self
-										  beanDelegate:self
-							 listeningForIncomingBeans:incomingBeanPrototypes];
+	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
+		// 192.168.1.51
+		connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
+												  password:passwordFromDefaults
+												  hostName:hostnameFromDefaults
+										  presenceDelegate:self
+											stanzaDelegate:self
+											  beanDelegate:self
+								 listeningForIncomingBeans:incomingBeanPrototypes];
+	}
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

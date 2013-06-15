@@ -58,4 +58,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)backgroundTapped:(id)sender {
+	[[self view] endEditing:YES];
+}
+
 @end

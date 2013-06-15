@@ -4,7 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -30,8 +32,14 @@ import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditEntryResponse;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EditListResponse;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EntryCreatedInfo;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EntryDeletedInfo;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.EntryEditedInfo;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListRequest;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.GetListResponse;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListCreatedInfo;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListDeletedInfo;
+import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListEditedInfo;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListSync;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.ListsSync;
 import de.tudresden.inf.rn.mobilis.services.mobilist.proxy.MobiList;
@@ -49,6 +57,7 @@ import de.tudresden.inf.rn.mobilis.xmpp.server.BeanProviderAdapter;
 public class Mobilist extends MobilisService {
 
 	private ListStore listStore = ListStore.getInstance();
+	private Set<String> knownClientsJabberIds = new HashSet<String>();
 	
 	private final String XML_FILENAME = "liststore.xml";
 	
@@ -118,6 +127,13 @@ public class Mobilist extends MobilisService {
 					
 					ProxyBean proxyBean = (ProxyBean) inBean;
 					
+					String to = proxyBean.getTo();
+					String from = proxyBean.getFrom();
+					
+					if (!knownClientsJabberIds.contains(from)) {
+						knownClientsJabberIds.add(from);
+					}
+					
 					// Ping
 					if (proxyBean.isTypeOf(PingRequest.NAMESPACE, PingRequest.CHILD_ELEMENT)) {
 						PingRequest request = (PingRequest) proxyBean.parsePayload(new PingRequest());
@@ -179,12 +195,24 @@ public class Mobilist extends MobilisService {
 							e.printStackTrace();
 						}
 						
+						// Confirm the list creation
 						CreateListResponse response = new CreateListResponse();
 						response.setListId(theNewList.getListId());
 						response.setTo(request.getFrom());
 						response.setFrom(request.getTo());
 						
 						getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+						
+						// Inform other clients about the creation
+						for (String clientJid : knownClientsJabberIds) {
+							if (!clientJid.equals(from)) {
+								ListCreatedInfo info = new ListCreatedInfo();
+								info.setList(theNewList);
+								info.setTo(clientJid);
+								info.setFrom(to);
+								getAgent().getConnection().sendPacket(new BeanIQAdapter(info));
+							}
+						}
 					}
 					
 					// DeleteList
@@ -195,12 +223,24 @@ public class Mobilist extends MobilisService {
 						boolean success = ListStore.getInstance().removeList(listId);
 						
 						if (success) {
+							// Confirm the deletion of the list
 							DeleteListResponse response = new DeleteListResponse();
 							response.setListId(listId);
 							response.setTo(request.getFrom());
 							response.setFrom(request.getTo());
 							
 							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+							
+							// Inform other client about the deletion
+							for (String clientJid : knownClientsJabberIds) {
+								if (!clientJid.equals(from)) {
+									ListDeletedInfo info = new ListDeletedInfo();
+									info.setListId(listId);
+									info.setTo(clientJid);
+									info.setFrom(to);
+									getAgent().getConnection().sendPacket(new BeanIQAdapter(info));
+								}
+							}
 						}
 					}
 					
@@ -221,12 +261,24 @@ public class Mobilist extends MobilisService {
 								e.printStackTrace();
 							}
 							
+							// Confirm the edit
 							EditListResponse response = new EditListResponse();
 							response.setListId(oldList.getListId());
 							response.setTo(request.getFrom());
 							response.setFrom(request.getTo());
 							
 							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+							
+							// Inform other clients about the edit
+							for (String clientJid : knownClientsJabberIds) {
+								if (!clientJid.equals(from)) {
+									ListEditedInfo info = new ListEditedInfo();
+									info.setList(editedList);
+									info.setTo(clientJid);
+									info.setFrom(to);
+									getAgent().getConnection().sendPacket(new BeanIQAdapter(info));
+								}
+							}
 						} else {
 							// TODO handle error case
 						}
@@ -248,12 +300,25 @@ public class Mobilist extends MobilisService {
 								e.printStackTrace();
 							}
 							
+							// Confirm the creation
 							CreateEntryResponse response = new CreateEntryResponse();
 							response.setEntryId(entry.getEntryId());
 							response.setTo(request.getFrom());
 							response.setFrom(request.getTo());
 							
 							getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+							
+							// Inform other clients about the creation
+							for (String clientJid : knownClientsJabberIds) {
+								if (!clientJid.equals(from)) {
+									EntryCreatedInfo info = new EntryCreatedInfo();
+									info.setEntry(entry);
+									info.setListId(listId);
+									info.setTo(clientJid);
+									info.setFrom(to);
+									getAgent().getConnection().sendPacket(new BeanIQAdapter(info));
+								}
+							}
 						} else {
 							// TODO handle error case
 						}
@@ -281,12 +346,25 @@ public class Mobilist extends MobilisService {
 									e.printStackTrace();
 								}
 								
+								// Confirm the editing
 								EditEntryResponse response = new EditEntryResponse();
 								response.setTo(request.getFrom());
 								response.setFrom(request.getTo());
 								response.setEntryId(editedEntry.getEntryId());
 								
 								getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+								
+								// Inform other clients about the editing
+								for (String clientJid : knownClientsJabberIds) {
+									if (!clientJid.equals(from)) {
+										EntryEditedInfo info = new EntryEditedInfo();
+										info.setListId(listId);
+										info.setEntry(editedEntry);
+										info.setTo(clientJid);
+										info.setFrom(to);
+										getAgent().getConnection().sendPacket(new BeanIQAdapter(info));
+									}
+								}
 							} else {
 								// TODO handle error case
 							}
@@ -307,12 +385,24 @@ public class Mobilist extends MobilisService {
 							boolean success = parent.removeEntryById(entryId);
 							
 							if (success) {
+								// Confirm the deletion
 								DeleteEntryResponse response = new DeleteEntryResponse();
 								response.setEntryId(entryId);
 								response.setTo(request.getFrom());
 								response.setFrom(request.getTo());
 								
 								getAgent().getConnection().sendPacket(new BeanIQAdapter(response));
+								
+								// Inform other clients about the deletion
+								for (String clientJid : knownClientsJabberIds) {
+									if (!clientJid.equals(from)) {
+										EntryDeletedInfo info = new EntryDeletedInfo();
+										info.setEntryId(entryId);
+										info.setTo(clientJid);
+										info.setFrom(to);
+										getAgent().getConnection().sendPacket(new BeanIQAdapter(info));
+									}
+								}
 							} else {
 								// TODO handle error case
 							}
