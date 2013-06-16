@@ -191,6 +191,20 @@
 		[accept setEntryId:[[entryCreatedInfo entry] entryId]];
 		[connection sendBean:accept];
 	}
+	
+	if ([theBean class] == [EntryEditedInfo class]) {
+		EntryEditedInfo* entryEditedInfo = (EntryEditedInfo*) theBean;
+		NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+		[userInfo setObject:[entryEditedInfo listId] forKey:@"listId"];
+		[userInfo setObject:[entryEditedInfo entry] forKey:@"entry"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryEditedInformed
+															object:self
+														  userInfo:userInfo];
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryEditedInformed
+															object:self
+														  userInfo:userInfo];
+	}
 }
 
 /*
@@ -258,6 +272,7 @@
 	[incomingBeanPrototypes addObject:[[ListEditedInfo alloc] init]];
 	[incomingBeanPrototypes addObject:[[ListDeletedInfo alloc] init]];
 	[incomingBeanPrototypes addObject:[[EntryCreatedInfo alloc] init]];
+	[incomingBeanPrototypes addObject:[[EntryEditedInfo alloc] init]];
 	
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];

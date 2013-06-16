@@ -73,6 +73,9 @@
 												 selector:@selector(receivedEntryCreatedInfo:)
 													 name:NotificationEntryCreatedInformed
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedEntryEditedInfo:)
+													 name:NotificationEntryEditedInformed object:nil];
     }
     return self;
 }
@@ -157,6 +160,22 @@
 	
 	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
 	[listForEntry addListEntry:entry];
+	
+	[existingsListsTable reloadData];
+}
+
+- (void)receivedEntryEditedInfo:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	NSString* listId = [userInfo objectForKey:@"listId"];
+	MobiListEntry* entry = [userInfo objectForKey:@"entry"];
+	
+	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
+	MobiListEntry* oldEntry = [listForEntry entryById:[entry entryId]];
+	
+	[oldEntry setTitle:[entry title]];
+	[oldEntry setDescription:[entry description]];
+	[oldEntry setDueDate:[entry dueDate]];
+	[oldEntry setDone:[entry done]];
 	
 	[existingsListsTable reloadData];
 }

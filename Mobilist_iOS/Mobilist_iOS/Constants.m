@@ -21,6 +21,7 @@ NSString* const NotificationListCreatedInformed = @"ListCreatedInformed";
 NSString* const NotificationListEditedInformed = @"ListEditedInformed";
 NSString* const NotificationListDeletedInformed = @"ListDeletedInformed";
 NSString* const NotificationEntryCreatedInformed = @"EntryCreatedInformed";
+NSString* const NotificationEntryEditedInformed = @"EntryEditedInformed";
 
 NSString* const CellTodoListEntry = @"TodoListEntryCell";
 NSString* const CellTodoList = @"TodoListCell";

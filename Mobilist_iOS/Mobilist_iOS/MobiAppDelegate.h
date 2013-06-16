@@ -29,7 +29,8 @@
 #import "ListDeletedAccept.h"
 #import "EntryCreatedInfo.h"
 #import "EntryCreatedAccept.h"
-//#import "DashboardViewController.h"
+#import "EntryEditedInfo.h"
+#import "EntryEditedAccept.h"
 
 @class DashboardViewController;
 

@@ -22,6 +22,8 @@
 		79207521176DAAA900C6F1D2 /* ListDeletedAccept.m in Sources */ = {isa = PBXBuildFile; fileRef = 79207520176DAAA900C6F1D2 /* ListDeletedAccept.m */; };
 		79207524176DD83500C6F1D2 /* EntryCreatedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 79207523176DD83400C6F1D2 /* EntryCreatedInfo.m */; };
 		79207527176DDF5200C6F1D2 /* EntryCreatedAccept.m in Sources */ = {isa = PBXBuildFile; fileRef = 79207526176DDF5100C6F1D2 /* EntryCreatedAccept.m */; };
+		7920752A176DF07700C6F1D2 /* EntryEditedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 79207529176DF07600C6F1D2 /* EntryEditedInfo.m */; };
+		7920752D176DF34300C6F1D2 /* EntryEditedAccept.m in Sources */ = {isa = PBXBuildFile; fileRef = 7920752C176DF34200C6F1D2 /* EntryEditedAccept.m */; };
 		7972141217212C7300D63C38 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7972141117212C7300D63C38 /* libiconv.dylib */; };
 		79768E8D171AD42800F5DDA1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79768E8C171AD42800F5DDA1 /* UIKit.framework */; };
 		79768E8F171AD42800F5DDA1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79768E8E171AD42800F5DDA1 /* Foundation.framework */; };
@@ -110,6 +112,10 @@
 		79207523176DD83400C6F1D2 /* EntryCreatedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryCreatedInfo.m; sourceTree = "<group>"; };
 		79207525176DDF5100C6F1D2 /* EntryCreatedAccept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryCreatedAccept.h; sourceTree = "<group>"; };
 		79207526176DDF5100C6F1D2 /* EntryCreatedAccept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryCreatedAccept.m; sourceTree = "<group>"; };
+		79207528176DF07500C6F1D2 /* EntryEditedInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryEditedInfo.h; sourceTree = "<group>"; };
+		79207529176DF07600C6F1D2 /* EntryEditedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryEditedInfo.m; sourceTree = "<group>"; };
+		7920752B176DF34200C6F1D2 /* EntryEditedAccept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryEditedAccept.h; sourceTree = "<group>"; };
+		7920752C176DF34200C6F1D2 /* EntryEditedAccept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryEditedAccept.m; sourceTree = "<group>"; };
 		7972141117212C7300D63C38 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		79768E89171AD42800F5DDA1 /* Mobilist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mobilist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79768E8C171AD42800F5DDA1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -345,6 +351,8 @@
 				7920751D176DA83D00C6F1D2 /* ListDeletedInfo.m */,
 				79207522176DD83400C6F1D2 /* EntryCreatedInfo.h */,
 				79207523176DD83400C6F1D2 /* EntryCreatedInfo.m */,
+				79207528176DF07500C6F1D2 /* EntryEditedInfo.h */,
+				79207529176DF07600C6F1D2 /* EntryEditedInfo.m */,
 			);
 			name = Incoming;
 			sourceTree = "<group>";
@@ -376,6 +384,8 @@
 				79207520176DAAA900C6F1D2 /* ListDeletedAccept.m */,
 				79207525176DDF5100C6F1D2 /* EntryCreatedAccept.h */,
 				79207526176DDF5100C6F1D2 /* EntryCreatedAccept.m */,
+				7920752B176DF34200C6F1D2 /* EntryEditedAccept.h */,
+				7920752C176DF34200C6F1D2 /* EntryEditedAccept.m */,
 			);
 			name = Outgoing;
 			sourceTree = "<group>";
@@ -587,6 +597,8 @@
 				79207521176DAAA900C6F1D2 /* ListDeletedAccept.m in Sources */,
 				79207524176DD83500C6F1D2 /* EntryCreatedInfo.m in Sources */,
 				79207527176DDF5200C6F1D2 /* EntryCreatedAccept.m in Sources */,
+				7920752A176DF07700C6F1D2 /* EntryEditedInfo.m in Sources */,
+				7920752D176DF34300C6F1D2 /* EntryEditedAccept.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
