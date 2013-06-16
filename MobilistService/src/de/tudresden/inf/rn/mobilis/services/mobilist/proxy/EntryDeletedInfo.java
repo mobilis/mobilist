@@ -7,17 +7,18 @@ import de.tudresden.inf.rn.mobilis.xmpp.beans.XMPPBean;
 public class EntryDeletedInfo extends XMPPBean {
 
 	private static final long serialVersionUID = -89363913082031510L;
+	private String listId;
 	private String entryId = null;
 
 	public EntryDeletedInfo( String id ) {
 		super();
 		this.entryId = id;
 
-		this.setType( XMPPBean.TYPE_RESULT );
+		this.setType( XMPPBean.TYPE_SET );
 	}
 
 	public EntryDeletedInfo(){
-		this.setType( XMPPBean.TYPE_RESULT );
+		this.setType( XMPPBean.TYPE_SET );
 	}
 
 
@@ -35,6 +36,9 @@ public class EntryDeletedInfo extends XMPPBean {
 				}
 				else if (tagName.equals( "entryId" ) ) {
 					this.entryId = parser.nextText();
+				}
+				else if (tagName.equals( "listId" ) ) {
+					this.listId = parser.nextText();
 				}
 				else if (tagName.equals("error")) {
 					parser = parseErrorAttributes(parser);
@@ -83,7 +87,10 @@ public class EntryDeletedInfo extends XMPPBean {
 	public String payloadToXML() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append( "<entryId>" )
+		sb.append("<listId>")
+			.append(this.listId)
+			.append("</listId>")
+			.append( "<entryId>" )
 			.append( this.entryId )
 			.append( "</entryId>" );
 
@@ -99,6 +106,14 @@ public class EntryDeletedInfo extends XMPPBean {
 
 	public void setEntryId( String id ) {
 		this.entryId = id;
+	}
+
+	public String getListId() {
+		return listId;
+	}
+
+	public void setListId(String listId) {
+		this.listId = listId;
 	}
 
 }

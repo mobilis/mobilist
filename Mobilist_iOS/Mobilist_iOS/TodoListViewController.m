@@ -50,6 +50,10 @@
 												 selector:@selector(receivedEntryEditedInfo:)
 													 name:NotificationEntryEditedInformed
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedEntryDeletedInfo:)
+													 name:NotificationEntryDeletedInformed
+												   object:nil];
     }
 	
     return self;
@@ -91,6 +95,10 @@
 }
 
 - (void)receivedEntryEditedInfo:(NSNotification* )notification {
+	[[self tableView] reloadData];
+}
+
+- (void)receivedEntryDeletedInfo:(NSNotification* )notification {
 	[[self tableView] reloadData];
 }
 

@@ -201,9 +201,23 @@
 															object:self
 														  userInfo:userInfo];
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryEditedInformed
+		EntryEditedAccept* accept = [[EntryEditedAccept alloc] init];
+		[accept setEntryId:[[entryEditedInfo entry] entryId]];
+		[connection sendBean:accept];
+	}
+	
+	if ([theBean class] == [EntryDeletedInfo class]) {
+		EntryDeletedInfo* entryDeletedInfo = (EntryDeletedInfo*) theBean;
+		NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+		[userInfo setObject:[entryDeletedInfo listId] forKey:@"listId"];
+		[userInfo setObject:[entryDeletedInfo entryId] forKey:@"entryId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryDeletedInformed
 															object:self
 														  userInfo:userInfo];
+		
+		EntryDeletedAccept* accept = [[EntryDeletedAccept alloc] init];
+		[accept setEntryId:[entryDeletedInfo entryId]];
+		[connection sendBean:accept];
 	}
 }
 
@@ -263,7 +277,7 @@
 	[incomingBeanPrototypes addObject:[[SyncResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[GetListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[CreateListResponse alloc] init]];
-	[incomingBeanPrototypes addObject:[[DeleteListResponse alloc] init]];
+	[incomingBeanPrototypes addObject:[[DeleteListResponse alloc] init]]; // EXC_BAD_ACCESS
 	[incomingBeanPrototypes addObject:[[EditListResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[CreateEntryResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[EditEntryResponse alloc] init]];
@@ -273,6 +287,7 @@
 	[incomingBeanPrototypes addObject:[[ListDeletedInfo alloc] init]];
 	[incomingBeanPrototypes addObject:[[EntryCreatedInfo alloc] init]];
 	[incomingBeanPrototypes addObject:[[EntryEditedInfo alloc] init]];
+	[incomingBeanPrototypes addObject:[[EntryDeletedInfo alloc] init]];
 	
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];

@@ -397,6 +397,7 @@ public class Mobilist extends MobilisService {
 								for (String clientJid : knownClientsJabberIds) {
 									if (!clientJid.equals(from)) {
 										EntryDeletedInfo info = new EntryDeletedInfo();
+										info.setListId(listId);
 										info.setEntryId(entryId);
 										info.setTo(clientJid);
 										info.setFrom(to);

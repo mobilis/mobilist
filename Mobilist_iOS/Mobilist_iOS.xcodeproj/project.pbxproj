@@ -61,6 +61,8 @@
 		79A4DDCF176326EC00E6BDE4 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DDCE176326EB00E6BDE4 /* Constants.m */; };
 		79AE3B851735AF1C000A5CA8 /* mobilist-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */; };
 		79AE3B871735AF22000A5CA8 /* mobilist-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */; };
+		79B293F5176E05840059E65A /* EntryDeletedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B293F4176E05840059E65A /* EntryDeletedInfo.m */; };
+		79B293F8176E0AC10059E65A /* EntryDeletedAccept.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B293F7176E0AC10059E65A /* EntryDeletedAccept.m */; };
 		79BA8D351726C73B007FB4B3 /* TodoListCell~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79BA8D341726C73B007FB4B3 /* TodoListCell~iphone.xib */; };
 		79BA8D381726C784007FB4B3 /* TodoListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BA8D371726C784007FB4B3 /* TodoListCell.m */; };
 		79BA8D3B17290423007FB4B3 /* TodoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BA8D3A17290423007FB4B3 /* TodoListViewController.m */; };
@@ -171,6 +173,10 @@
 		79A4DDCE176326EB00E6BDE4 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		79AE3B841735AF1C000A5CA8 /* mobilist-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon.png"; path = "../mobilist-icon.png"; sourceTree = "<group>"; };
 		79AE3B861735AF22000A5CA8 /* mobilist-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mobilist-icon@2x.png"; path = "../mobilist-icon@2x.png"; sourceTree = "<group>"; };
+		79B293F3176E05840059E65A /* EntryDeletedInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryDeletedInfo.h; sourceTree = "<group>"; };
+		79B293F4176E05840059E65A /* EntryDeletedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryDeletedInfo.m; sourceTree = "<group>"; };
+		79B293F6176E0AC10059E65A /* EntryDeletedAccept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryDeletedAccept.h; sourceTree = "<group>"; };
+		79B293F7176E0AC10059E65A /* EntryDeletedAccept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryDeletedAccept.m; sourceTree = "<group>"; };
 		79BA8D341726C73B007FB4B3 /* TodoListCell~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TodoListCell~iphone.xib"; sourceTree = "<group>"; };
 		79BA8D361726C784007FB4B3 /* TodoListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoListCell.h; sourceTree = "<group>"; };
 		79BA8D371726C784007FB4B3 /* TodoListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoListCell.m; sourceTree = "<group>"; };
@@ -353,6 +359,8 @@
 				79207523176DD83400C6F1D2 /* EntryCreatedInfo.m */,
 				79207528176DF07500C6F1D2 /* EntryEditedInfo.h */,
 				79207529176DF07600C6F1D2 /* EntryEditedInfo.m */,
+				79B293F3176E05840059E65A /* EntryDeletedInfo.h */,
+				79B293F4176E05840059E65A /* EntryDeletedInfo.m */,
 			);
 			name = Incoming;
 			sourceTree = "<group>";
@@ -386,6 +394,8 @@
 				79207526176DDF5100C6F1D2 /* EntryCreatedAccept.m */,
 				7920752B176DF34200C6F1D2 /* EntryEditedAccept.h */,
 				7920752C176DF34200C6F1D2 /* EntryEditedAccept.m */,
+				79B293F6176E0AC10059E65A /* EntryDeletedAccept.h */,
+				79B293F7176E0AC10059E65A /* EntryDeletedAccept.m */,
 			);
 			name = Outgoing;
 			sourceTree = "<group>";
@@ -599,6 +609,8 @@
 				79207527176DDF5200C6F1D2 /* EntryCreatedAccept.m in Sources */,
 				7920752A176DF07700C6F1D2 /* EntryEditedInfo.m in Sources */,
 				7920752D176DF34300C6F1D2 /* EntryEditedAccept.m in Sources */,
+				79B293F5176E05840059E65A /* EntryDeletedInfo.m in Sources */,
+				79B293F8176E0AC10059E65A /* EntryDeletedAccept.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

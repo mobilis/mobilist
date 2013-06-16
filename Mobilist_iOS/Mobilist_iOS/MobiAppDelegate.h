@@ -31,6 +31,8 @@
 #import "EntryCreatedAccept.h"
 #import "EntryEditedInfo.h"
 #import "EntryEditedAccept.h"
+#import "EntryDeletedInfo.h"
+#import "EntryDeletedAccept.h"
 
 @class DashboardViewController;
 

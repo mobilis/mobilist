@@ -75,7 +75,12 @@
 												   object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(receivedEntryEditedInfo:)
-													 name:NotificationEntryEditedInformed object:nil];
+													 name:NotificationEntryEditedInformed
+												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedEntryDeletedInfo:)
+													 name:NotificationEntryDeletedInformed
+												   object:nil];
     }
     return self;
 }
@@ -176,6 +181,18 @@
 	[oldEntry setDescription:[entry description]];
 	[oldEntry setDueDate:[entry dueDate]];
 	[oldEntry setDone:[entry done]];
+	
+	[existingsListsTable reloadData];
+}
+
+- (void)receivedEntryDeletedInfo:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	NSString* listId = [userInfo objectForKey:@"listId"];
+	NSString* entryId = [userInfo objectForKey:@"entryId"];
+	
+	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
+	MobiListEntry* entryToBeDeleted = [listForEntry entryById:entryId];
+	[listForEntry removeListEntry:entryToBeDeleted];
 	
 	[existingsListsTable reloadData];
 }
