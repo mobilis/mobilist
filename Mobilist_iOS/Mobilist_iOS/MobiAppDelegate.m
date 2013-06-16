@@ -151,6 +151,46 @@
 		[accept setListId:[[listCreatedInfo list] listId]];
 		[connection sendBean:accept];
 	}
+	
+	if ([theBean class] == [ListEditedInfo class]) {
+		ListEditedInfo* listEditedInfo = (ListEditedInfo*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[listEditedInfo list]
+															 forKey:@"list"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationListEditedInformed
+															object:self
+														  userInfo:userInfo];
+		
+		ListEditedAccept* accept = [[ListEditedAccept alloc] init];
+		[accept setListId:[[listEditedInfo list] listId]];
+		[connection sendBean:accept];
+	}
+	
+	if ([theBean class] == [ListDeletedInfo class]) {
+		ListDeletedInfo* listDeletedInfo = (ListDeletedInfo*) theBean;
+		NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[listDeletedInfo listId]
+															 forKey:@"listId"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationListDeletedInformed
+															object:self
+														  userInfo:userInfo];
+		
+		ListDeletedAccept* accept = [[ListDeletedAccept alloc] init];
+		[accept setListId:[listDeletedInfo listId]];
+		[connection sendBean:accept];
+	}
+	
+	if ([theBean class] == [EntryCreatedInfo class]) {
+		EntryCreatedInfo* entryCreatedInfo = (EntryCreatedInfo*) theBean;
+		NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+		[userInfo setObject:[entryCreatedInfo listId] forKey:@"listId"];
+		[userInfo setObject:[entryCreatedInfo entry] forKey:@"entry"];
+		[[NSNotificationCenter defaultCenter] postNotificationName:NotificationEntryCreatedInformed
+															object:self
+														  userInfo:userInfo];
+		
+		EntryCreatedAccept* accept = [[EntryCreatedAccept alloc] init];
+		[accept setEntryId:[[entryCreatedInfo entry] entryId]];
+		[connection sendBean:accept];
+	}
 }
 
 /*
@@ -215,6 +255,9 @@
 	[incomingBeanPrototypes addObject:[[EditEntryResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[DeleteEntryRequest alloc] init]];
 	[incomingBeanPrototypes addObject:[[ListCreatedInfo alloc] init]];
+	[incomingBeanPrototypes addObject:[[ListEditedInfo alloc] init]];
+	[incomingBeanPrototypes addObject:[[ListDeletedInfo alloc] init]];
+	[incomingBeanPrototypes addObject:[[EntryCreatedInfo alloc] init]];
 	
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];

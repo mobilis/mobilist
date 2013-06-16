@@ -61,6 +61,18 @@
 												 selector:@selector(receivedListCreatedInfo:)
 													 name:NotificationListCreatedInformed
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListEditedInfo:)
+													 name:NotificationListEditedInformed
+												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedListDeletedInfo:)
+													 name:NotificationListDeletedInformed
+												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedEntryCreatedInfo:)
+													 name:NotificationEntryCreatedInformed
+												   object:nil];
     }
     return self;
 }
@@ -95,7 +107,9 @@
 
 - (void)receivedListDeletionConfirmedNotification:(NSNotification* )notification {
 	NSDictionary* userInfo = [notification userInfo];
-	NSLog(@"List deletion confirmed: %@", [userInfo objectForKey:@"listId"]);
+	NSString* listId = [userInfo objectForKey:@"listId"];
+	
+	[[MobiListStore sharedStore] setSyncedStatus:YES forListId:listId];
 }
 
 - (void)receivedListEditingConfirmedNotification:(NSNotification* )notification {
@@ -111,6 +125,39 @@
 	
 	[[MobiListStore sharedStore] addMobiList:list
 								newlyCreated:NO];
+	[existingsListsTable reloadData];
+}
+
+- (void)receivedListEditedInfo:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	MobiList* newList = [userInfo objectForKey:@"list"];
+	
+	MobiList* oldList = [[MobiListStore sharedStore] listByListId:[newList listId]];
+	
+	[oldList setListName:[newList listName]];
+	[oldList setListEntries:[newList listEntries]];
+	
+	[existingsListsTable reloadData];
+}
+
+- (void)receivedListDeletedInfo:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	NSString* listId = [userInfo objectForKey:@"listId"];
+	
+	MobiList* listToBeDeleted = [[MobiListStore sharedStore] listByListId:listId];
+	[[MobiListStore sharedStore] removeMobiList:listToBeDeleted];
+	
+	[existingsListsTable reloadData];
+}
+
+- (void)receivedEntryCreatedInfo:(NSNotification* )notification {
+	NSDictionary* userInfo = [notification userInfo];
+	NSString* listId = [userInfo objectForKey:@"listId"];
+	MobiListEntry* entry = [userInfo objectForKey:@"entry"];
+	
+	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
+	[listForEntry addListEntry:entry];
+	
 	[existingsListsTable reloadData];
 }
 
@@ -192,6 +239,8 @@
 		
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
 						 withRowAnimation:UITableViewRowAnimationMiddle];
+		
+		[store setSyncedStatus:NO forListId:[selectedList listId]];
 	}
 }
 

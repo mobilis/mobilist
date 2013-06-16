@@ -189,11 +189,11 @@ public class Mobilist extends MobilisService {
 						
 						ListStore.getInstance().addList(theNewList);
 						
-						try {
+						/*try {
 							Thread.sleep(2000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
-						}
+						}*/
 						
 						// Confirm the list creation
 						CreateListResponse response = new CreateListResponse();
@@ -255,11 +255,11 @@ public class Mobilist extends MobilisService {
 							oldList.setListName(editedList.getListName());
 							oldList.setEntries(editedList.getEntries());
 							
-							try {
+							/*try {
 								Thread.sleep(2000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
-							}
+							}*/
 							
 							// Confirm the edit
 							EditListResponse response = new EditListResponse();
@@ -294,11 +294,11 @@ public class Mobilist extends MobilisService {
 						if (parent != null) {
 							parent.getEntries().add(entry);
 							
-							try {
+							/*try {
 								Thread.sleep(2000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
-							}
+							}*/
 							
 							// Confirm the creation
 							CreateEntryResponse response = new CreateEntryResponse();
@@ -340,11 +340,11 @@ public class Mobilist extends MobilisService {
 								oldEntry.setDueDate(editedEntry.getDueDate());
 								oldEntry.setDone(editedEntry.isDone());
 								
-								try {
+								/*try {
 									Thread.sleep(2000);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
-								}
+								}*/
 								
 								// Confirm the editing
 								EditEntryResponse response = new EditEntryResponse();

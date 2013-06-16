@@ -340,7 +340,7 @@
 		</msdl:operation>
 		
 		<msdl:operation name="ListDeleted" pattern="http://www.w3.org/ns/wsdl/out-in">
-			<msdl:input element="mns:ListDeletedInfo" />
+			<msdl:input element="mns:ListDeletedAccept" />
 			<msdl:output element="mns:ListDeletedInfo" />
 		</msdl:operation>
 		

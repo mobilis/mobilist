@@ -10,6 +10,8 @@
 
 @implementation SyncResponse
 
+@synthesize lists;
+
 - (id)init {
 	self = [super initWithBeanType:RESULT];
 	

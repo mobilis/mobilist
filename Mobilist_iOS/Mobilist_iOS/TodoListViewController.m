@@ -42,6 +42,10 @@
 												 selector:@selector(receivedEntryEditingConfirmed:)
 													 name:NotificationEntryEditingConfirmed
 												   object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(receivedEntryCreatedInfo:)
+													 name:NotificationEntryCreatedInformed
+												   object:nil];
     }
 	
     return self;
@@ -75,6 +79,10 @@
 	
 	[[MobiListStore sharedStore] setSyncedStatus:YES
 									  forEntryId:entryId];
+	[[self tableView] reloadData];
+}
+
+- (void)receivedEntryCreatedInfo:(NSNotification* )notification {
 	[[self tableView] reloadData];
 }
 

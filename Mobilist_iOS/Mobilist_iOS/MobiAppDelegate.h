@@ -23,6 +23,12 @@
 #import "DeleteEntryRequest.h"
 #import "ListCreatedInfo.h"
 #import "ListCreatedAccept.h"
+#import "ListEditedInfo.h"
+#import "ListEditedAccept.h"
+#import "ListDeletedInfo.h"
+#import "ListDeletedAccept.h"
+#import "EntryCreatedInfo.h"
+#import "EntryCreatedAccept.h"
 //#import "DashboardViewController.h"
 
 @class DashboardViewController;

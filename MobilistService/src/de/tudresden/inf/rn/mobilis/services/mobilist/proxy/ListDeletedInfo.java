@@ -13,11 +13,11 @@ public class ListDeletedInfo extends XMPPBean {
 		super();
 		this.listId = id;
 
-		this.setType( XMPPBean.TYPE_RESULT );
+		this.setType( XMPPBean.TYPE_SET );
 	}
 
 	public ListDeletedInfo(){
-		this.setType( XMPPBean.TYPE_RESULT );
+		this.setType( XMPPBean.TYPE_SET );
 	}
 
 
