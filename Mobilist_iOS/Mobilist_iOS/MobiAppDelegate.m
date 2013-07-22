@@ -18,6 +18,7 @@
  */
 
 - (void)didAuthenticate {
+	NSLog(@"Authentication successful");
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:connection forKey:@"connection"];
 	[[NSNotificationCenter defaultCenter] postNotificationName:NotificationConnectionEstablished
 														object:self
@@ -262,17 +263,17 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+	NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	NSLog(@"%@", NSStringFromSelector(_cmd));
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+	NSLog(@"%@", NSStringFromSelector(_cmd));
 	NSMutableArray* incomingBeanPrototypes = [NSMutableArray array];
 	[incomingBeanPrototypes addObject:[[SyncResponse alloc] init]];
 	[incomingBeanPrototypes addObject:[[GetListResponse alloc] init]];
@@ -296,9 +297,16 @@
 	
 	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
 		// 192.168.1.51
-		connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
+		/*connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
 												  password:passwordFromDefaults
 												  hostName:hostnameFromDefaults
+										  presenceDelegate:self
+											stanzaDelegate:self
+											  beanDelegate:self
+								 listeningForIncomingBeans:incomingBeanPrototypes];*/
+		connection = [MXiConnection connectionWithJabberID:@"richard@mobilis-dev.inf.tu-dresden.de"
+												  password:@"richard@mobilis"
+												  hostName:@"mobilis-dev.inf.tu-dresden.de"
 										  presenceDelegate:self
 											stanzaDelegate:self
 											  beanDelegate:self
