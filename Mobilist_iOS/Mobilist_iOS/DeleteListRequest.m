@@ -23,8 +23,7 @@
 														xmlns:[[self class] iqNamespace]];
 	
 	NSXMLElement* listIdElement = [NSXMLElement elementWithName:@"listId"];
-	[listIdElement setStringValue:listId];
-	
+	[listIdElement setStringValue:[self listId]];
 	[beanElement addChild:listIdElement];
 	
 	return beanElement;

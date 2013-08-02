@@ -47,6 +47,7 @@
 	} else {
 		doneStringValue = @"false";
 	}
+	[doneElement setStringValue:[entry done] ? @"true" : @"false"];
 	[doneElement setStringValue:doneStringValue];
 	[entryElement addChild:doneElement];
 	

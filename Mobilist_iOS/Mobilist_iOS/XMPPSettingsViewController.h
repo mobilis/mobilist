@@ -13,7 +13,7 @@
 {
 	__weak IBOutlet UITextField *jabberIDTextField;
 	__weak IBOutlet UITextField *passwordTextField;
-	__weak IBOutlet UITextField *coordinatorServiceTextField;
+	__weak IBOutlet UITextField *serviceTextField;
 	__weak IBOutlet UITextField *hostnameTextField;
 }
 

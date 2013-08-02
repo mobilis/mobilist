@@ -240,8 +240,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	MobiAppDelegate* delegate = (MobiAppDelegate*) [[UIApplication sharedApplication] delegate];
+	
 	if (![delegate areXMPPSettingsSufficient]) {
 		return @"Go to the settings view and supply your XMPP account information.";
+	}
+	
+	if (![delegate authenticated]) {
+		return @"Connecting …";
 	}
 	
 	if ([[[MobiListStore sharedStore] allLists] count] > 0) {

@@ -21,8 +21,8 @@
 - (NSXMLElement* )toXML {
 	NSXMLElement* beanElement = [NSXMLElement elementWithName:[[self class] elementName]
 														xmlns:[[self class] iqNamespace]];
-	NSXMLElement* listIdElement = [NSXMLElement elementWithName:@"listId"];
 	
+	NSXMLElement* listIdElement = [NSXMLElement elementWithName:@"listId"];
 	[listIdElement setStringValue:[self listId]];
 	[beanElement addChild:listIdElement];
 	

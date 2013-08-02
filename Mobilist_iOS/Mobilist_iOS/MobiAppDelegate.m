@@ -11,7 +11,7 @@
 
 @implementation MobiAppDelegate
 
-@synthesize dashBoardController, areXMPPSettingsSufficient;
+@synthesize dashBoardController, areXMPPSettingsSufficient, authenticated;
 
 /*
  * Presence delegate
@@ -19,6 +19,7 @@
 
 - (void)didAuthenticate {
 	NSLog(@"Authentication successful");
+	authenticated = true;
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:connection forKey:@"connection"];
 	[[NSNotificationCenter defaultCenter] postNotificationName:NotificationConnectionEstablished
 														object:self
@@ -264,6 +265,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	NSLog(@"%@", NSStringFromSelector(_cmd));
+	authenticated = false;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -294,19 +296,14 @@
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
 	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
+	NSString* serviceJIDFromDefaults = [userDefaults stringForKey:UserDefaultMobilistService];
 	
 	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
-		// 192.168.1.51
-		/*connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
+		authenticated = false;
+		connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
 												  password:passwordFromDefaults
 												  hostName:hostnameFromDefaults
-										  presenceDelegate:self
-											stanzaDelegate:self
-											  beanDelegate:self
-								 listeningForIncomingBeans:incomingBeanPrototypes];*/
-		connection = [MXiConnection connectionWithJabberID:@"richard@mobilis-dev.inf.tu-dresden.de"
-												  password:@"richard@mobilis"
-												  hostName:@"mobilis-dev.inf.tu-dresden.de"
+												serviceJID:serviceJIDFromDefaults
 										  presenceDelegate:self
 											stanzaDelegate:self
 											  beanDelegate:self

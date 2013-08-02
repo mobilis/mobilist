@@ -45,5 +45,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DashboardViewController* dashBoardController;
 @property BOOL areXMPPSettingsSufficient;
+@property (nonatomic) BOOL authenticated;
 
 @end

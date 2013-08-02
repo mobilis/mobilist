@@ -37,7 +37,7 @@
 	[jabberIDTextField setText:[userDefaults stringForKey:UserDefaultJabberId]];
 	[passwordTextField setText:[userDefaults stringForKey:UserDefaultPassword]];
 	[hostnameTextField setText:[userDefaults stringForKey:UserDefaultHostname]];
-	[coordinatorServiceTextField setText:[userDefaults stringForKey:UserDefaultCoordinatorService]];
+	[serviceTextField setText:[userDefaults stringForKey:UserDefaultMobilistService]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -47,7 +47,7 @@
 	[userDefaults setObject:[jabberIDTextField text] forKey:UserDefaultJabberId];
 	[userDefaults setObject:[passwordTextField text] forKey:UserDefaultPassword];
 	[userDefaults setObject:[hostnameTextField text] forKey:UserDefaultHostname];
-	[userDefaults setObject:[coordinatorServiceTextField text] forKey:UserDefaultCoordinatorService];
+	[userDefaults setObject:[serviceTextField text] forKey:UserDefaultMobilistService];
 	
 	[userDefaults synchronize];
 }
