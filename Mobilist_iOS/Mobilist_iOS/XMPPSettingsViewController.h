@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "Constants.h"
 
-@interface XMPPSettingsViewController : UIViewController
+@interface XMPPSettingsViewController : UIViewController <UITextFieldDelegate>
 {
 	__weak IBOutlet UITextField *jabberIDTextField;
 	__weak IBOutlet UITextField *passwordTextField;
 	__weak IBOutlet UITextField *serviceTextField;
 	__weak IBOutlet UITextField *hostnameTextField;
+	__weak IBOutlet UIScrollView *scrollView;
 }
 
 - (IBAction)backgroundTapped:(id)sender;
