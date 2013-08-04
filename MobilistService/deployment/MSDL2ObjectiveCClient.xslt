@@ -10,7 +10,7 @@
 	<xsl:output method="text" version="2.0" encoding="UTF-8" indent="yes"/>
 
 	<!-- User defined variables -->
-	<xsl:variable name="outputFolder" select="'client/'" />
+	<xsl:variable name="outputFolder" select="'/Users/richard/Desktop/client/'" />
 	<xsl:variable name="serviceXMLNS" select="'mns'" />
 	
 	<!-- Internal variables - do not edit these unless you know exactly what you're doing -->
@@ -105,7 +105,7 @@
 				Implementation file
 			-->
 			<xsl:result-document href="{$implFileName}">
-<xsl:text>#import "</xsl:text><xsl:value-of select="substring-after($headerFileName, '/')" /><xsl:text>"
+<xsl:text>#import "</xsl:text><xsl:value-of select="concat($className, '.h')" /><xsl:text>"
 
 @implementation </xsl:text><xsl:value-of select="$className" /><xsl:text>
 
@@ -245,6 +245,8 @@
 				</xsl:if>
 
 <xsl:text>
+}
+
 + (NSString* )elementName {
 	return @"</xsl:text><xsl:value-of select="$className" /><xsl:text>";
 }
@@ -256,6 +258,26 @@
 @end</xsl:text>	
 			</xsl:result-document>
 			
+		</xsl:for-each>
+		
+		<!--
+			Generate all element classes that are not beans (i.e. not mentioned as input or output of an operation),
+			but are defined in the schema area
+		-->
+		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element">
+			<xsl:variable name="boHeaderFileName" select="concat($outputFolder, ./@name, '.h')" />
+			<xsl:variable name="boImplFileName" select="concat($outputFolder, ./@name, '.m')" />
+			
+			<xsl:choose>
+				<xsl:when test="not(unparsed-text-available($boHeaderFileName))">
+					<!-- File is not there yet -->
+					
+					<xsl:result-document href="{$boHeaderFileName}"></xsl:result-document>
+					
+					<xsl:variable name="infoMessage" select="concat('Generated ', ./@name)" />
+					<xsl:message><xsl:value-of select="$infoMessage" /></xsl:message>
+				</xsl:when>
+			</xsl:choose>
 		</xsl:for-each>
 		
 	</xsl:template>
@@ -616,8 +638,7 @@
 		
 		<xsl:text>	</xsl:text><xsl:value-of select="$memberName" />
 		<xsl:text> = [</xsl:text><xsl:value-of select="$elementName" />
-		<xsl:text> stringValue];</xsl:text><xsl:value-of select="$newline" />
-		<xsl:text>}</xsl:text><xsl:value-of select="$newline" />
+		<xsl:text> stringValue];</xsl:text>
 	</xsl:template>
 	
 	<!-- END Sub templates for xml to bean conversion -->
