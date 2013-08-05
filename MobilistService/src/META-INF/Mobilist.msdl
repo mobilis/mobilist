@@ -58,7 +58,7 @@
 			<xs:element name="GetListRequest">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="list" type="mns:MobiList" />
+						<xs:element name="listId" type="xs:string" maxOccurs="unbounded" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

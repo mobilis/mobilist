@@ -10,7 +10,7 @@
 	<xsl:output method="text" version="2.0" encoding="UTF-8" indent="yes"/>
 
 	<!-- User defined variables -->
-	<xsl:variable name="outputFolder" select="'/Users/richard/Desktop/client/'" />
+	<xsl:variable name="outputFolder" select="'client/'" />
 	<xsl:variable name="serviceXMLNS" select="'mns'" />
 	
 	<!-- Internal variables - do not edit these unless you know exactly what you're doing -->
@@ -53,9 +53,7 @@
 
 					<xsl:text>@property (nonatomic</xsl:text>
 					<xsl:choose>
-						<xsl:when test="@maxOccurs = 'unbounded'">
-							<xsl:variable name="lowerName" select="lower-case(./@name)" />
-							
+						<xsl:when test="./@maxOccurs != '1'">
 							<xsl:text>, strong) NSMutableArray* </xsl:text>
 							<xsl:value-of select="./@name" />
 							<xsl:text>;</xsl:text>
@@ -260,26 +258,125 @@
 			
 		</xsl:for-each>
 		
+	</xsl:template>
+	
+	<xsl:template match="/">
+		<xsl:apply-templates />
+		
 		<!--
 			Generate all element classes that are not beans (i.e. not mentioned as input or output of an operation),
 			but are defined in the schema area
 		-->
-		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element">
-			<xsl:variable name="boHeaderFileName" select="concat($outputFolder, ./@name, '.h')" />
-			<xsl:variable name="boImplFileName" select="concat($outputFolder, ./@name, '.m')" />
-			
-			<xsl:choose>
-				<xsl:when test="not(unparsed-text-available($boHeaderFileName))">
-					<!-- File is not there yet -->
-					
-					<xsl:result-document href="{$boHeaderFileName}"></xsl:result-document>
-					
-					<xsl:variable name="infoMessage" select="concat('Generated ', ./@name)" />
-					<xsl:message><xsl:value-of select="$infoMessage" /></xsl:message>
-				</xsl:when>
-			</xsl:choose>
-		</xsl:for-each>
+		<xsl:variable name="allClassNames" select="/msdl:description/msdl:types/xs:schema/xs:element/@name" />
+		<xsl:variable name="allBeanNames" select="/msdl:description/msdl:interface/msdl:operation/*/@element" />
 		
+		<xsl:for-each select="$allClassNames">
+			<xsl:variable name="className" select="." />
+			<xsl:variable name="namespacifiedClassName" select="concat($serviceXMLNS, ':', .)" />
+			
+			<xsl:if test="not($allBeanNames = $namespacifiedClassName)">
+				<!-- Generate header file -->
+				<xsl:result-document href="{concat($outputFolder, $className, '.h')}">
+<!-- Imports -->
+<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $className]/xs:complexType/xs:sequence/xs:element">
+	<xsl:if test="starts-with(./@type, $serviceXMLNS)">
+		<xsl:text>#import "</xsl:text><xsl:value-of select="substring-after(./@type, ':')" />
+		<xsl:text>.h"</xsl:text><xsl:value-of select="$newline" />
+		
+		<xsl:if test="position() = last()">
+			<xsl:value-of select="$newline" />
+		</xsl:if>
+	</xsl:if>
+	<xsl:if test="not(./@type)">
+		<xsl:text>#import "</xsl:text>
+		<xsl:call-template name="getAnonymousComplexTypeName">
+			<xsl:with-param name="elementName" select="./@name" />
+		</xsl:call-template>
+		<xsl:text>.h"</xsl:text><xsl:value-of select="$newline" />
+		
+		<xsl:if test="position() = last()">
+			<xsl:value-of select="$newline" />
+		</xsl:if>
+	</xsl:if>
+</xsl:for-each>
+					
+<!-- Class definition -->
+<xsl:text>@interface </xsl:text><xsl:value-of select="$className" /><xsl:text> : NSObject</xsl:text>
+<xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+					
+<!-- Properties -->
+<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $className]/xs:complexType/xs:sequence/xs:element">
+	<xsl:text>@property (nonatomic</xsl:text>
+	<xsl:choose>
+		<xsl:when test="./@maxOccurs != '1'">
+			<xsl:text>, strong) NSMutableArray* </xsl:text>
+			<xsl:value-of select="./@name" />
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:choose>
+				<xsl:when test="./@type = 'xs:string'">
+					<xsl:text>, strong) NSString*</xsl:text>
+				</xsl:when>
+				<xsl:when test="./@type = 'xs:int'">
+					<xsl:text>) NSInteger</xsl:text>
+				</xsl:when>
+				<xsl:when test="./@type = 'xs:long'">
+					<xsl:text>) NSInteger</xsl:text>
+				</xsl:when>
+				<xsl:when test="./@type = 'xs:boolean'">
+					<xsl:text>) BOOL</xsl:text>
+				</xsl:when>
+				<xsl:when test="starts-with(./@type, $serviceXMLNS)">
+					<xsl:text>, strong) </xsl:text><xsl:value-of select="substring-after(./@type, ':')" /><xsl:text>*</xsl:text>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:text>, strong) </xsl:text>
+					<xsl:call-template name="getAnonymousComplexTypeName">
+						<xsl:with-param name="elementName" select="./@name" />
+					</xsl:call-template>
+					<xsl:text>*</xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
+			
+			<xsl:value-of select="$space" />
+			<xsl:value-of select="./@name" />
+		</xsl:otherwise>
+	</xsl:choose>
+	<xsl:text>;</xsl:text><xsl:value-of select="$newline" />
+	
+	<xsl:if test="position() = last()">
+		<xsl:value-of select="$newline" />
+	</xsl:if>
+</xsl:for-each>
+					
+<!-- End of header definition -->
+<xsl:text>@end</xsl:text>
+				</xsl:result-document>
+				
+				<!-- Generate implementation file -->
+				<xsl:result-document href="{concat($outputFolder, $className, '.m')}">
+<!-- Import header file -->
+<xsl:text>#import "</xsl:text><xsl:value-of select="$className" /><xsl:text>.h"</xsl:text>
+<xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+					
+<!-- Class definition -->
+<xsl:text>@implementation </xsl:text><xsl:value-of select="$className" />
+<xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+					
+<!-- Synthesize properties -->
+<xsl:text>@synthesize </xsl:text>
+<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $className]/xs:complexType/xs:sequence/xs:element">
+	<xsl:value-of select="./@name" />
+	<xsl:if test="position() != last()"><xsl:text>, </xsl:text></xsl:if>
+	<xsl:if test="position() = last()"><xsl:text>;</xsl:text></xsl:if>
+</xsl:for-each>
+<xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+					
+<!-- End of class definition -->
+<xsl:text>@end</xsl:text>
+				</xsl:result-document>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 
 	<!-- BEGIN Sub templates for bean to xml conversion -->
