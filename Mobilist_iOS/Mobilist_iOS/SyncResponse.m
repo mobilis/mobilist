@@ -19,17 +19,18 @@
 }
 
 - (void)fromXML:(NSXMLElement *)xml {
-	NSXMLNode* listsElement = [xml childAtIndex:0];
+	NSXMLElement* listsElement = (NSXMLElement*) [xml elementForName:@"lists"];
 	ListsSyncFromService* listsSyncFromService = [[ListsSyncFromService alloc] init];
 	
 	for (int i = 0; i < [listsElement childCount]; i++) {
-		NSXMLNode* listElement = [listsElement childAtIndex:i];
+		NSXMLElement* listElement = (NSXMLElement*) [listsElement childAtIndex:i];
 		ListSyncFromService* listSyncFromService = [[ListSyncFromService alloc] init];
 		
-		[listSyncFromService setListId:[[((NSXMLElement*) listElement) attributeStringValueForName:@"listId"]
-										stringByCorrectingXMLDecoding]];
-		[listSyncFromService setListCrc:[[((NSXMLElement*) listElement) attributeStringValueForName:@"listCrc"]
-										 stringByCorrectingXMLDecoding]];
+		NSXMLElement* listIdElement = (NSXMLElement*) [listElement elementForName:@"listId"];
+		[listSyncFromService setListId:[[listIdElement stringValue] stringByCorrectingXMLDecoding]];
+		
+		NSXMLElement* listCrcElement = (NSXMLElement*) [listElement elementForName:@"listCrc"];
+		[listSyncFromService setListCrc:[[listCrcElement stringValue] stringByCorrectingXMLDecoding]];
 		
 		[listsSyncFromService addListSyncFromService:listSyncFromService];
 	}

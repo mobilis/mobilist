@@ -26,7 +26,10 @@ public class ListsSync {
 		StringBuilder s = new StringBuilder();
 		
 		for (ListSync list : listSyncs) {
-			s.append("<list listId=\"" + list.getListId() + "\" listCrc=\"" + list.getListCrc() + "\" />");
+			s.append("<list>");
+			s.append("<listId>" + list.getListId() + "</listId>");
+			s.append("<listCrc>" + list.getListCrc() + "</listCrc>");
+			s.append("</list>");
 		}
 		
 		return s.toString();

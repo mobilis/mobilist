@@ -40,7 +40,23 @@
 			-->
 			<xsl:result-document href="{$headerFileName}">
 <xsl:text>#import &lt;MXi/MXi.h&gt;
+</xsl:text>
 
+<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $className]/xs:complexType/xs:sequence/xs:element">
+	<xsl:if test="starts-with(./@type, $serviceXMLNS)">
+		<xsl:text>#import "</xsl:text><xsl:value-of select="substring-after(./@type, ':')" />
+		<xsl:text>.h"</xsl:text><xsl:value-of select="$newline" />
+	</xsl:if>
+	<xsl:if test="not(./@type)">
+		<xsl:text>#import "</xsl:text>
+		<xsl:call-template name="makeFirstLetterUpperCase">
+			<xsl:with-param name="elementName" select="./@name" />
+		</xsl:call-template>
+		<xsl:text>.h"</xsl:text><xsl:value-of select="$newline" />
+	</xsl:if>
+</xsl:for-each>
+
+<xsl:text>
 @interface </xsl:text>
 				<xsl:value-of select="$className" />
 <xsl:text> : MXiBean &lt;</xsl:text>
@@ -78,7 +94,7 @@
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:text>, strong) </xsl:text>
-									<xsl:call-template name="getAnonymousComplexTypeName">
+									<xsl:call-template name="makeFirstLetterUpperCase">
 										<xsl:with-param name="elementName" select="./@name" />
 									</xsl:call-template>
 									<xsl:text>*</xsl:text>
@@ -139,7 +155,7 @@
 					<xsl:variable name="elementName" select="concat(./@name, 'Element')" />
 					
 					<xsl:choose>
-						<xsl:when test="./@maxOccurs = 'unbounded'">
+						<xsl:when test="./@maxOccurs != '1'">
 							<!-- NSArray -->
 							<xsl:call-template name="convertToListElement">
 								<xsl:with-param name="elementName" select="$elementName" />
@@ -213,37 +229,60 @@
 					<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name=$className]/xs:complexType/xs:sequence/xs:element">
 						<xsl:variable name="elementName" select="concat(./@name, 'Element')" />
 						
-						<xsl:text>	NSXMLElement* </xsl:text><xsl:value-of select="$elementName" />
-						<xsl:text> = (NSXMLElement*) [xml childAtIndex:</xsl:text><xsl:value-of select="position()-1" />
-						<xsl:text>];</xsl:text><xsl:value-of select="$newline" />
-						
 						<xsl:choose>
-							<xsl:when test="./@type">
-								<xsl:choose>
-									<xsl:when test="starts-with(./@type, 'xs:')">
-										<xsl:call-template name="convertFromSimpleAtomicXMLElement">
-											<xsl:with-param name="memberName" select="./@name" />
-										</xsl:call-template>
-									</xsl:when>
-									<xsl:when test="starts-with(./@type, $serviceXMLNS)">
-										
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:text>&lt;unknown&gt;</xsl:text>
-									</xsl:otherwise>
-								</xsl:choose>
+							<xsl:when test="./@maxOccurs != '1'">
+								<!-- array -->
 							</xsl:when>
 							<xsl:otherwise>
-								
+								<xsl:choose>
+									<xsl:when test="./@type">
+										<xsl:choose>
+											<xsl:when test="starts-with(./@type, 'xs:')">
+												<!-- simple type -->
+												<xsl:call-template name="convertFromSimpleAtomicXMLElement">
+													<xsl:with-param name="indent" select="$tab" />
+													<xsl:with-param name="objectToWorkOn" select="'self'" />
+													<xsl:with-param name="memberName" select="./@name" />
+													<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+													<xsl:with-param name="xmlElementName" select="./@name" />
+													<xsl:with-param name="xmlVariableName" select="'xml'" />
+													<xsl:with-param name="type" select="./@type" />
+												</xsl:call-template>
+											</xsl:when>
+											<xsl:when test="starts-with(./@type, $serviceXMLNS)">
+												<!-- custom type -->
+												<xsl:call-template name="convertFromCustomNamedAtomicElement">
+													<xsl:with-param name="indent" select="$tab" />
+													<xsl:with-param name="memberName" select="./@name" />
+													<xsl:with-param name="type" select="./@type" />
+													<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+													<xsl:with-param name="xmlElementName" select="./@name" />
+													<xsl:with-param name="xmlVariableName" select="'xml'" />
+												</xsl:call-template>
+											</xsl:when>
+											<xsl:otherwise>
+												<!-- unknown type -->
+												<xsl:text>&lt;unknown&gt;</xsl:text>
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:when>
+									<xsl:otherwise>
+										<!-- anomymous -->
+									</xsl:otherwise>
+								</xsl:choose>
 							</xsl:otherwise>
 						</xsl:choose>
+						
+						<xsl:value-of select="$newline" />
+						<xsl:if test="position() != last()">
+							<xsl:value-of select="$newline" />
+						</xsl:if>
 						
 					</xsl:for-each>
 
 				</xsl:if>
 
-<xsl:text>
-}
+<xsl:text>}
 
 + (NSString* )elementName {
 	return @"</xsl:text><xsl:value-of select="$className" /><xsl:text>";
@@ -289,7 +328,7 @@
 	</xsl:if>
 	<xsl:if test="not(./@type)">
 		<xsl:text>#import "</xsl:text>
-		<xsl:call-template name="getAnonymousComplexTypeName">
+		<xsl:call-template name="makeFirstLetterUpperCase">
 			<xsl:with-param name="elementName" select="./@name" />
 		</xsl:call-template>
 		<xsl:text>.h"</xsl:text><xsl:value-of select="$newline" />
@@ -297,6 +336,14 @@
 		<xsl:if test="position() = last()">
 			<xsl:value-of select="$newline" />
 		</xsl:if>
+		
+		<!--
+			The class that is being imported here also needs
+			to be generated
+		-->
+		<xsl:call-template name="generateAnonymouslyGivenClass">
+			<xsl:with-param name="element" select="." />
+		</xsl:call-template>
 	</xsl:if>
 </xsl:for-each>
 					
@@ -331,7 +378,7 @@
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:text>, strong) </xsl:text>
-					<xsl:call-template name="getAnonymousComplexTypeName">
+					<xsl:call-template name="makeFirstLetterUpperCase">
 						<xsl:with-param name="elementName" select="./@name" />
 					</xsl:call-template>
 					<xsl:text>*</xsl:text>
@@ -377,6 +424,120 @@
 				</xsl:result-document>
 			</xsl:if>
 		</xsl:for-each>
+	</xsl:template>
+
+	<xsl:template name="generateAnonymouslyGivenClass">
+		<xsl:param name="element" required="yes" />
+		
+		<xsl:variable name="className">
+			<xsl:call-template name="makeFirstLetterUpperCase">
+				<xsl:with-param name="elementName" select="$element/@name" />
+			</xsl:call-template>
+		</xsl:variable>
+		
+		<!-- Header file -->
+		<xsl:result-document href="{concat($outputFolder, $className, '.h')}">
+			
+			<!-- Imports -->
+			<xsl:for-each select="./xs:complexType/xs:sequence/xs:element">
+				<xsl:if test="not(./@type)">
+					<xsl:text>#import "</xsl:text>
+					<xsl:call-template name="makeFirstLetterUpperCase">
+						<xsl:with-param name="elementName" select="./@name" />
+					</xsl:call-template>
+					<xsl:text>.h"</xsl:text>
+					
+					<!-- The imported class needs to be generated as well -->
+					<xsl:call-template name="generateAnonymouslyGivenClass">
+						<xsl:with-param name="element" select="." />
+					</xsl:call-template>
+					
+					<xsl:value-of select="$newline" />
+					<xsl:if test="position() = last()">
+						<xsl:value-of select="$newline" />
+					</xsl:if>
+				</xsl:if>
+			</xsl:for-each>
+			
+			<!-- Class definition -->
+			<xsl:text>@interface </xsl:text><xsl:value-of select="$className" />
+			<xsl:text> : NSObject</xsl:text>
+			<xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+			
+			<!-- Properties -->
+			<xsl:for-each select="./xs:complexType/xs:sequence/xs:element">
+				<xsl:text>@property (nonatomic</xsl:text>
+				<xsl:choose>
+					<xsl:when test="./@maxOccurs != '1'">
+						<xsl:text>, strong) NSMutableArray* </xsl:text>
+						<xsl:value-of select="./@name" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<xsl:when test="./@type = 'xs:string'">
+								<xsl:text>, strong) NSString*</xsl:text>
+							</xsl:when>
+							<xsl:when test="./@type = 'xs:int'">
+								<xsl:text>) NSInteger</xsl:text>
+							</xsl:when>
+							<xsl:when test="./@type = 'xs:long'">
+								<xsl:text>) NSInteger</xsl:text>
+							</xsl:when>
+							<xsl:when test="./@type = 'xs:boolean'">
+								<xsl:text>) BOOL</xsl:text>
+							</xsl:when>
+							<xsl:when test="starts-with(./@type, $serviceXMLNS)">
+								<xsl:text>, strong) </xsl:text><xsl:value-of select="substring-after(./@type, ':')" /><xsl:text>*</xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>, strong) </xsl:text>
+								<xsl:call-template name="makeFirstLetterUpperCase">
+									<xsl:with-param name="elementName" select="./@name" />
+								</xsl:call-template>
+								<xsl:text>*</xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
+						
+						<xsl:value-of select="$space" />
+						<xsl:value-of select="./@name" />
+					</xsl:otherwise>
+				</xsl:choose>
+				<xsl:text>;</xsl:text><xsl:value-of select="$newline" />
+				
+				<xsl:if test="position() = last()">
+					<xsl:value-of select="$newline" />
+				</xsl:if>
+			</xsl:for-each>
+			
+			<!-- End of header definition -->
+			<xsl:text>@end</xsl:text>
+			
+		</xsl:result-document>
+		
+		<!-- Implementation file -->
+		<xsl:result-document href="{concat($outputFolder, $className, '.m')}">
+			
+			<!-- Import header file -->
+			<xsl:text>#import "</xsl:text><xsl:value-of select="$className" />
+			<xsl:text>.h"</xsl:text><xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+			
+			<!-- Class definition -->
+			<xsl:text>@implementation </xsl:text><xsl:value-of select="$className" />
+			<xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+			
+			<!-- Synthesize properties -->
+			<xsl:text>@synthesize </xsl:text>
+			<xsl:for-each select="./xs:complexType/xs:sequence/xs:element">
+				<xsl:value-of select="./@name" />
+				<xsl:if test="position() = last()">;</xsl:if>
+				<xsl:if test="position() != last()">, </xsl:if>
+			</xsl:for-each>
+			<xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
+			
+			<!-- End of class definition -->
+			<xsl:text>@end</xsl:text>
+			
+		</xsl:result-document>
 	</xsl:template>
 
 	<!-- BEGIN Sub templates for bean to xml conversion -->
@@ -660,7 +821,7 @@
 					No type given by name, but rather defined as inner complex type.
 					The element name with its first letter turned to upper case serves as the class and therefor type name
 				-->
-				<xsl:call-template name="getAnonymousComplexTypeName">
+				<xsl:call-template name="makeFirstLetterUpperCase">
 					<xsl:with-param name="elementName" select="./@name" />
 				</xsl:call-template>
 				<xsl:text>* </xsl:text>
@@ -717,7 +878,7 @@
 	
 	<!-- END Sub templates for bean to xml conversion -->
 	
-	<xsl:template name="getAnonymousComplexTypeName">
+	<xsl:template name="makeFirstLetterUpperCase">
 		<xsl:param name="elementName" as="xs:string" />
 		
 		<xsl:variable name="upperCaseFirstLetter" select="upper-case(substring($elementName, 1, 1))" />
@@ -730,12 +891,112 @@
 	<!-- BEGIN Sub templates for xml to bean conversion -->
 	
 	<xsl:template name="convertFromSimpleAtomicXMLElement">
+		<xsl:param name="indent" as="xs:string" />
+		<xsl:param name="objectToWorkOn" as="xs:string" />
 		<xsl:param name="memberName" as="xs:string" />
-		<xsl:variable name="elementName" select="concat($memberName, 'Element')" />
+		<xsl:param name="codeElementName" as="xs:string" />
+		<xsl:param name="xmlElementName" as="xs:string" />
+		<xsl:param name="xmlVariableName" as="xs:string" />
+		<xsl:param name="type" as="xs:string" />
 		
-		<xsl:text>	</xsl:text><xsl:value-of select="$memberName" />
-		<xsl:text> = [</xsl:text><xsl:value-of select="$elementName" />
-		<xsl:text> stringValue];</xsl:text>
+		<xsl:variable name="upperMemberName">
+			<xsl:call-template name="makeFirstLetterUpperCase">
+				<xsl:with-param name="elementName" select="$memberName" />
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="setterName" select="concat('set', $upperMemberName)" />
+		
+		<xsl:value-of select="$indent" />
+		<xsl:text>NSXMLElement* </xsl:text><xsl:value-of select="$codeElementName" />
+		<xsl:text> = (NSXMLElement*) [</xsl:text><xsl:value-of select="$xmlVariableName" />
+		<xsl:text> elementForName:@"</xsl:text><xsl:value-of select="$xmlElementName" />
+		<xsl:text>"];</xsl:text><xsl:value-of select="$newline" />
+		
+		<xsl:value-of select="$indent" />
+		<xsl:text>[</xsl:text><xsl:value-of select="$objectToWorkOn" />
+		<xsl:text> </xsl:text><xsl:value-of select="$setterName" />
+		<xsl:text>:</xsl:text>
+		
+		<xsl:choose>
+			<xsl:when test="$type = 'xs:string'">
+				<xsl:text>[</xsl:text><xsl:value-of select="$codeElementName" />
+				<xsl:text> stringValue]</xsl:text>
+			</xsl:when>
+			<xsl:when test="$type = 'xs:int' or $type = 'xs:long'">
+				<xsl:text>[[</xsl:text><xsl:value-of select="$codeElementName" />
+				<xsl:text> stringValue] integerValue]</xsl:text>
+			</xsl:when>
+			<xsl:when test="$type = 'xs:boolean'">
+				<xsl:text>[[[</xsl:text><xsl:value-of select="$codeElementName" />
+				<xsl:text> stringValue] lowercaseString] isEqualToString:@"true"] ? YES : NO</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>&lt;unknown&gt;</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+		
+		<xsl:text>];</xsl:text>
+	</xsl:template>
+	
+	<xsl:template name="convertFromCustomNamedAtomicElement">
+		<xsl:param name="indent" as="xs:string" />
+		<xsl:param name="memberName" as="xs:string" />
+		<xsl:param name="codeElementName" as="xs:string" />
+		<xsl:param name="xmlElementName" as="xs:string" />
+		<xsl:param name="xmlVariableName" as="xs:string" />
+		<xsl:param name="type" as="xs:string" />
+		
+		<xsl:variable name="classNameForType" select="substring-after($type, ':')" />
+		
+		<xsl:value-of select="$indent" />
+		<xsl:text>NSXMLElement* </xsl:text><xsl:value-of select="$codeElementName" />
+		<xsl:text> = (NSXMLElement*) [</xsl:text><xsl:value-of select="$xmlVariableName" />
+		<xsl:text> elementForName:@"</xsl:text><xsl:value-of select="$xmlElementName" />
+		<xsl:text>"];</xsl:text><xsl:value-of select="$newline" />
+		
+		<xsl:value-of select="$indent" />
+		<xsl:text></xsl:text><xsl:value-of select="$memberName" />
+		<xsl:text> = [[</xsl:text><xsl:value-of select="$classNameForType" />
+		<xsl:text> alloc] init];</xsl:text><xsl:value-of select="$newline" />
+		
+		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $classNameForType]/xs:complexType/xs:sequence/xs:element">
+			<xsl:choose>
+				<xsl:when test="./@maxOccurs != '1'">
+					
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="./@type">
+							<xsl:choose>
+								<xsl:when test="starts-with(./@type, 'xs:')">
+									<!-- simple type -->
+									<xsl:call-template name="convertFromSimpleAtomicXMLElement">
+										<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+										<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+										<xsl:with-param name="memberName" select="./@name" />
+										<xsl:with-param name="indent" select="$indent" />
+										<xsl:with-param name="xmlElementName" select="./@name" />
+										<xsl:with-param name="type" select="./@type" />
+										<xsl:with-param name="objectToWorkOn" select="$memberName" />
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:when test="starts-with(./@type, $serviceXMLNS)">
+									<!-- custom type -->
+								</xsl:when>
+								<xsl:otherwise>
+									<!-- unknown -->
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:when>
+						<xsl:otherwise>
+							<!-- anonymous -->
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:value-of select="$newline" />
+			
+		</xsl:for-each>
 	</xsl:template>
 	
 	<!-- END Sub templates for xml to bean conversion -->

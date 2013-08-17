@@ -19,7 +19,7 @@
 }
 
 - (void)fromXML:(NSXMLElement *)xml {
-	NSXMLElement* listElement = (NSXMLElement*) [xml childAtIndex:0];
+	NSXMLElement* listElement = (NSXMLElement*) [xml elementForName:@"list"];
 	NSXMLElement* listNameElement = [listElement elementForName:@"listName"];
 	NSString* listName = [[listNameElement stringValue] stringByCorrectingXMLDecoding];
 	NSXMLElement* listIdElement = [listElement elementForName:@"listId"];

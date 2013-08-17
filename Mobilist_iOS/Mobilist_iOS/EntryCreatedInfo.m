@@ -19,20 +19,17 @@
 }
 
 - (void)fromXML:(NSXMLElement *)xml {
-	NSXMLElement* listIdElement = (NSXMLElement*) [xml childAtIndex:0];
-	listId = [listIdElement stringValue];
+	NSXMLElement* listIdElement = (NSXMLElement*) [xml elementForName:@"listId"];
+	//listId = [listIdElement stringValue];
+	[self setListId:[listIdElement stringValue]];
 	
-	NSXMLElement* entryElement = (NSXMLElement*) [xml childAtIndex:1];
+	NSXMLElement* entryElement = (NSXMLElement*) [xml elementForName:@"entry"];
 	entry = [[MobiListEntry alloc] init];
 	[entry setEntryId:[[[entryElement elementForName:@"entryId"] stringValue] stringByCorrectingXMLDecoding]];
-	
 	[entry setTitle:[[[entryElement elementForName:@"title"] stringValue] stringByCorrectingXMLDecoding]];
-	
 	[entry setDescription:[[[entryElement elementForName:@"description"] stringValue] stringByCorrectingXMLDecoding]];
-	
 	NSInteger dueDate = [[[entryElement elementForName:@"dueDate"] stringValue] integerValue];
 	[entry setDueDate:dueDate];
-	
 	NSString* doneString = [[entryElement elementForName:@"done"] stringValue];
 	if ([[doneString lowercaseString] isEqualToString:@"true"]) {
 		[entry setDone:YES];
