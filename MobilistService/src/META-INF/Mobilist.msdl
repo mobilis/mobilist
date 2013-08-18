@@ -227,7 +227,7 @@
 					<xs:sequence>
 						<xs:element name="entryId" type="xs:string" />
 						<xs:element name="entry" type="mns:MobiListEntry" />
-						<xs:element name="good" type="xs:string" maxOccurs="unbounded" />
+						<xs:element name="good" type="mns:MobiListEntry" maxOccurs="unbounded" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

@@ -17,7 +17,7 @@ public class ListStore {
 	/*
 	 * Singleton
 	 */
-	//private ListStore() {}
+	private ListStore() {}
 	
 	private static ListStore instance;
 	

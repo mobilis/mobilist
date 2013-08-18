@@ -19,7 +19,7 @@
 }
 
 - (void)fromXML:(NSXMLElement *)xml {
-	NSXMLElement* listIdElement = (NSXMLElement*) [xml elementForName:@"listId"];
+	NSXMLElement* listIdElement = [xml elementForName:@"listId"];
 	//listId = [listIdElement stringValue];
 	[self setListId:[listIdElement stringValue]];
 	
