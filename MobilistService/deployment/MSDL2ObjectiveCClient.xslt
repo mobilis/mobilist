@@ -265,6 +265,7 @@
 													<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
 													<xsl:with-param name="xmlElementName" select="./@name" />
 													<xsl:with-param name="xmlVariableName" select="'xml'" />
+													<xsl:with-param name="objectToWorkOn" select="'self'" />
 												</xsl:call-template>
 											</xsl:when>
 											<xsl:otherwise>
@@ -275,6 +276,14 @@
 									</xsl:when>
 									<xsl:otherwise>
 										<!-- anomymous -->
+										<xsl:call-template name="convertFromCustomAnonymousAtomicElement">
+											<xsl:with-param name="memberName" select="./@name" />
+											<xsl:with-param name="objectToWorkOn" select="'self'" />
+											<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+											<xsl:with-param name="xmlVariableName" select="'xml'" />
+											<xsl:with-param name="indent" select="$tab" />
+											<xsl:with-param name="xmlElementName" select="./@name" />
+										</xsl:call-template>
 									</xsl:otherwise>
 								</xsl:choose>
 							</xsl:otherwise>
@@ -320,7 +329,9 @@
 			<xsl:variable name="className" select="." />
 			<xsl:variable name="namespacifiedClassName" select="concat($serviceXMLNS, ':', .)" />
 			
+			<!-- If $allBeanNames does not contain $namespacifiedClassName -->
 			<xsl:if test="not($allBeanNames = $namespacifiedClassName)">
+				
 				<!-- Generate header file -->
 				<xsl:result-document href="{concat($outputFolder, $className, '.h')}">
 <!-- Imports -->
@@ -985,8 +996,15 @@
 		<xsl:param name="xmlElementName" as="xs:string" />
 		<xsl:param name="xmlVariableName" as="xs:string" />
 		<xsl:param name="type" as="xs:string" />
+		<xsl:param name="objectToWorkOn" as="xs:string" />
 		
 		<xsl:variable name="classNameForType" select="substring-after($type, ':')" />
+		<xsl:variable name="upperMemberName">
+			<xsl:call-template name="makeFirstLetterUpperCase">
+				<xsl:with-param name="elementName" select="$memberName" />
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="setterName" select="concat('set', $upperMemberName)" />
 		
 		<xsl:value-of select="$indent" />
 		<xsl:text>NSXMLElement* </xsl:text><xsl:value-of select="$codeElementName" />
@@ -995,14 +1013,22 @@
 		<xsl:text>"];</xsl:text><xsl:value-of select="$newline" />
 		
 		<xsl:value-of select="$indent" />
-		<xsl:text></xsl:text><xsl:value-of select="$memberName" />
-		<xsl:text> = [[</xsl:text><xsl:value-of select="$classNameForType" />
-		<xsl:text> alloc] init];</xsl:text><xsl:value-of select="$newline" />
+		<xsl:text>[</xsl:text><xsl:value-of select="$objectToWorkOn" />
+		<xsl:text> </xsl:text><xsl:value-of select="$setterName" />
+		<xsl:text>:[[</xsl:text><xsl:value-of select="$classNameForType" />
+		<xsl:text> alloc] init]];</xsl:text><xsl:value-of select="$newline" />
 		
 		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $classNameForType]/xs:complexType/xs:sequence/xs:element">
 			<xsl:choose>
 				<xsl:when test="./@maxOccurs != '1'">
 					<!-- array -->
+					<xsl:call-template name="convertFromListElement">
+						<xsl:with-param name="memberName" select="./@name" />
+						<xsl:with-param name="indent" select="$indent" />
+						<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+						<xsl:with-param name="type" select="./@type" />
+						<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
+					</xsl:call-template>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:choose>
@@ -1017,7 +1043,7 @@
 										<xsl:with-param name="indent" select="$indent" />
 										<xsl:with-param name="xmlElementName" select="./@name" />
 										<xsl:with-param name="type" select="./@type" />
-										<xsl:with-param name="objectToWorkOn" select="$memberName" />
+										<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
 									</xsl:call-template>
 								</xsl:when>
 								<xsl:when test="starts-with(./@type, $serviceXMLNS)">
@@ -1029,6 +1055,7 @@
 										<xsl:with-param name="type" select="./@type" />
 										<xsl:with-param name="xmlElementName" select="./@name" />
 										<xsl:with-param name="indent" select="$indent" />
+										<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
 									</xsl:call-template>
 								</xsl:when>
 								<xsl:otherwise>
@@ -1039,6 +1066,14 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<!-- anonymous -->
+							<xsl:call-template name="convertFromCustomAnonymousAtomicElement">
+								<xsl:with-param name="xmlElementName" select="./@name" />
+								<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+								<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
+							</xsl:call-template>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:otherwise>
@@ -1069,8 +1104,220 @@
 		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name=substring-after($type, ':')]/xs:complexType/xs:sequence/xs:element">
 			<xsl:choose>
 				<xsl:when test="./@maxOccurs != '1'">
+				<!-- Array -->
+					<xsl:call-template name="convertFromListElement">
+						<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+						<xsl:with-param name="memberName" select="./@name" />
+						<xsl:with-param name="indent" select="$indent" />
+						<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+						<xsl:with-param name="type" select="./@type" />
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="./@type">
+							<xsl:choose>
+								<xsl:when test="starts-with(./@type, $serviceXMLNS)">
+								<!-- Custom type -->
+									<xsl:call-template name="convertFromCustomNamedAtomicElement">
+										<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+										<xsl:with-param name="memberName" select="./@name" />
+										<xsl:with-param name="xmlElementName" select="./@name" />
+										<xsl:with-param name="indent" select="$indent" />
+										<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+										<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+										<xsl:with-param name="type" select="./@type" />
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:when test="starts-with(./@type, 'xs:')">
+								<!-- Simple type -->
+									<xsl:call-template name="convertFromSimpleAtomicXMLElement">
+										<xsl:with-param name="type" select="./@type" />
+										<xsl:with-param name="memberName" select="./@name" />
+										<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+										<xsl:with-param name="indent" select="$indent" />
+										<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+										<xsl:with-param name="xmlElementName" select="./@name" />
+										<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:text>&lt;unknow&gt;</xsl:text>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:when>
+						<xsl:otherwise>
+						<!-- Anonymous complex type -->
+							<xsl:call-template name="convertFromCustomAnonymousAtomicElement">
+								<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+								<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="xmlElementName" select="./@name" />
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:value-of select="$newline" />
+		</xsl:for-each>
+		
+		<xsl:value-of select="$indent" />
+		<xsl:text>[[</xsl:text><xsl:value-of select="$objectToWorkOn" /><xsl:text> </xsl:text>
+		<xsl:value-of select="$memberName" /><xsl:text>] addObject:</xsl:text>
+		<xsl:value-of select="$memberObjectName" /><xsl:text>];</xsl:text>
+	</xsl:template>
+	
+	<xsl:template name="convertFromCustomAnonymousAtomicElement">
+		<xsl:param name="indent" as="xs:string" />
+		<xsl:param name="memberName" as="xs:string" />
+		<xsl:param name="codeElementName" as="xs:string" />
+		<xsl:param name="xmlElementName" as="xs:string" />
+		<xsl:param name="xmlVariableName" as="xs:string" />
+		<xsl:param name="objectToWorkOn" as="xs:string" />
+		
+		<xsl:variable name="upperMemberName">
+			<xsl:call-template name="makeFirstLetterUpperCase">
+				<xsl:with-param name="elementName" select="$memberName" />
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="classNameForType" select="$upperMemberName" />
+		<xsl:variable name="setterName" select="concat('set', $upperMemberName)" />
+		
+		<xsl:value-of select="$indent" />
+		<xsl:text>NSXMLElement* </xsl:text><xsl:value-of select="$codeElementName" />
+		<xsl:text> = [</xsl:text><xsl:value-of select="$xmlVariableName" />
+		<xsl:text> elementForName:@"</xsl:text><xsl:value-of select="$xmlElementName" />
+		<xsl:text>"];</xsl:text><xsl:value-of select="$newline" />
+		
+		<xsl:value-of select="$indent" />
+		<xsl:text>[</xsl:text><xsl:value-of select="$objectToWorkOn" />
+		<xsl:text> </xsl:text><xsl:value-of select="$setterName" />
+		<xsl:text>:[[</xsl:text><xsl:value-of select="$classNameForType" />
+		<xsl:text> alloc] init]];</xsl:text><xsl:value-of select="$newline" />
+		
+		<xsl:for-each select="./xs:complexType/xs:sequence/xs:element">
+			<xsl:choose>
+				<xsl:when test="./@maxOccurs != '1'">
+					<!-- array -->
+					<xsl:choose>
+						<xsl:when test="./@type">
+							<xsl:call-template name="convertFromListElement">
+								<xsl:with-param name="type" select="./@type" />
+								<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:call-template name="convertFromListElement">
+								<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:choose>
+						<xsl:when test="./@type">
+							<xsl:choose>
+								<xsl:when test="starts-with(./@type, 'xs:')">
+									<!-- simple type -->
+									<xsl:call-template name="convertFromSimpleAtomicXMLElement">
+										<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+										<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+										<xsl:with-param name="memberName" select="./@name" />
+										<xsl:with-param name="indent" select="$indent" />
+										<xsl:with-param name="xmlElementName" select="./@name" />
+										<xsl:with-param name="type" select="./@type" />
+										<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:when test="starts-with(./@type, $serviceXMLNS)">
+									<!-- custom type -->
+									<xsl:call-template name="convertFromCustomNamedAtomicElement">
+										<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+										<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+										<xsl:with-param name="memberName" select="./@name" />
+										<xsl:with-param name="type" select="./@type" />
+										<xsl:with-param name="xmlElementName" select="./@name" />
+										<xsl:with-param name="indent" select="$indent" />
+										<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:otherwise>
+									<!-- unknown -->
+									<xsl:text>&lt;unknown&gt;</xsl:text>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:when>
+						<xsl:otherwise>
+							<!-- anonymous -->
+							<xsl:call-template name="convertFromCustomAnonymousAtomicElement">
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="xmlVariableName" select="$codeElementName" />
+								<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+								<xsl:with-param name="xmlElementName" select="./@name" />
+								<xsl:with-param name="objectToWorkOn" select="concat('[', $objectToWorkOn, ' ', $memberName, ']')" />
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:if test="position() != last()">
+				<xsl:value-of select="$newline" />
+			</xsl:if>
+			
+		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template name="convertFromCustomAnonymousAtomicElementInsideArray">
+		<xsl:param name="memberName" as="xs:string" />
+		<xsl:param name="objectToWorkOn" as="xs:string" />
+		<xsl:param name="indent" as="xs:string" />
+		<xsl:param name="xmlVariableName" as="xs:string" />
+		
+		<xsl:variable name="memberObjectName" select="concat($memberName, 'Object')" />
+		<xsl:variable name="classNameForType">
+			<xsl:call-template name="makeFirstLetterUpperCase">
+				<xsl:with-param name="elementName" select="$memberName" />
+			</xsl:call-template>
+		</xsl:variable>
+		
+		<xsl:value-of select="$indent" />
+		<xsl:value-of select="$memberObjectName" /><xsl:text> = [[</xsl:text>
+		<xsl:value-of select="$classNameForType" /><xsl:text> alloc] init];</xsl:text>
+		<xsl:value-of select="$newline" />
+		
+		<!-- Recursion -->
+		<xsl:for-each select="./xs:complexType/xs:sequence/xs:element">
+			<xsl:choose>
+				<xsl:when test="./@maxOccurs != '1'">
 					<!-- Array -->
-					
+					<xsl:choose>
+						<xsl:when test="./@type">
+							<xsl:call-template name="convertFromListElement">
+								<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+								<xsl:with-param name="type" select="./@type" />
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:call-template name="convertFromListElement">
+								<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:choose>
@@ -1078,7 +1325,15 @@
 							<xsl:choose>
 								<xsl:when test="starts-with(./@type, $serviceXMLNS)">
 									<!-- Custom type -->
-									
+									<xsl:call-template name="convertFromCustomNamedAtomicElement">
+										<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+										<xsl:with-param name="memberName" select="./@name" />
+										<xsl:with-param name="xmlElementName" select="./@name" />
+										<xsl:with-param name="indent" select="$indent" />
+										<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+										<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+										<xsl:with-param name="type" select="./@type" />
+									</xsl:call-template>
 								</xsl:when>
 								<xsl:when test="starts-with(./@type, 'xs:')">
 									<!-- Simple type -->
@@ -1099,7 +1354,14 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<!-- Anonymous complex type -->
-							
+							<xsl:call-template name="convertFromCustomAnonymousAtomicElement">
+								<xsl:with-param name="codeElementName" select="concat(./@name, 'Element')" />
+								<xsl:with-param name="xmlVariableName" select="$xmlVariableName" />
+								<xsl:with-param name="indent" select="$indent" />
+								<xsl:with-param name="xmlElementName" select="./@name" />
+								<xsl:with-param name="memberName" select="./@name" />
+								<xsl:with-param name="objectToWorkOn" select="$memberObjectName" />
+							</xsl:call-template>
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:otherwise>
@@ -1118,7 +1380,7 @@
 		<xsl:param name="memberName" as="xs:string" />
 		<xsl:param name="objectToWorkOn" as="xs:string" />
 		<xsl:param name="xmlVariableName" as="xs:string" />
-		<xsl:param name="type" as="xs:string" required="no" />
+		<xsl:param name="type" required="no" />
 		
 		<xsl:variable name="upperMemberName">
 			<xsl:call-template name="makeFirstLetterUpperCase">
@@ -1177,7 +1439,12 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<!-- anonymous -->
-				
+				<xsl:call-template name="convertFromCustomAnonymousAtomicElementInsideArray">
+					<xsl:with-param name="memberName" select="$memberName" />
+					<xsl:with-param name="objectToWorkOn" select="$objectToWorkOn" />
+					<xsl:with-param name="indent" select="concat($tab, $indent)" />
+					<xsl:with-param name="xmlVariableName" select="$partName" />
+				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
 		<xsl:value-of select="$newline" />
