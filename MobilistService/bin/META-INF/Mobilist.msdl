@@ -61,7 +61,7 @@
 			<xs:element name="GetListRequest">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="listId" type="xs:string" maxOccurs="unbounded" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -83,19 +83,7 @@
 						<xs:element name="entries">
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="entry" maxOccurs="unbounded">
-										<xs:complexType>
-											<xs:sequence>
-												<xs:element name="inner">
-													<xs:complexType>
-														<xs:sequence>
-															<xs:element name="innerInner" type="xs:string" />
-														</xs:sequence>
-													</xs:complexType>
-												</xs:element>
-											</xs:sequence>
-										</xs:complexType>
-									</xs:element>
+									<xs:element name="entry" type="mns:MobiListEntry" maxOccurs="unbounded" />
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -226,15 +214,6 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="entryId" type="xs:string" />
-						<xs:element name="entry" type="mns:MobiListEntry" />
-						<xs:element name="good" type="mns:MobiListEntry" maxOccurs="unbounded" />
-						<xs:element name="anon" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="value" type="xs:string" />
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
