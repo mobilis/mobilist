@@ -319,7 +319,7 @@
 			Generate all element classes that are not beans (i.e. not mentioned as input or output of an operation),
 			but are defined in the schema area
 		-->
-		<xsl:variable name="allClassNames" select="/msdl:description/msdl:types/xs:schema/xs:element/@name" />
+		<xsl:variable name="allClassNames" select="/msdl:description/msdl:types/xs:schema/xs:complexType/@name" />
 		<xsl:variable name="allBeanNames" select="/msdl:description/msdl:interface/msdl:operation/*/@element" />
 		
 		<xsl:for-each select="$allClassNames">
@@ -332,7 +332,7 @@
 				<!-- Generate header file -->
 				<xsl:result-document href="{concat($outputFolder, $className, '.h')}">
 <!-- Imports -->
-<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $className]/xs:complexType/xs:sequence/xs:element">
+<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:complexType[@name = $className]/xs:sequence/xs:element">
 	<xsl:if test="starts-with(./@type, $serviceXMLNS)">
 		<xsl:text>#import "</xsl:text><xsl:value-of select="substring-after(./@type, ':')" />
 		<xsl:text>.h"</xsl:text><xsl:value-of select="$newline" />
@@ -367,7 +367,7 @@
 <xsl:value-of select="$newline" /><xsl:value-of select="$newline" />
 					
 <!-- Properties -->
-<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $className]/xs:complexType/xs:sequence/xs:element">
+<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:complexType[@name = $className]/xs:sequence/xs:element">
 	<xsl:text>@property (nonatomic</xsl:text>
 	<xsl:choose>
 		<xsl:when test="./@maxOccurs != '1'">
@@ -427,7 +427,7 @@
 					
 <!-- Synthesize properties -->
 <xsl:text>@synthesize </xsl:text>
-<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $className]/xs:complexType/xs:sequence/xs:element">
+<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:complexType[@name = $className]/xs:sequence/xs:element">
 	<xsl:value-of select="./@name" />
 	<xsl:if test="position() != last()"><xsl:text>, </xsl:text></xsl:if>
 	<xsl:if test="position() = last()"><xsl:text>;</xsl:text></xsl:if>
@@ -732,7 +732,7 @@
 		
 		<!-- Look up the schema definition for the type and recursively call the appropriate code generation -->
 		<xsl:variable name="customTypeName" select="./@type" />
-		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = substring-after($customTypeName, ':')]/xs:complexType/xs:sequence/xs:element">
+		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:complexType[@name = substring-after($customTypeName, ':')]/xs:sequence/xs:element">
 			<xsl:variable name="subElementName" select="concat(./@name, 'Element')" />
 			
 			<xsl:choose>
@@ -1015,7 +1015,7 @@
 		<xsl:text>:[[</xsl:text><xsl:value-of select="$classNameForType" />
 		<xsl:text> alloc] init]];</xsl:text><xsl:value-of select="$newline" />
 		
-		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name = $classNameForType]/xs:complexType/xs:sequence/xs:element">
+		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:complexType[@name = $classNameForType]/xs:sequence/xs:element">
 			<xsl:choose>
 				<xsl:when test="./@maxOccurs != '1'">
 					<!-- array -->
@@ -1098,7 +1098,7 @@
 		<xsl:value-of select="$newline" />
 		
 		<!-- Recursion -->
-		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:element[@name=substring-after($type, ':')]/xs:complexType/xs:sequence/xs:element">
+		<xsl:for-each select="/msdl:description/msdl:types/xs:schema/xs:complexType[@name=substring-after($type, ':')]/xs:sequence/xs:element">
 			<xsl:choose>
 				<xsl:when test="./@maxOccurs != '1'">
 				<!-- Array -->

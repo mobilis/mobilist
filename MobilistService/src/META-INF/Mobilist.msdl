@@ -75,35 +75,31 @@
 			
 			<!-- A todo list -->
 			
-			<xs:element name="MobiList">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="listName" type="xs:string" />
-						<xs:element name="listId" type="xs:string" />
-						<xs:element name="entries">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="entry" type="mns:MobiListEntry" maxOccurs="unbounded" />
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:complexType name="MobiList">
+				<xs:sequence>
+					<xs:element name="listName" type="xs:string" />
+					<xs:element name="listId" type="xs:string" />
+					<xs:element name="entries">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="entry" type="mns:MobiListEntry" maxOccurs="unbounded" />
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
 			
 			<!-- A todo entry -->
 			
-			<xs:element name="MobiListEntry">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="entryId" type="xs:string" />
-						<xs:element name="title" type="xs:string" />
-						<xs:element name="description" type="xs:string" />
-						<xs:element name="dueDate" type="xs:long" />
-						<xs:element name="done" type="xs:boolean" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:complexType name="MobiListEntry">
+				<xs:sequence>
+					<xs:element name="entryId" type="xs:string" />
+					<xs:element name="title" type="xs:string" />
+					<xs:element name="description" type="xs:string" />
+					<xs:element name="dueDate" type="xs:long" />
+					<xs:element name="done" type="xs:boolean" />
+				</xs:sequence>
+			</xs:complexType>
 			
 			<!-- Add a new list and inform other clients -->
 			
