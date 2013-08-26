@@ -79,7 +79,7 @@
 			<xs:element name="GetListRequest">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="first" type="mns:First" />
+						<xs:element name="listId" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
