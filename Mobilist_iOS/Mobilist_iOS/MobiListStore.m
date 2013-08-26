@@ -133,4 +133,10 @@
 													  userInfo:userInfo];
 }
 
+- (void)reset {
+	allLists = [NSMutableArray array];
+	notYetSyncedListIds = [NSMutableArray array];
+	notYetSyncedEntryIds = [NSMutableArray array];
+}
+
 @end

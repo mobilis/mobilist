@@ -301,6 +301,28 @@
 
 - (void)showXMPPSettingsView:(id)sender {
 	XMPPSettingsViewController* xvc = [[XMPPSettingsViewController alloc] init];
+	
+	[xvc setDismissBlock:^{
+		MobiAppDelegate* appDelegate = (MobiAppDelegate*) [[UIApplication sharedApplication] delegate];
+		
+		if ([appDelegate areXMPPSettingsSufficient]) {
+			[[MobiListStore sharedStore] reset];
+			[appDelegate setAuthenticated:NO];
+			[existingsListsTable reloadData];
+			
+			NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+			NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
+			NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
+			NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
+			NSString* serviceJIDFromDefaults = [userDefaults stringForKey:UserDefaultMobilistService];
+			
+			[connection reconnectWithJabberID:jabberIdFromDefaults
+									 password:passwordFromDefaults
+									 hostname:hostnameFromDefaults
+								   serviceJID:serviceJIDFromDefaults];
+		}
+	}];
+	
 	[[self navigationController] pushViewController:xvc animated:YES];
 }
 

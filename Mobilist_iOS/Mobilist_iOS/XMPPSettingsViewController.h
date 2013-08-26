@@ -18,6 +18,8 @@
 	__weak IBOutlet UIScrollView *scrollView;
 }
 
+@property (nonatomic, copy) void (^dismissBlock)(void);
+
 - (IBAction)backgroundTapped:(id)sender;
 
 @end

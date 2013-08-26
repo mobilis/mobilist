@@ -19,6 +19,8 @@
 
 @implementation XMPPSettingsViewController
 
+@synthesize dismissBlock;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -147,6 +149,8 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:UIKeyboardDidHideNotification
 												  object:nil];
+	
+	dismissBlock();
 }
 
 - (void)didReceiveMemoryWarning

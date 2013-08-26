@@ -35,4 +35,6 @@
 - (void)setSyncedStatus:(BOOL)inSync
 			 forEntryId:(NSString* )entryId;
 
+- (void)reset;
+
 @end
