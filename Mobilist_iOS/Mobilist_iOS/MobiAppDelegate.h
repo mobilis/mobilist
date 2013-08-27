@@ -48,4 +48,9 @@
 @property (nonatomic) BOOL authenticated;
 @property (nonatomic, strong) NSString* serviceJID;
 
+- (BOOL)isSufficientJabberID:(NSString* )jabberID
+					password:(NSString* )password
+			  coordinatorJID:(NSString* )coordinatorJID
+			serviceNamespace:(NSString* )serviceNamespace;
+
 @end

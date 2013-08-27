@@ -234,6 +234,20 @@
 	}
 }
 
+- (BOOL)isSufficientJabberID:(NSString* )jabberID
+					password:(NSString* )password
+			  coordinatorJID:(NSString* )coordinatorJID
+			serviceNamespace:(NSString* )serviceNamespace {
+	if (jabberID && ![jabberID isEqualToString:@""] &&
+		password && ![password isEqualToString:@""] &&
+		coordinatorJID && ![coordinatorJID isEqualToString:@""] &&
+		serviceNamespace && ![serviceNamespace isEqualToString:@""]) {
+			return YES;
+	}
+	
+	return NO;
+}
+
 /*
  * App delegate
  */
@@ -246,12 +260,10 @@
 	NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
 	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
 	
-	if (jabberIdFromDefaults && passwordFromDefaults &&
-			coordinatorJIDFromDefaults && serviceNamespaceFromDefaults) {
-		[self setAreXMPPSettingsSufficient:YES];
-	} else {
-		[self setAreXMPPSettingsSufficient:NO];
-	}
+	[self setAreXMPPSettingsSufficient:[self isSufficientJabberID:jabberIdFromDefaults
+														 password:passwordFromDefaults
+												   coordinatorJID:coordinatorJIDFromDefaults
+												 serviceNamespace:serviceNamespaceFromDefaults]];
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	dashBoardController = [[DashboardViewController alloc] init];
@@ -311,12 +323,17 @@
 	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
 	NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
 	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
+	NSInteger portFromDefaults = [userDefaults integerForKey:UserDefaultPort];
+	if (portFromDefaults == 0) {
+		portFromDefaults = 5222;
+	}
 	
 	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
 		authenticated = false;
 		connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
 												  password:passwordFromDefaults
 												  hostName:hostnameFromDefaults
+													  port:portFromDefaults
 											coordinatorJID:coordinatorJIDFromDefaults
 										  serviceNamespace:serviceNamespaceFromDefaults
 										  presenceDelegate:self

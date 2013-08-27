@@ -305,8 +305,10 @@
 	[xvc setDismissBlock:^{
 		MobiAppDelegate* appDelegate = (MobiAppDelegate*) [[UIApplication sharedApplication] delegate];
 		
+		// Delete all local lists
+		[[MobiListStore sharedStore] reset];
+		
 		if ([appDelegate areXMPPSettingsSufficient]) {
-			[[MobiListStore sharedStore] reset];
 			[appDelegate setAuthenticated:NO];
 			[existingsListsTable reloadData];
 			
@@ -315,11 +317,18 @@
 			NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
 			NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
 			NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
+			NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
+			NSInteger portFromDefaults = [userDefaults integerForKey:UserDefaultPort];
+			if (portFromDefaults == 0) {
+				portFromDefaults = 5222;
+			}
 			
 			[connection reconnectWithJabberID:jabberIdFromDefaults
 									 password:passwordFromDefaults
 									 hostname:hostnameFromDefaults
-							   coordinatorJID:coordinatorJIDFromDefaults];
+										 port:portFromDefaults
+							   coordinatorJID:coordinatorJIDFromDefaults
+							 serviceNamespace:serviceNamespaceFromDefaults];
 		}
 	}];
 	
