@@ -34,6 +34,7 @@
 		79768E9F171AD42800F5DDA1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 79768E9E171AD42800F5DDA1 /* Default.png */; };
 		79768EA1171AD42800F5DDA1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79768EA0171AD42800F5DDA1 /* Default@2x.png */; };
 		79768EA3171AD42800F5DDA1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79768EA2171AD42800F5DDA1 /* Default-568h@2x.png */; };
+		798D5FBC17CCAC0000B27757 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FBB17CCAC0000B27757 /* SystemConfiguration.framework */; };
 		7999F6AA171D658E00B74031 /* Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6A6171D658E00B74031 /* Button.png */; };
 		7999F6AB171D658E00B74031 /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6A7171D658E00B74031 /* Button@2x.png */; };
 		7999F6AC171D658E00B74031 /* ButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6A8171D658E00B74031 /* ButtonHighlighted.png */; };
@@ -132,6 +133,7 @@
 		79768E9E171AD42800F5DDA1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		79768EA0171AD42800F5DDA1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		79768EA2171AD42800F5DDA1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		798D5FBB17CCAC0000B27757 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7999F6A6171D658E00B74031 /* Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button.png; sourceTree = "<group>"; };
 		7999F6A7171D658E00B74031 /* Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button@2x.png"; sourceTree = "<group>"; };
 		7999F6A8171D658E00B74031 /* ButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonHighlighted.png; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798D5FBC17CCAC0000B27757 /* SystemConfiguration.framework in Frameworks */,
 				79A4DD7B1755085900E6BDE4 /* libMXi.a in Frameworks */,
 				7972141217212C7300D63C38 /* libiconv.dylib in Frameworks */,
 				7915201D1720524100AB33F0 /* libresolv.dylib in Frameworks */,
@@ -257,6 +260,7 @@
 		79768E8B171AD42800F5DDA1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				798D5FBB17CCAC0000B27757 /* SystemConfiguration.framework */,
 				79E7273217266958003DC9F2 /* libMXi.a */,
 				7972141117212C7300D63C38 /* libiconv.dylib */,
 				7915201C1720524100AB33F0 /* libresolv.dylib */,
