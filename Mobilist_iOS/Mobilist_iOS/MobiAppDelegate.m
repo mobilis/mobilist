@@ -11,7 +11,7 @@
 
 @implementation MobiAppDelegate
 
-@synthesize dashBoardController, areXMPPSettingsSufficient, authenticated;
+@synthesize dashBoardController, areXMPPSettingsSufficient, authenticated, serviceJID;
 
 /*
  * Presence delegate
@@ -19,7 +19,18 @@
 
 - (void)didAuthenticate {
 	NSLog(@"Authentication successful");
+}
+
+- (void)didDiscoverServiceWithNamespace:(NSString *)serviceNamespace
+								   name:(NSString *)serviceName
+								version:(NSInteger)version
+							 atJabberID:(NSString *)theServiceJID {
+	NSLog(@"Service discovered");
 	authenticated = true;
+	
+	[self setServiceJID:theServiceJID];
+	[connection setServiceJID:theServiceJID];
+	
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObject:connection forKey:@"connection"];
 	[[NSNotificationCenter defaultCenter] postNotificationName:NotificationConnectionEstablished
 														object:self
@@ -43,16 +54,16 @@
  */
 
 - (void)didReceiveMessage:(XMPPMessage* )message {
-	NSLog(@"Received message:\n%@", [message prettyXMLString]);
+	//NSLog(@"Received message:\n%@", [message prettyXMLString]);
 }
 
 - (BOOL)didReceiveIQ:(XMPPIQ* )iq {
-	NSLog(@"Received iq:\n%@", [iq prettyXMLString]);
+	//NSLog(@"Received iq:\n%@", [iq prettyXMLString]);
 	return true;
 }
 
 - (void)didReceivePresence:(XMPPPresence* )presence {
-	NSLog(@"Received presence:\n%@", [presence prettyXMLString]);
+	//NSLog(@"Received presence:\n%@", [presence prettyXMLString]);
 }
 
 - (void)didReceiveError:(NSXMLElement* )error {
@@ -232,9 +243,11 @@
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
-	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
+	NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
+	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
 	
-	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
+	if (jabberIdFromDefaults && passwordFromDefaults &&
+			coordinatorJIDFromDefaults && serviceNamespaceFromDefaults) {
 		[self setAreXMPPSettingsSufficient:YES];
 	} else {
 		[self setAreXMPPSettingsSufficient:NO];
@@ -296,14 +309,16 @@
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
 	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
-	NSString* serviceJIDFromDefaults = [userDefaults stringForKey:UserDefaultMobilistService];
+	NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
+	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
 	
 	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
 		authenticated = false;
 		connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
 												  password:passwordFromDefaults
 												  hostName:hostnameFromDefaults
-												serviceJID:serviceJIDFromDefaults
+											coordinatorJID:coordinatorJIDFromDefaults
+										  serviceNamespace:serviceNamespaceFromDefaults
 										  presenceDelegate:self
 											stanzaDelegate:self
 											  beanDelegate:self

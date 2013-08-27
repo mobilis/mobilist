@@ -314,12 +314,12 @@
 			NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 			NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
 			NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
-			NSString* serviceJIDFromDefaults = [userDefaults stringForKey:UserDefaultMobilistService];
+			NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
 			
 			[connection reconnectWithJabberID:jabberIdFromDefaults
 									 password:passwordFromDefaults
 									 hostname:hostnameFromDefaults
-								   serviceJID:serviceJIDFromDefaults];
+							   coordinatorJID:coordinatorJIDFromDefaults];
 		}
 	}];
 	

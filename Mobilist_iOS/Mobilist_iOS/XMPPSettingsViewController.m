@@ -42,7 +42,7 @@
 	
 	[jabberIDTextField setDelegate:self];
 	[passwordTextField setDelegate:self];
-	[serviceTextField setDelegate:self];
+	[coordinatorTextField setDelegate:self];
 	[hostnameTextField setDelegate:self];
 }
 
@@ -120,7 +120,7 @@
 	[jabberIDTextField setText:[userDefaults stringForKey:UserDefaultJabberId]];
 	[passwordTextField setText:[userDefaults stringForKey:UserDefaultPassword]];
 	[hostnameTextField setText:[userDefaults stringForKey:UserDefaultHostname]];
-	[serviceTextField setText:[userDefaults stringForKey:UserDefaultMobilistService]];
+	[coordinatorTextField setText:[userDefaults stringForKey:UserDefaultCoordinatorJID]];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(keyboardWillShow:)
@@ -139,7 +139,7 @@
 	[userDefaults setObject:[jabberIDTextField text] forKey:UserDefaultJabberId];
 	[userDefaults setObject:[passwordTextField text] forKey:UserDefaultPassword];
 	[userDefaults setObject:[hostnameTextField text] forKey:UserDefaultHostname];
-	[userDefaults setObject:[serviceTextField text] forKey:UserDefaultMobilistService];
+	[userDefaults setObject:[coordinatorTextField text] forKey:UserDefaultCoordinatorJID];
 	
 	[userDefaults synchronize];
 	

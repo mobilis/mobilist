@@ -46,5 +46,6 @@
 @property (strong, nonatomic) DashboardViewController* dashBoardController;
 @property BOOL areXMPPSettingsSufficient;
 @property (nonatomic) BOOL authenticated;
+@property (nonatomic, strong) NSString* serviceJID;
 
 @end

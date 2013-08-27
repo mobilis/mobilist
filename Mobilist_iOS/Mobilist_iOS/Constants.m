@@ -30,7 +30,9 @@ NSString* const CellTodoList = @"TodoListCell";
 NSString* const UserDefaultJabberId = @"DefaultJabberId";
 NSString* const UserDefaultPassword = @"DefaultPassword";
 NSString* const UserDefaultHostname = @"DefaultHostname";
-NSString* const UserDefaultMobilistService = @"DefaultMobilistService";
+NSString* const UserDefaultServiceNamespace = @"DefaultServiceNamespace";
+NSString* const UserDefaultCoordinatorJID = @"DefaultCoordinatorJID";
+NSString* const UserDefaultPort = @"DefaultPort";
 
 @implementation Constants
 

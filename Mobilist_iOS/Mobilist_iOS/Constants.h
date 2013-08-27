@@ -30,7 +30,9 @@ extern NSString* const CellTodoList;
 extern NSString* const UserDefaultJabberId;
 extern NSString* const UserDefaultPassword;
 extern NSString* const UserDefaultHostname;
-extern NSString* const UserDefaultMobilistService;
+extern NSString* const UserDefaultServiceNamespace;
+extern NSString* const UserDefaultCoordinatorJID;
+extern NSString* const UserDefaultPort;
 
 @interface Constants : NSObject
 

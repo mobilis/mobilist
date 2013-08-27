@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <msdl:description
-	targetNamespace="http://mobilis.inf.tu-dresden.de/Mobilist"
+	targetNamespace="http://mobilis.inf.tu-dresden.de#services/MobilistService"
 	xmlns:msdl="http://mobilis.inf.tu-dresden.de/msdl/"
 	xmlns:xmpp="http://mobilis.inf.tu-dresden.de/xmpp/"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:mns="http://mobilis.inf.tu-dresden.de/Mobilist"
+	xmlns:mns="http://mobilis.inf.tu-dresden.de#services/MobilistService"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://mobilis.inf.tu-dresden.de/msdl/ http://mobilis.inf.tu-dresden.de/msdl.xsd ">
 	
 	<msdl:types>
-		<xs:schema targetNamespace="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<xs:schema targetNamespace="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 		
 			<!-- Test the service's availability -->
 		
@@ -392,77 +392,77 @@
 	
 	<msdl:binding name="MobilistBinding" interface="mns:MobilistInterface"
 		type="http://mobilis.inf.tu-dresden.de/xmpp/">
-		<msdl:operation ref="mns:Ping" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:Ping" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="get" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:Sync" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:Sync" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="get" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:GetList" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:GetList" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="get" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:CreateList" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:CreateList" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="set" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:ListCreated" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:ListCreated" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="result" />
 			<msdl:output xmpp:type="set" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:CreateEntry" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:CreateEntry" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="set" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:EntryCreated" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:EntryCreated" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="result" />
 			<msdl:output xmpp:type="set" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:DeleteList" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:DeleteList" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="set" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:ListDeleted" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:ListDeleted" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="result" />
 			<msdl:output xmpp:type="set" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:DeleteEntry" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:DeleteEntry" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="set" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:EntryDeleted" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:EntryDeleted" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="result" />
 			<msdl:output xmpp:type="set" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:EditList" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:EditList" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="set" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:ListEdited" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:ListEdited" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="result" />
 			<msdl:output xmpp:type="set" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:EditEntry" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:EditEntry" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="set" />
 			<msdl:output xmpp:type="result" />
 		</msdl:operation>
 		
-		<msdl:operation ref="mns:EntryEdited" xmpp:ident="http://mobilis.inf.tu-dresden.de/Mobilist">
+		<msdl:operation ref="mns:EntryEdited" xmpp:ident="http://mobilis.inf.tu-dresden.de#services/MobilistService">
 			<msdl:input xmpp:type="result" />
 			<msdl:output xmpp:type="set" />
 		</msdl:operation>
