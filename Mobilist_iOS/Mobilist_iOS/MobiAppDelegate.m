@@ -26,7 +26,7 @@
 								version:(NSInteger)version
 							 atJabberID:(NSString *)theServiceJID {
 	NSLog(@"Service discovered");
-	authenticated = true;
+	[self setAuthenticated:YES];
 	
 	[self setServiceJID:theServiceJID];
 	[connection setServiceJID:theServiceJID];

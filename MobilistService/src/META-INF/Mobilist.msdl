@@ -58,24 +58,6 @@
 			
 			<!-- Request a list's data specified by its id -->
 			
-			<xs:complexType name="First">
-				<xs:sequence>
-					<xs:element name="second" type="mns:Second" maxOccurs="unbounded" />
-				</xs:sequence>
-			</xs:complexType>
-			
-			<xs:complexType name="Second">
-				<xs:sequence>
-					<xs:element name="third" type="mns:Third" />
-				</xs:sequence>
-			</xs:complexType>
-			
-			<xs:complexType name="Third">
-				<xs:sequence>
-					<xs:element name="value" type="xs:string" maxOccurs="unbounded" />
-				</xs:sequence>
-			</xs:complexType>
-			
 			<xs:element name="GetListRequest">
 				<xs:complexType>
 					<xs:sequence>
@@ -195,7 +177,7 @@
 			<xs:element name="DeleteListResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="listId" type="xs:string" />
+						<xs:element name="listId" type="xs:string" maxOccurs="unbounded" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

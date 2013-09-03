@@ -282,6 +282,8 @@
 						 withRowAnimation:UITableViewRowAnimationMiddle];
 		
 		[store setSyncedStatus:NO forListId:[selectedList listId]];
+		
+		[tableView reloadData];
 	}
 }
 

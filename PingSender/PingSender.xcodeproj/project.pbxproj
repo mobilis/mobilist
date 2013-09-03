@@ -1,0 +1,373 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		798D5FCA17D5BE2000B27757 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FC917D5BE2000B27757 /* Cocoa.framework */; };
+		798D5FD417D5BE2000B27757 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 798D5FD217D5BE2000B27757 /* InfoPlist.strings */; };
+		798D5FD617D5BE2000B27757 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 798D5FD517D5BE2000B27757 /* main.m */; };
+		798D5FDA17D5BE2000B27757 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 798D5FD817D5BE2000B27757 /* Credits.rtf */; };
+		798D5FDD17D5BE2000B27757 /* SenderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 798D5FDC17D5BE2000B27757 /* SenderAppDelegate.m */; };
+		798D5FE017D5BE2000B27757 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 798D5FDE17D5BE2000B27757 /* MainMenu.xib */; };
+		798D5FE917D5BEAF00B27757 /* MXi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FE817D5BEAF00B27757 /* MXi.framework */; };
+		798D5FEB17D5BEBB00B27757 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FEA17D5BEBB00B27757 /* CFNetwork.framework */; };
+		798D5FED17D5BEC300B27757 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FEC17D5BEC300B27757 /* Security.framework */; };
+		798D5FEF17D5BECA00B27757 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FEE17D5BECA00B27757 /* SystemConfiguration.framework */; };
+		798D5FF117D5BEDA00B27757 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FF017D5BEDA00B27757 /* libresolv.dylib */; };
+		798D5FF317D5BEE200B27757 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 798D5FF217D5BEE200B27757 /* libxml2.dylib */; };
+		798D5FF717D5C68300B27757 /* PingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 798D5FF617D5C68300B27757 /* PingRequest.m */; };
+		798D5FFA17D5C74100B27757 /* PingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 798D5FF917D5C74100B27757 /* PingResponse.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		798D5FC617D5BE2000B27757 /* PingSender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PingSender.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		798D5FC917D5BE2000B27757 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		798D5FCC17D5BE2000B27757 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		798D5FCD17D5BE2000B27757 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		798D5FCE17D5BE2000B27757 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		798D5FD117D5BE2000B27757 /* PingSender-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PingSender-Info.plist"; sourceTree = "<group>"; };
+		798D5FD317D5BE2000B27757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		798D5FD517D5BE2000B27757 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		798D5FD717D5BE2000B27757 /* PingSender-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PingSender-Prefix.pch"; sourceTree = "<group>"; };
+		798D5FD917D5BE2000B27757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		798D5FDB17D5BE2000B27757 /* SenderAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SenderAppDelegate.h; sourceTree = "<group>"; };
+		798D5FDC17D5BE2000B27757 /* SenderAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SenderAppDelegate.m; sourceTree = "<group>"; };
+		798D5FDF17D5BE2000B27757 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		798D5FE817D5BEAF00B27757 /* MXi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MXi.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/Mobilist-cluhobmwscjfbgeqbbarzvtxhkap/Build/Products/Debug/MXi.framework"; sourceTree = "<group>"; };
+		798D5FEA17D5BEBB00B27757 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		798D5FEC17D5BEC300B27757 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		798D5FEE17D5BECA00B27757 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		798D5FF017D5BEDA00B27757 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		798D5FF217D5BEE200B27757 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		798D5FF517D5C68300B27757 /* PingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingRequest.h; sourceTree = "<group>"; };
+		798D5FF617D5C68300B27757 /* PingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingRequest.m; sourceTree = "<group>"; };
+		798D5FF817D5C74100B27757 /* PingResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingResponse.h; sourceTree = "<group>"; };
+		798D5FF917D5C74100B27757 /* PingResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingResponse.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		798D5FC317D5BE2000B27757 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				798D5FF317D5BEE200B27757 /* libxml2.dylib in Frameworks */,
+				798D5FF117D5BEDA00B27757 /* libresolv.dylib in Frameworks */,
+				798D5FEF17D5BECA00B27757 /* SystemConfiguration.framework in Frameworks */,
+				798D5FED17D5BEC300B27757 /* Security.framework in Frameworks */,
+				798D5FEB17D5BEBB00B27757 /* CFNetwork.framework in Frameworks */,
+				798D5FE917D5BEAF00B27757 /* MXi.framework in Frameworks */,
+				798D5FCA17D5BE2000B27757 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		798D5FBD17D5BE2000B27757 = {
+			isa = PBXGroup;
+			children = (
+				798D5FCF17D5BE2000B27757 /* PingSender */,
+				798D5FC817D5BE2000B27757 /* Frameworks */,
+				798D5FC717D5BE2000B27757 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		798D5FC717D5BE2000B27757 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				798D5FC617D5BE2000B27757 /* PingSender.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		798D5FC817D5BE2000B27757 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				798D5FF017D5BEDA00B27757 /* libresolv.dylib */,
+				798D5FEE17D5BECA00B27757 /* SystemConfiguration.framework */,
+				798D5FEC17D5BEC300B27757 /* Security.framework */,
+				798D5FEA17D5BEBB00B27757 /* CFNetwork.framework */,
+				798D5FE817D5BEAF00B27757 /* MXi.framework */,
+				798D5FF217D5BEE200B27757 /* libxml2.dylib */,
+				798D5FC917D5BE2000B27757 /* Cocoa.framework */,
+				798D5FCB17D5BE2000B27757 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		798D5FCB17D5BE2000B27757 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				798D5FCC17D5BE2000B27757 /* AppKit.framework */,
+				798D5FCD17D5BE2000B27757 /* CoreData.framework */,
+				798D5FCE17D5BE2000B27757 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		798D5FCF17D5BE2000B27757 /* PingSender */ = {
+			isa = PBXGroup;
+			children = (
+				798D5FF417D5C46400B27757 /* Beans */,
+				798D5FDB17D5BE2000B27757 /* SenderAppDelegate.h */,
+				798D5FDC17D5BE2000B27757 /* SenderAppDelegate.m */,
+				798D5FDE17D5BE2000B27757 /* MainMenu.xib */,
+				798D5FD017D5BE2000B27757 /* Supporting Files */,
+			);
+			path = PingSender;
+			sourceTree = "<group>";
+		};
+		798D5FD017D5BE2000B27757 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				798D5FD117D5BE2000B27757 /* PingSender-Info.plist */,
+				798D5FD217D5BE2000B27757 /* InfoPlist.strings */,
+				798D5FD517D5BE2000B27757 /* main.m */,
+				798D5FD717D5BE2000B27757 /* PingSender-Prefix.pch */,
+				798D5FD817D5BE2000B27757 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		798D5FF417D5C46400B27757 /* Beans */ = {
+			isa = PBXGroup;
+			children = (
+				798D5FF517D5C68300B27757 /* PingRequest.h */,
+				798D5FF617D5C68300B27757 /* PingRequest.m */,
+				798D5FF817D5C74100B27757 /* PingResponse.h */,
+				798D5FF917D5C74100B27757 /* PingResponse.m */,
+			);
+			name = Beans;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		798D5FC517D5BE2000B27757 /* PingSender */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 798D5FE317D5BE2000B27757 /* Build configuration list for PBXNativeTarget "PingSender" */;
+			buildPhases = (
+				798D5FC217D5BE2000B27757 /* Sources */,
+				798D5FC317D5BE2000B27757 /* Frameworks */,
+				798D5FC417D5BE2000B27757 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PingSender;
+			productName = PingSender;
+			productReference = 798D5FC617D5BE2000B27757 /* PingSender.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		798D5FBE17D5BE2000B27757 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Sender;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "TU Dresden";
+			};
+			buildConfigurationList = 798D5FC117D5BE2000B27757 /* Build configuration list for PBXProject "PingSender" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 798D5FBD17D5BE2000B27757;
+			productRefGroup = 798D5FC717D5BE2000B27757 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				798D5FC517D5BE2000B27757 /* PingSender */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		798D5FC417D5BE2000B27757 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				798D5FD417D5BE2000B27757 /* InfoPlist.strings in Resources */,
+				798D5FDA17D5BE2000B27757 /* Credits.rtf in Resources */,
+				798D5FE017D5BE2000B27757 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		798D5FC217D5BE2000B27757 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				798D5FD617D5BE2000B27757 /* main.m in Sources */,
+				798D5FDD17D5BE2000B27757 /* SenderAppDelegate.m in Sources */,
+				798D5FF717D5C68300B27757 /* PingRequest.m in Sources */,
+				798D5FFA17D5C74100B27757 /* PingResponse.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		798D5FD217D5BE2000B27757 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				798D5FD317D5BE2000B27757 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		798D5FD817D5BE2000B27757 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				798D5FD917D5BE2000B27757 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		798D5FDE17D5BE2000B27757 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				798D5FDF17D5BE2000B27757 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		798D5FE117D5BE2000B27757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		798D5FE217D5BE2000B27757 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		798D5FE417D5BE2000B27757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Mobilist-cluhobmwscjfbgeqbbarzvtxhkap/Build/Products/Debug\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PingSender/PingSender-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				INFOPLIST_FILE = "PingSender/PingSender-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		798D5FE517D5BE2000B27757 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../../../Library/Developer/Xcode/DerivedData/Mobilist-cluhobmwscjfbgeqbbarzvtxhkap/Build/Products/Debug\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PingSender/PingSender-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				INFOPLIST_FILE = "PingSender/PingSender-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		798D5FC117D5BE2000B27757 /* Build configuration list for PBXProject "PingSender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				798D5FE117D5BE2000B27757 /* Debug */,
+				798D5FE217D5BE2000B27757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		798D5FE317D5BE2000B27757 /* Build configuration list for PBXNativeTarget "PingSender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				798D5FE417D5BE2000B27757 /* Debug */,
+				798D5FE517D5BE2000B27757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 798D5FBE17D5BE2000B27757 /* Project object */;
+}
