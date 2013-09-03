@@ -15,5 +15,6 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (nonatomic, strong) MXiConnection* connection;
+@property (nonatomic, strong) NSString* serviceJID;
 
 @end

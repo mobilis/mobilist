@@ -20,7 +20,7 @@
 }
 
 + (NSString* )iqNamespace {
-	return @"http://mobilis.inf.tu-dresden.de#services/MobilistService";
+	return @"http://mobilis.inf.tu-dresden.de/Mobilist";
 }
 
 @end

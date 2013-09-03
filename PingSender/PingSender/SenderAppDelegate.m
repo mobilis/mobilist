@@ -27,18 +27,21 @@
 											   stanzaDelegate:self
 												 beanDelegate:self
 									listeningForIncomingBeans:incomingPrototypes]];
-	NSLog(@"Connection created");
 }
 
 - (void)didAuthenticate {
-	NSLog(@"Authenticated");
+	
 }
 
 - (void)didDiscoverServiceWithNamespace:(NSString *)serviceNamespace
 								   name:(NSString *)serviceName
 								version:(NSInteger)version
 							 atJabberID:(NSString *)serviceJID {
-	NSLog(@"Discovered");
+	[self setServiceJID:serviceJID];
+	
+	PingRequest* request = [[PingRequest alloc] init];
+	[request setContent:@"Hello world"];
+	[[self connection] sendBean:request];
 }
 
 - (void)didDisconnectWithError:(NSError *)error {
@@ -50,7 +53,10 @@
 }
 
 - (void)didReceiveBean:(MXiBean<MXiIncomingBean> *)theBean {
-	
+	if ([theBean class] == [PingResponse class]) {
+		PingResponse* response = (PingResponse*) theBean;
+		NSLog(@"Received PingResponse with content: %@", [response content]);
+	}
 }
 
 - (void)didReceiveMessage:(XMPPMessage *)message {
@@ -58,7 +64,7 @@
 }
 
 - (BOOL)didReceiveIQ:(XMPPIQ *)iq {
-	
+	return true;
 }
 
 - (void)didReceivePresence:(XMPPPresence *)presence {
