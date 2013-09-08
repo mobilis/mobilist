@@ -10,7 +10,7 @@
 
 @implementation SenderAppDelegate
 
-@synthesize connection;
+@synthesize connection, serviceJID = _serviceJID;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -38,10 +38,7 @@
 								version:(NSInteger)version
 							 atJabberID:(NSString *)serviceJID {
 	[self setServiceJID:serviceJID];
-	
-	PingRequest* request = [[PingRequest alloc] init];
-	[request setContent:@"Hello world"];
-	[[self connection] sendBean:request];
+	NSLog(@"Ready");
 }
 
 - (void)didDisconnectWithError:(NSError *)error {
@@ -54,8 +51,21 @@
 
 - (void)didReceiveBean:(MXiBean<MXiIncomingBean> *)theBean {
 	if ([theBean class] == [PingResponse class]) {
+		NSDate* now = [NSDate date];
+		
 		PingResponse* response = (PingResponse*) theBean;
-		NSLog(@"Received PingResponse with content: %@", [response content]);
+		NSString* pingContent = [response content];
+		
+		NSTimeInterval requestTimeStampInterval = [pingContent doubleValue];
+		NSDate* requestTime = [NSDate dateWithTimeIntervalSince1970:requestTimeStampInterval];
+		
+		NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setDateStyle:NSDateFormatterNoStyle];
+		[dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+		NSString* requestTimeString = [dateFormatter stringFromDate:requestTime];
+		NSString* nowString = [dateFormatter stringFromDate:now];
+		
+		NSLog(@"Ping sent at %@, received at %@", requestTimeString, nowString);
 	}
 }
 
@@ -73,6 +83,43 @@
 
 - (void)didReceiveError:(NSXMLElement *)error {
 	
+}
+
+- (IBAction)sendPingClicked:(id)sender {
+	if ([self serviceJID]) {
+		NSTimeInterval timeStampInterval = [[NSDate date] timeIntervalSince1970];
+		NSNumber* timeStamp = [NSNumber numberWithDouble:timeStampInterval];
+		
+		PingRequest* ping = [[PingRequest alloc] init];
+		[ping setContent:[NSString stringWithFormat:@"%ld", (long) [timeStamp integerValue]]];
+		[connection sendBean:ping];
+	}
+}
+
+- (IBAction)startPingLoopClicked:(id)sender {
+	if (![self serviceJID]) {
+		return;
+	}
+	
+	NSThread* pingThread = [[NSThread alloc] initWithTarget:self
+												   selector:@selector(runPingLoop)
+													 object:nil];
+	[pingThread start];
+}
+
+- (void)runPingLoop {
+	PingRequest* ping = [[PingRequest alloc] init];
+	NSTimeInterval timeStampInterval;
+	NSNumber* timeStamp;
+	
+	while (YES) {
+		timeStampInterval = [[NSDate date] timeIntervalSince1970];
+		timeStamp = [NSNumber numberWithDouble:timeStampInterval];
+		[ping setContent:[NSString stringWithFormat:@"%ld", (long)[timeStamp integerValue]]];
+		[connection sendBean:ping];
+		
+		sleep(1);
+	}
 }
 
 @end

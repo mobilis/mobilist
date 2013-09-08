@@ -17,4 +17,7 @@
 @property (nonatomic, strong) MXiConnection* connection;
 @property (nonatomic, strong) NSString* serviceJID;
 
+- (IBAction)sendPingClicked:(id)sender;
+- (IBAction)startPingLoopClicked:(id)sender;
+
 @end
