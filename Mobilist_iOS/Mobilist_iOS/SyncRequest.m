@@ -8,6 +8,8 @@
 
 #import "SyncRequest.h"
 
+#import <XMPPFramework/NSXMLElement+XMPP.h>
+
 @implementation SyncRequest
 
 - (id)init {

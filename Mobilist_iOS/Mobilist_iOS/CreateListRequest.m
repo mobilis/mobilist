@@ -8,6 +8,8 @@
 
 #import "CreateListRequest.h"
 
+#import <XMPPFramework/NSXMLElement+XMPP.h>
+
 @implementation CreateListRequest
 
 @synthesize list;

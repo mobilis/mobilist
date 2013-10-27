@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41241986D3344BFEA2EB3FE1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3C8B1E58D0460DAA5FF037 /* libPods.a */; };
 		7915200F17203EE100AB33F0 /* MobiListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7915200E17203EE100AB33F0 /* MobiListEntry.m */; };
 		79152012172040D400AB33F0 /* MobiList.m in Sources */ = {isa = PBXBuildFile; fileRef = 79152011172040D400AB33F0 /* MobiList.m */; };
 		79152015172047E900AB33F0 /* MobiListStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 79152014172047E900AB33F0 /* MobiListStore.m */; };
@@ -89,6 +90,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D3C8B1E58D0460DAA5FF037 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7915200D17203EE100AB33F0 /* MobiListEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobiListEntry.h; sourceTree = "<group>"; };
 		7915200E17203EE100AB33F0 /* MobiListEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobiListEntry.m; sourceTree = "<group>"; };
 		79152010172040D400AB33F0 /* MobiList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobiList.h; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		79FF6A84171D3E3000A3202F /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
 		79FF6A85171D3E3000A3202F /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
 		79FF6A86171D3E3000A3202F /* DashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardViewController.xib; sourceTree = "<group>"; };
+		EE60EE39ACC5406184AF3F8B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +236,7 @@
 				79768E8D171AD42800F5DDA1 /* UIKit.framework in Frameworks */,
 				79768E8F171AD42800F5DDA1 /* Foundation.framework in Frameworks */,
 				79768E91171AD42800F5DDA1 /* CoreGraphics.framework in Frameworks */,
+				41241986D3344BFEA2EB3FE1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +250,7 @@
 				79768E92171AD42800F5DDA1 /* Mobilist_iOS */,
 				79768E8B171AD42800F5DDA1 /* Frameworks */,
 				79768E8A171AD42800F5DDA1 /* Products */,
+				EE60EE39ACC5406184AF3F8B /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -270,6 +275,7 @@
 				79768E8C171AD42800F5DDA1 /* UIKit.framework */,
 				79768E8E171AD42800F5DDA1 /* Foundation.framework */,
 				79768E90171AD42800F5DDA1 /* CoreGraphics.framework */,
+				1D3C8B1E58D0460DAA5FF037 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -491,9 +497,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 79768EA6171AD42800F5DDA1 /* Build configuration list for PBXNativeTarget "Mobilist" */;
 			buildPhases = (
+				933F543CD1DE4CD5AB5730F2 /* Check Pods Manifest.lock */,
 				79768E85171AD42800F5DDA1 /* Sources */,
 				79768E86171AD42800F5DDA1 /* Frameworks */,
 				79768E87171AD42800F5DDA1 /* Resources */,
+				3BF0D3B38317436DBD72DEAE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -564,6 +572,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3BF0D3B38317436DBD72DEAE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		933F543CD1DE4CD5AB5730F2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		79768E85171AD42800F5DDA1 /* Sources */ = {
@@ -694,20 +735,18 @@
 		};
 		79768EA7171AD42800F5DDA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE60EE39ACC5406184AF3F8B /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mobilist_iOS/Mobilist_iOS-Prefix.pch";
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Mobilist_iOS/Mobilist_iOS-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -715,20 +754,18 @@
 		};
 		79768EA8171AD42800F5DDA1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE60EE39ACC5406184AF3F8B /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mobilist_iOS/Mobilist_iOS-Prefix.pch";
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Mobilist_iOS/Mobilist_iOS-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

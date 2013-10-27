@@ -330,16 +330,17 @@
 	
 	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
 		authenticated = false;
-		connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
-												  password:passwordFromDefaults
-												  hostName:hostnameFromDefaults
-													  port:portFromDefaults
-											coordinatorJID:coordinatorJIDFromDefaults
-										  serviceNamespace:serviceNamespaceFromDefaults
-										  presenceDelegate:self
-											stanzaDelegate:self
-											  beanDelegate:self
-								 listeningForIncomingBeans:incomingBeanPrototypes];
+        connection = [MXiConnection connectionWithJabberID:jabberIdFromDefaults
+                                                  password:passwordFromDefaults
+                                                  hostName:hostnameFromDefaults
+                                                      port:portFromDefaults
+                                            coordinatorJID:coordinatorJIDFromDefaults
+                                          serviceNamespace:serviceNamespaceFromDefaults
+                                               serviceType:SINGLE
+                                          presenceDelegate:self
+                                            stanzaDelegate:self
+                                              beanDelegate:self
+                                 listeningForIncomingBeans:incomingBeanPrototypes];
 	}
 }
 

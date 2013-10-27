@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MXi/MXi.h>
+
 #import "Constants.h"
 #import "SyncRequest.h"
 #import "SyncResponse.h"

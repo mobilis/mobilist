@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 TU Dresden. All rights reserved.
 //
 
-#import <MXi/MXi.h>
 #import "MobiList.h"
+
+#import "MXiBean.h"
+#import "MXiOutgoingBean.h"
 
 @interface CreateListRequest : MXiBean <MXiOutgoingBean>
 
