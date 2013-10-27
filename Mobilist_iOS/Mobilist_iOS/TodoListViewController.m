@@ -153,9 +153,9 @@
 	NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
 	[formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"]];
 	[formatter setTimeZone:[NSTimeZone timeZoneWithName:@"Europe/Berlin"]];
-	[formatter setDateFormat:@"dd.MM.yyyy, hh:mm"];
+	[formatter setDateFormat:@"yyyy-MM-dd"];
 	
-	[[cell dueDateLabel] setText:[formatter stringFromDate:dueDate]];
+	[[cell dueDateLabel] setText:[NSString stringWithFormat:@"Due %@", [formatter stringFromDate:dueDate]]];
 	
 	[[cell checkedSwitch] setOnImage:[UIImage imageNamed:@"checked.png"]];
 	[[cell checkedSwitch] setOffImage:[UIImage imageNamed:@"not-checked.png"]];

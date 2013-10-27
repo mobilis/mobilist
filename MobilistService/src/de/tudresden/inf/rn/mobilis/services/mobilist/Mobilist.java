@@ -17,6 +17,7 @@ import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.packet.PacketExtension;
 
 import de.tudresden.inf.rn.mobilis.server.agents.MobilisAgent;
 import de.tudresden.inf.rn.mobilis.server.services.MobilisService;
@@ -416,6 +417,11 @@ public class Mobilist extends MobilisService {
 			}
 		}
 		
+	}
+
+	@Override
+	public List<PacketExtension> getNodePacketExtensions() {
+		return null;
 	}
 
 }
