@@ -742,6 +742,7 @@
 				GCC_PREFIX_HEADER = "Mobilist_iOS/Mobilist_iOS-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Mobilist_iOS/Mobilist_iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -761,6 +762,7 @@
 				GCC_PREFIX_HEADER = "Mobilist_iOS/Mobilist_iOS-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Mobilist_iOS/Mobilist_iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
