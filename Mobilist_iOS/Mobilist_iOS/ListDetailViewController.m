@@ -10,6 +10,8 @@
 
 @interface ListDetailViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+
 @end
 
 @implementation ListDetailViewController
@@ -86,6 +88,13 @@
 		[[MobiListStore sharedStore] setSyncedStatus:NO
 										   forListId:[list listId]];
 	}
+}
+
+- (void)viewDidLayoutSubviews
+{
+    CGRect frame = self.contentView.frame;
+    frame.origin.y = self.topLayoutGuide.length;
+    self.contentView.frame = frame;
 }
 
 - (void)didReceiveMemoryWarning

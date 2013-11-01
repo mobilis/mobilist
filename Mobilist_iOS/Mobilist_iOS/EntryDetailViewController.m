@@ -10,6 +10,8 @@
 
 @interface EntryDetailViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+
 @end
 
 @implementation EntryDetailViewController
@@ -106,6 +108,13 @@
 		[[MobiListStore sharedStore] setSyncedStatus:NO
 										  forEntryId:[entry entryId]];
 	}
+}
+
+- (void)viewDidLayoutSubviews
+{
+    CGRect frame = self.contentView.frame;
+    frame.origin.y = self.topLayoutGuide.length;
+    self.contentView.frame = frame;
 }
 
 - (void)didReceiveMemoryWarning

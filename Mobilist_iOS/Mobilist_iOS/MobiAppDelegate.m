@@ -321,7 +321,6 @@
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
 	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
-	NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
 	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
 	NSInteger portFromDefaults = [userDefaults integerForKey:UserDefaultPort];
 	if (portFromDefaults == 0) {
@@ -334,7 +333,7 @@
                                                   password:passwordFromDefaults
                                                   hostName:hostnameFromDefaults
                                                       port:portFromDefaults
-                                            coordinatorJID:coordinatorJIDFromDefaults
+                                            coordinatorJID:[NSString stringWithFormat:@"mobilis@%@/Coordinator", hostnameFromDefaults]
                                           serviceNamespace:serviceNamespaceFromDefaults
                                                serviceType:SINGLE
                                           presenceDelegate:self

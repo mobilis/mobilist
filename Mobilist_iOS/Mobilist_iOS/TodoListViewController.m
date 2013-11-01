@@ -174,7 +174,7 @@
 - (void)switchTapped:(id)sender forEvent:(UIEvent* )event {
 	UISwitch* theSwitch = (UISwitch*) sender;
 	// TODO this seems a bad solution …
-	TodoListEntryCell* cell = (TodoListEntryCell*) [[theSwitch superview] superview];
+	TodoListEntryCell* cell = (TodoListEntryCell*) [[[theSwitch superview] superview] superview];
 	
 	MobiListEntry* entry = [cell entry];
 	[entry setDone:[theSwitch isOn]];

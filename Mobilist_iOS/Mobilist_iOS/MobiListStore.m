@@ -12,10 +12,10 @@
 
 + (MobiListStore *)sharedStore {
 	static MobiListStore* sharedInstance = nil;
-	
-	if (!sharedInstance) {
-		sharedInstance = [[MobiListStore alloc] init];
-	}
+	static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
 	
 	return sharedInstance;
 }
