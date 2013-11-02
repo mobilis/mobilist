@@ -26,6 +26,7 @@
         UIImage* bgImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]
 										pathForResource:@"light_toast" ofType:@"png"]];
 		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+        self.existingsListsTable.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
 		
 		[self.existingsListsTable setDataSource:self];
 		[self.existingsListsTable setDelegate:self];
@@ -227,13 +228,7 @@
 	return [[[MobiListStore sharedStore] allLists] count];
 }
 
-/*
- * End table view data source
- */
-
-/*
- * Table view delegate
- */
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	TodoListViewController* tlvc = [[TodoListViewController alloc]
@@ -296,15 +291,7 @@
 	return YES;
 }
 
-/*
- * End table view delegate
- */
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - Navigating to other Views
 
 - (void)showXMPPSettingsView:(id)sender {
 	XMPPSettingsViewController* xvc = [[XMPPSettingsViewController alloc] init];
