@@ -15,12 +15,10 @@
 #import "DeleteListRequest.h"
 #import "MobiAppDelegate.h"
 
-@interface DashboardViewController : UIViewController
-		<UITableViewDataSource, UITableViewDelegate>
-{
-	__weak IBOutlet UITableView *existingsListsTable;
-	MXiConnection* connection;
-}
+@interface DashboardViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic, readonly) MXiConnection *connection;
+
 
 - (void)showXMPPSettingsView:(id)sender;
 - (void)showCreateListView:(id)sender;

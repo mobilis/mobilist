@@ -14,9 +14,12 @@
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *checkedSwitch;
-@property (nonatomic, strong) MobiListEntry* entry;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *syncIndicator;
 
 - (IBAction)doneSwitchChanged:(id)sender;
+
+@property (nonatomic) MobiListEntry* entry;
+
++ (float)expectedHeight;
 
 @end

@@ -10,8 +10,6 @@
 
 @implementation TodoListEntryCell
 
-@synthesize titleLabel, dueDateLabel, checkedSwitch, entry;
-
 - (id)initWithStyle:(UITableViewCellStyle)style
 	reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -33,6 +31,11 @@
 
 - (IBAction)doneSwitchChanged:(id)sender {
 	
+}
+
++ (float)expectedHeight
+{
+    return 55.0;
 }
 
 @end

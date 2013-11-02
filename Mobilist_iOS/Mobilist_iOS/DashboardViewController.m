@@ -10,6 +10,10 @@
 
 @interface DashboardViewController ()
 
+@property (weak, nonatomic) IBOutlet UITableView *existingsListsTable;
+
+@property (strong, nonatomic, readwrite) MXiConnection *connection;
+
 @end
 
 @implementation DashboardViewController
@@ -23,23 +27,21 @@
 										pathForResource:@"light_toast" ofType:@"png"]];
 		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
 		
-		[existingsListsTable setDataSource:self];
-		[existingsListsTable setDelegate:self];
+		[self.existingsListsTable setDataSource:self];
+		[self.existingsListsTable setDelegate:self];
 		
 		UIBarButtonItem* addListItem = [[UIBarButtonItem alloc]
 				initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 										target:self
 										action:@selector(showCreateListView:)];
-		[[self navigationItem] setRightBarButtonItem:addListItem];
+        self.navigationItem.rightBarButtonItem = addListItem;
 		
 		UIBarButtonItem* settingsItem = [[UIBarButtonItem alloc]
 				initWithTitle:@"Settings"
 						style:UIBarButtonItemStylePlain
 					   target:self
 					   action:@selector(showXMPPSettingsView:)];
-		[[self navigationItem] setLeftBarButtonItem:settingsItem];
-		
-		[[self navigationItem] setTitle:@"Mobilist"];
+        self.navigationItem.leftBarButtonItem = settingsItem;
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(receivedListAddedNotification:)
@@ -92,25 +94,30 @@
 	UINib* nib = [UINib nibWithNibName:CellTodoList
 								bundle:nil];
 	
-	[existingsListsTable registerNib:nib
+	[self.existingsListsTable registerNib:nib
 			  forCellReuseIdentifier:CellTodoList];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
+}
+
+- (NSString *)title
+{
+    return @"Mobilist";
 }
 
 - (void)connectionEstablished:(NSNotification* )notification {
 	NSDictionary* userInfo = [notification userInfo];
-	connection = [userInfo objectForKey:@"connection"];
+	self.connection = [userInfo objectForKey:@"connection"];
 }
 
 - (void)receivedListAddedNotification:(NSNotification* )notification {
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedListCreationConfirmedNotification:(NSNotification* )notification {
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedListDeletionConfirmedNotification:(NSNotification* )notification {
@@ -124,7 +131,7 @@
 	NSDictionary* userInfo = [notification userInfo];
 	[[MobiListStore sharedStore] setSyncedStatus:YES forListId:[userInfo objectForKey:@"listId"]];
 	
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedListCreatedInfo:(NSNotification* )notification {
@@ -133,7 +140,7 @@
 	
 	[[MobiListStore sharedStore] addMobiList:list
 								newlyCreated:NO];
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedListEditedInfo:(NSNotification* )notification {
@@ -145,7 +152,7 @@
 	[oldList setListName:[newList listName]];
 	[oldList setListEntries:[newList listEntries]];
 	
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedListDeletedInfo:(NSNotification* )notification {
@@ -155,7 +162,7 @@
 	MobiList* listToBeDeleted = [[MobiListStore sharedStore] listByListId:listId];
 	[[MobiListStore sharedStore] removeMobiList:listToBeDeleted];
 	
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedEntryCreatedInfo:(NSNotification* )notification {
@@ -166,7 +173,7 @@
 	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
 	[listForEntry addListEntry:entry];
 	
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedEntryEditedInfo:(NSNotification* )notification {
@@ -182,7 +189,7 @@
 	[oldEntry setDueDate:[entry dueDate]];
 	[oldEntry setDone:[entry done]];
 	
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 - (void)receivedEntryDeletedInfo:(NSNotification* )notification {
@@ -194,7 +201,7 @@
 	MobiListEntry* entryToBeDeleted = [listForEntry entryById:entryId];
 	[listForEntry removeListEntry:entryToBeDeleted];
 	
-	[existingsListsTable reloadData];
+	[self.existingsListsTable reloadData];
 }
 
 /*
@@ -205,7 +212,7 @@
 		  cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	MobiList* list = [[[MobiListStore sharedStore] allLists] objectAtIndex:[indexPath row]];
 	
-	TodoListCell* cell = [existingsListsTable dequeueReusableCellWithIdentifier:CellTodoList];
+	TodoListCell* cell = [self.existingsListsTable dequeueReusableCellWithIdentifier:CellTodoList];
 	
 	[[cell listNameLabel] setText:[list listName]];
 	if (![[MobiListStore sharedStore] isListSyncedWithService:list]) {
@@ -233,7 +240,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	TodoListViewController* tlvc = [[TodoListViewController alloc]
 				initWithMobiList:[[[MobiListStore sharedStore] allLists] objectAtIndex:[indexPath row]]];
-	[tlvc setConnection:connection];
+	[tlvc setConnection:self.connection];
 	
 	[[self navigationController] pushViewController:tlvc animated:YES];
 }
@@ -261,7 +268,7 @@
 	
 	ListDetailViewController* ldvc = [[ListDetailViewController alloc] initForNewList:NO];
 	[ldvc setList:selectedList];
-	[ldvc setConnection:connection];
+	[ldvc setConnection:self.connection];
 	
 	[[self navigationController] pushViewController:ldvc animated:YES];
 }
@@ -276,7 +283,7 @@
 		[store removeMobiList:selectedList];
 		DeleteListRequest* request = [[DeleteListRequest alloc] init];
 		[request setListId:[selectedList listId]];
-		[connection sendBean:request];
+		[self.connection sendBean:request];
 		
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
 						 withRowAnimation:UITableViewRowAnimationMiddle];
@@ -312,7 +319,7 @@
 		
 		if ([appDelegate areXMPPSettingsSufficient]) {
 			[appDelegate setAuthenticated:NO];
-			[existingsListsTable reloadData];
+			[self.existingsListsTable reloadData];
 			
 			NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
 			NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
@@ -325,7 +332,7 @@
 				portFromDefaults = 5222;
 			}
 			
-			[connection reconnectWithJabberID:jabberIdFromDefaults
+			[self.connection reconnectWithJabberID:jabberIdFromDefaults
 									 password:passwordFromDefaults
 									 hostname:hostnameFromDefaults
 										 port:portFromDefaults
@@ -341,9 +348,9 @@
 	ListDetailViewController* nlvc = [[ListDetailViewController alloc] initForNewList:YES];
 	
 	[nlvc setDismissBlock:^{
-		[existingsListsTable reloadData];
+		[self.existingsListsTable reloadData];
 	}];
-	[nlvc setConnection:connection];
+	[nlvc setConnection:self.connection];
 	
 	UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:nlvc];
 	

@@ -15,6 +15,16 @@
 	UITextField* currentlyEditingTextField;
 	int distanceByWhichViewIsCurrentlyMovedUp;
 }
+
+@property (weak, nonatomic) IBOutlet UITextField *hostNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *jabberIDTextField;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UITextField *portTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *serviceNamespaceTextField;
+
+- (IBAction)backgroundTapped:(id)sender;
+
 @end
 
 @implementation XMPPSettingsViewController
@@ -30,10 +40,10 @@
 																			 ofType:@"png"]];
 		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
 		
-		[scrollView setContentSize:[[self view] frame].size];
+		[self.scrollView setContentSize:[[self view] frame].size];
 		UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
 																					action:@selector(backgroundTapped:)];
-		[scrollView addGestureRecognizer:singleTap];
+		[self.scrollView addGestureRecognizer:singleTap];
     }
     return self;
 }
@@ -42,12 +52,11 @@
 {
     [super viewDidLoad];
 	
-	[jabberIDTextField setDelegate:self];
-	[passwordTextField setDelegate:self];
-	[coordinatorTextField setDelegate:self];
-	[hostnameTextField setDelegate:self];
-	[serviceNamespaceTextField setDelegate:self];
-	[portTextField setDelegate:self];
+	[self.jabberIDTextField setDelegate:self];
+	[self.passwordTextField setDelegate:self];
+	[self.hostNameTextField setDelegate:self];
+	[self.serviceNamespaceTextField setDelegate:self];
+	[self.portTextField setDelegate:self];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -121,12 +130,11 @@
 	[super viewWillAppear:animated];
 	
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-	[jabberIDTextField setText:[userDefaults stringForKey:UserDefaultJabberId]];
-	[passwordTextField setText:[userDefaults stringForKey:UserDefaultPassword]];
-	[hostnameTextField setText:[userDefaults stringForKey:UserDefaultHostname]];
-	[coordinatorTextField setText:[userDefaults stringForKey:UserDefaultCoordinatorJID]];
-	[serviceNamespaceTextField setText:[userDefaults stringForKey:UserDefaultServiceNamespace]];
-	[portTextField setText:[userDefaults stringForKey:UserDefaultPort]];
+	[self.jabberIDTextField setText:[userDefaults stringForKey:UserDefaultJabberId]];
+	[self.passwordTextField setText:[userDefaults stringForKey:UserDefaultPassword]];
+	[self.hostNameTextField setText:[userDefaults stringForKey:UserDefaultHostname]];
+	[self.serviceNamespaceTextField setText:[userDefaults stringForKey:UserDefaultServiceNamespace]];
+	[self.portTextField setText:[userDefaults stringForKey:UserDefaultPort]];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(keyboardWillShow:)
@@ -142,12 +150,11 @@
 	[super viewWillDisappear:animated];
 	
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-	[userDefaults setObject:[jabberIDTextField text] forKey:UserDefaultJabberId];
-	[userDefaults setObject:[passwordTextField text] forKey:UserDefaultPassword];
-	[userDefaults setObject:[hostnameTextField text] forKey:UserDefaultHostname];
-	[userDefaults setObject:[coordinatorTextField text] forKey:UserDefaultCoordinatorJID];
-	[userDefaults setObject:[serviceNamespaceTextField text] forKey:UserDefaultServiceNamespace];
-	[userDefaults setObject:[portTextField text] forKey:UserDefaultPort];
+	[userDefaults setObject:[self.jabberIDTextField text] forKey:UserDefaultJabberId];
+	[userDefaults setObject:[self.passwordTextField text] forKey:UserDefaultPassword];
+	[userDefaults setObject:[self.hostNameTextField text] forKey:UserDefaultHostname];
+	[userDefaults setObject:[self.serviceNamespaceTextField text] forKey:UserDefaultServiceNamespace];
+	[userDefaults setObject:[self.portTextField text] forKey:UserDefaultPort];
 	
 	[userDefaults synchronize];
 	

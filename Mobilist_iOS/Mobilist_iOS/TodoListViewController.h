@@ -21,8 +21,8 @@
 	NSInteger entryIndexToBeDeleted;
 }
 
-@property (nonatomic, strong) MobiList* theList;
-@property (nonatomic, strong) MXiConnection* connection;
+@property (nonatomic) MobiList* theList;
+@property (nonatomic) MXiConnection* connection;
 
 - (id)initWithMobiList:(MobiList* )aList;
 - (void)showComposeListEntryView:(id)sender;

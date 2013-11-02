@@ -11,34 +11,30 @@
 @interface ListDetailViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UITextField *listNameTextField;
 
 @end
 
 @implementation ListDetailViewController
 
-@synthesize dismissBlock, list, connection;
-
 - (id)initForNewList:(BOOL)isNew {
 	self = [super initWithNibName:@"ListDetailViewController" bundle:nil];
 	
     if (self) {
-		isForNewItem = isNew;
-		UIImage* bgImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]
-															 pathForResource:@"light_toast" ofType:@"png"]];
-		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+		_isForNewItem = isNew;
 		
 		if (isNew) {
 			UIBarButtonItem* doneItem = [[UIBarButtonItem alloc]
-										 initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+										 initWithBarButtonSystemItem:UIBarButtonSystemItemSave
 										 target:self
 										 action:@selector(save:)];
-			[[self navigationItem] setRightBarButtonItem:doneItem];
+            self.navigationItem.rightBarButtonItem = doneItem;
 			
 			UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc]
 										   initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
 										   target:self
 										   action:@selector(cancel:)];
-			[[self navigationItem] setLeftBarButtonItem:cancelItem];
+            self.navigationItem.leftBarButtonItem = cancelItem;
 		}
     }
 	
@@ -62,14 +58,18 @@
 {
     [super viewDidLoad];
 	
-	[listNameTextField becomeFirstResponder];
+    UIImage* bgImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]
+                                                         pathForResource:@"light_toast" ofType:@"png"]];
+    self.contentView.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+    
+	[self.listNameTextField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	if (list) {
-		[listNameTextField setText:[list listName]];
+	if (self.list) {
+		[self.listNameTextField setText:[self.list listName]];
 	}
 }
 
@@ -78,15 +78,15 @@
 	
 	[[self view] endEditing:YES];
 	
-	if (!isForNewItem) {
-		[list setListName:[listNameTextField text]];
+	if (!_isForNewItem) {
+		[self.list setListName:[self.listNameTextField text]];
 	
 		EditListRequest* request = [[EditListRequest alloc] init];
-		[request setList:list];
-		[connection sendBean:request];
+		[request setList:self.list];
+		[self.connection sendBean:request];
 		
 		[[MobiListStore sharedStore] setSyncedStatus:NO
-										   forListId:[list listId]];
+										   forListId:[self.list listId]];
 	}
 }
 
@@ -104,7 +104,7 @@
 }
 
 - (void)save:(id)sender {
-	NSString* listNameText = [listNameTextField text];
+	NSString* listNameText = [self.listNameTextField text];
 	
 	if ([listNameText length] < 3) {
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Name too short"
@@ -128,13 +128,13 @@
 	
 	CreateListRequest* request = [[CreateListRequest alloc] init];
 	[request setList:theNewList];
-	[connection sendBean:request];
+	[self.connection sendBean:request];
 	
-	[[self navigationController] dismissViewControllerAnimated:YES completion:dismissBlock];
+	[[self navigationController] dismissViewControllerAnimated:YES completion:self.dismissBlock];
 }
 
 - (void)cancel:(id)sender {
-	[[self navigationController] dismissViewControllerAnimated:YES completion:dismissBlock];
+	[[self navigationController] dismissViewControllerAnimated:YES completion:self.dismissBlock];
 }
 
 @end

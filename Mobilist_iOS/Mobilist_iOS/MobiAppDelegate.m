@@ -41,6 +41,11 @@
 	[connection sendBean:request];
 }
 
+- (void)didCreateServiceWithJabberID:(NSString *)jabberID andVersion:(NSString *)version
+{
+    NSLog(@"Not required for SINGLE services");
+}
+
 - (void)didDisconnectWithError:(NSError* )error {
 	
 }

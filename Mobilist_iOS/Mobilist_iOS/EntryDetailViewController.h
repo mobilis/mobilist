@@ -15,11 +15,7 @@
 
 @interface EntryDetailViewController : UIViewController
 {
-	__weak IBOutlet UITextField *titleTextField;
-	__weak IBOutlet UITextView *descriptionTextField;
-	__weak IBOutlet UIDatePicker *dueDatePicker;
-	
-	BOOL isForNewItem;
+	BOOL _isForNewItem;
 }
 
 @property (nonatomic, strong) MobiListEntry* entry;

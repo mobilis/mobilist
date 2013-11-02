@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		41241986D3344BFEA2EB3FE1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3C8B1E58D0460DAA5FF037 /* libPods.a */; };
+		5B227BC01825049200173261 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B227BBF1825049200173261 /* QuartzCore.framework */; };
 		7915200F17203EE100AB33F0 /* MobiListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7915200E17203EE100AB33F0 /* MobiListEntry.m */; };
 		79152012172040D400AB33F0 /* MobiList.m in Sources */ = {isa = PBXBuildFile; fileRef = 79152011172040D400AB33F0 /* MobiList.m */; };
 		79152015172047E900AB33F0 /* MobiListStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 79152014172047E900AB33F0 /* MobiListStore.m */; };
@@ -49,7 +50,6 @@
 		7999F6C0171D86CD00B74031 /* ListDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6BE171D86CD00B74031 /* ListDetailViewController.xib */; };
 		7999F6C5171DAB3A00B74031 /* TodoListEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7999F6C4171DAB3A00B74031 /* TodoListEntryCell.m */; };
 		7999F6C7171DAB5F00B74031 /* TodoListEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7999F6C6171DAB5F00B74031 /* TodoListEntryCell.xib */; };
-		79A4DD7B1755085900E6BDE4 /* libMXi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A4DD7A1755085900E6BDE4 /* libMXi.a */; };
 		79A4DD8B175A599F00E6BDE4 /* SyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DD8A175A599F00E6BDE4 /* SyncRequest.m */; };
 		79A4DD9D175A800000E6BDE4 /* GetListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DD9C175A800000E6BDE4 /* GetListRequest.m */; };
 		79A4DDA0175B99A400E6BDE4 /* SyncResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4DD9F175B99A400E6BDE4 /* SyncResponse.m */; };
@@ -91,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		1D3C8B1E58D0460DAA5FF037 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B227BBF1825049200173261 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7915200D17203EE100AB33F0 /* MobiListEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobiListEntry.h; sourceTree = "<group>"; };
 		7915200E17203EE100AB33F0 /* MobiListEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobiListEntry.m; sourceTree = "<group>"; };
 		79152010172040D400AB33F0 /* MobiList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobiList.h; sourceTree = "<group>"; };
@@ -152,7 +153,6 @@
 		7999F6C3171DAB3A00B74031 /* TodoListEntryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoListEntryCell.h; sourceTree = "<group>"; };
 		7999F6C4171DAB3A00B74031 /* TodoListEntryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoListEntryCell.m; sourceTree = "<group>"; };
 		7999F6C6171DAB5F00B74031 /* TodoListEntryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodoListEntryCell.xib; sourceTree = "<group>"; };
-		79A4DD7A1755085900E6BDE4 /* libMXi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMXi.a; path = "../../mobilis/MXi/build/Release-iphoneos/libMXi.a"; sourceTree = "<group>"; };
 		79A4DD89175A599F00E6BDE4 /* SyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncRequest.h; sourceTree = "<group>"; };
 		79A4DD8A175A599F00E6BDE4 /* SyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncRequest.m; sourceTree = "<group>"; };
 		79A4DD9B175A800000E6BDE4 /* GetListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetListRequest.h; sourceTree = "<group>"; };
@@ -226,8 +226,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B227BC01825049200173261 /* QuartzCore.framework in Frameworks */,
 				798D5FBC17CCAC0000B27757 /* SystemConfiguration.framework in Frameworks */,
-				79A4DD7B1755085900E6BDE4 /* libMXi.a in Frameworks */,
 				7972141217212C7300D63C38 /* libiconv.dylib in Frameworks */,
 				7915201D1720524100AB33F0 /* libresolv.dylib in Frameworks */,
 				7915201B1720523100AB33F0 /* CFNetwork.framework in Frameworks */,
@@ -246,7 +246,6 @@
 		79768E80171AD42800F5DDA1 = {
 			isa = PBXGroup;
 			children = (
-				79A4DD7A1755085900E6BDE4 /* libMXi.a */,
 				79768E92171AD42800F5DDA1 /* Mobilist_iOS */,
 				79768E8B171AD42800F5DDA1 /* Frameworks */,
 				79768E8A171AD42800F5DDA1 /* Products */,
@@ -265,6 +264,7 @@
 		79768E8B171AD42800F5DDA1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B227BBF1825049200173261 /* QuartzCore.framework */,
 				798D5FBB17CCAC0000B27757 /* SystemConfiguration.framework */,
 				79E7273217266958003DC9F2 /* libMXi.a */,
 				7972141117212C7300D63C38 /* libiconv.dylib */,

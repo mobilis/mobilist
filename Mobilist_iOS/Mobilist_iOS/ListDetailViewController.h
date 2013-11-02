@@ -16,13 +16,12 @@
 
 @interface ListDetailViewController : UIViewController
 {
-	__weak IBOutlet UITextField *listNameTextField;
-	BOOL isForNewItem;
+	BOOL _isForNewItem;
 }
 
 @property (nonatomic, copy) void (^dismissBlock)(void);
-@property (nonatomic, strong) MobiList* list;
-@property (nonatomic, strong) MXiConnection* connection;
+@property (nonatomic) MobiList* list;
+@property (nonatomic) MXiConnection* connection;
 
 - (id)initForNewList:(BOOL)isNew;
 

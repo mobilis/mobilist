@@ -8,36 +8,33 @@
 
 #import "EntryDetailViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface EntryDetailViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIControl *contentView;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextField;
+@property (weak, nonatomic) IBOutlet UIDatePicker *dueDatePicker;
 
 @end
 
 @implementation EntryDetailViewController
 
-@synthesize entry, dismissBlock, parent, connection;
-
 - (id)initForNewEntry:(BOOL)isNew {
 	self = [super initWithNibName:@"EntryDetailViewController" bundle:nil];
 	
     if (self) {
-		isForNewItem = isNew;
-		
-		UIImage* bgImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]
-															 pathForResource:@"light_toast" ofType:@"png"]];
-		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+		_isForNewItem = isNew;
 		
 		if (isNew) {
-			[[self navigationItem] setTitle:@"New todo item"];
+			UIBarButtonItem* saveBarButtonItem = [[UIBarButtonItem alloc]
+				initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save:)];
+            self.navigationItem.rightBarButtonItem = saveBarButtonItem;
 			
-			UIBarButtonItem* doneItem = [[UIBarButtonItem alloc]
-				initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(save:)];
-			[[self navigationItem] setRightBarButtonItem:doneItem];
-			
-			UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc]
+			UIBarButtonItem* cancelBarButtonItem = [[UIBarButtonItem alloc]
 				initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-			[[self navigationItem] setLeftBarButtonItem:cancelItem];
+            self.navigationItem.leftBarButtonItem = cancelBarButtonItem;
 		}
     }
 	
@@ -53,7 +50,6 @@
     @throw [NSException exceptionWithName:@"Wrong initializer"
 								   reason:@"Use initForNewItem"
 								 userInfo:nil];
-	
 	return nil;
 }
 
@@ -61,32 +57,29 @@
 {
     [super viewDidLoad];
     
-	[titleTextField becomeFirstResponder];
-	
-	// Make the text view look like a text field
-	[descriptionTextField setBackgroundColor:[UIColor clearColor]];
-	UIImageView* borderView = [[UIImageView alloc]
-							   initWithFrame:CGRectMake(0, 0,
-														descriptionTextField.frame.size.width, descriptionTextField.frame.size.height)];
-	[borderView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-	UIImage* textFieldImage = [[UIImage imageNamed:@"text_view_background.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 8, 15, 8)];
-	[borderView setImage:textFieldImage];
-	[descriptionTextField addSubview:borderView];
-	[descriptionTextField sendSubviewToBack:borderView];
-	// TODO image doesn't grow along with the text view
+    UIImage* bgImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]
+                                                         pathForResource:@"light_toast" ofType:@"png"]];
+    self.contentView.backgroundColor = [UIColor colorWithPatternImage:bgImage];
+    
+    [self.descriptionTextField.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]];
+    [self.descriptionTextField.layer setBorderWidth:1.0];
+    self.descriptionTextField.layer.cornerRadius = 5.0;
+    self.descriptionTextField.clipsToBounds = YES;
+    
+	[self.titleTextField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	[titleTextField setText:[entry title]];
-	[descriptionTextField setText:[entry description]];
+	[self.titleTextField setText:[self.entry title]];
+	[self.descriptionTextField setText:[self.entry description]];
 	
-	NSDate* dueDate = [entry dueDateAsDate];
-	if ([entry dueDate] != 0) {
-		[dueDatePicker setDate:dueDate];
+	NSDate* dueDate = [self.entry dueDateAsDate];
+	if ([self.entry dueDate] != 0) {
+		[self.dueDatePicker setDate:dueDate];
 	} else {
-		[dueDatePicker setDate:[NSDate date]];
+		[self.dueDatePicker setDate:[NSDate date]];
 	}
 }
 
@@ -95,18 +88,18 @@
 	
 	[[self view] endEditing:YES];
 	
-	if (!isForNewItem) {
-		[entry setTitle:[titleTextField text]];
-		[entry setDescription:[descriptionTextField text]];
-		[entry setDueDate:[[dueDatePicker date] timeIntervalSince1970]];
+	if (!_isForNewItem) {
+		[self.entry setTitle:[self.titleTextField text]];
+		[self.entry setDescription:[self.descriptionTextField text]];
+		[self.entry setDueDate:[[self.dueDatePicker date] timeIntervalSince1970]];
 		
 		EditEntryRequest* request = [[EditEntryRequest alloc] init];
-		[request setListId:[parent listId]];
-		[request setEntry:entry];
-		[connection sendBean:request];
+		[request setListId:[self.parent listId]];
+		[request setEntry:self.entry];
+		[self.connection sendBean:request];
 		
 		[[MobiListStore sharedStore] setSyncedStatus:NO
-										  forEntryId:[entry entryId]];
+										  forEntryId:[self.entry entryId]];
 	}
 }
 
@@ -117,6 +110,11 @@
     self.contentView.frame = frame;
 }
 
+- (NSString *)title
+{
+    return _isForNewItem ? @"New ToDo" : @"Edit ToDo";
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -124,25 +122,25 @@
 }
 
 - (void)save:(id)sender {
-	[[self navigationController] dismissViewControllerAnimated:YES completion:dismissBlock];
+	[[self navigationController] dismissViewControllerAnimated:YES completion:self.dismissBlock];
 	
-	[entry setTitle:[titleTextField text]];
-	[entry setDescription:[descriptionTextField text]];
-	[entry setDueDate:[[dueDatePicker date] timeIntervalSince1970]];
-	[entry setDone:NO];
+	[self.entry setTitle:[self.titleTextField text]];
+	[self.entry setDescription:[self.descriptionTextField text]];
+	[self.entry setDueDate:[[self.dueDatePicker date] timeIntervalSince1970]];
+	[self.entry setDone:NO];
 	
 	CreateEntryRequest* request = [[CreateEntryRequest alloc] init];
-	[request setListId:[parent listId]];
-	[request setEntry:entry];
-	[connection sendBean:request];
+	[request setListId:[self.parent listId]];
+	[request setEntry:self.entry];
+	[self.connection sendBean:request];
 	
 	[[MobiListStore sharedStore] setSyncedStatus:NO
-									  forEntryId:[entry entryId]];
+									  forEntryId:[self.entry entryId]];
 }
 
 - (void)cancel:(id)sender {
-	[parent removeListEntry:entry];
-	[[self navigationController] dismissViewControllerAnimated:YES completion:dismissBlock];
+	[self.parent removeListEntry:self.entry];
+	[[self navigationController] dismissViewControllerAnimated:YES completion:self.dismissBlock];
 }
 
 - (IBAction)backgroundTapped:(id)sender {
