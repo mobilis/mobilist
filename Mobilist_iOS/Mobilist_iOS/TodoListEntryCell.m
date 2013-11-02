@@ -8,19 +8,13 @@
 
 #import "TodoListEntryCell.h"
 
-@implementation TodoListEntryCell
+@interface TodoListEntryCell ()
 
-- (id)initWithStyle:(UITableViewCellStyle)style
-	reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
-	if (self) {
-		
-    }
-    
-	return self;
-}
+- (IBAction)doneSwitchChanged:(id)sender;
+
+@end
+
+@implementation TodoListEntryCell
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -30,7 +24,8 @@
 }
 
 - (IBAction)doneSwitchChanged:(id)sender {
-	
+    [self.delegate checkedSwitchStateChange:self.checkedSwitch forEntry:self.entry];
+    [self.syncIndicator startAnimating];
 }
 
 + (float)expectedHeight

@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "MobiListEntry.h"
 
+@protocol TodoListEntryCellDelegate <NSObject>
+
+- (void)checkedSwitchStateChange:(UISwitch *)theSwitch forEntry:(MobiListEntry *)entry;
+
+@end
+
 @interface TodoListEntryCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
@@ -16,9 +22,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *checkedSwitch;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *syncIndicator;
 
-- (IBAction)doneSwitchChanged:(id)sender;
-
 @property (nonatomic) MobiListEntry* entry;
+@property (nonatomic, weak) id <TodoListEntryCellDelegate> delegate;
 
 + (float)expectedHeight;
 

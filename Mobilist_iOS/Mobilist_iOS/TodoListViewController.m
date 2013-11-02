@@ -8,7 +8,7 @@
 
 #import "TodoListViewController.h"
 
-@interface TodoListViewController ()
+@interface TodoListViewController () <TodoListEntryCellDelegate>
 
 @end
 
@@ -32,7 +32,7 @@
 			initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
 								 target:self
 								 action:@selector(showComposeListEntryView:)];
-		[[self navigationItem] setRightBarButtonItem:addEntryItem];
+        self.navigationItem.rightBarButtonItem = addEntryItem;
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(receivedEntryCreationConfirmed:)
@@ -143,6 +143,7 @@
 {
 	TodoListEntryCell* cell = [tableView dequeueReusableCellWithIdentifier:CellTodoListEntry
 															forIndexPath:indexPath];
+    cell.delegate = self;
 	MobiListEntry* entry = [theList entryAtIndex:[indexPath row]];
     
 	[cell setEntry:entry];
@@ -157,36 +158,13 @@
 	
 	[[cell dueDateLabel] setText:[NSString stringWithFormat:@"Due %@", [formatter stringFromDate:dueDate]]];
 	
-	[[cell checkedSwitch] setOnImage:[UIImage imageNamed:@"checked.png"]];
-	[[cell checkedSwitch] setOffImage:[UIImage imageNamed:@"not-checked.png"]];
 	[[cell checkedSwitch] setOn:[entry done] animated:YES];
-	[[cell checkedSwitch] addTarget:self
-							 action:@selector(switchTapped:forEvent:)
-				   forControlEvents:UIControlEventValueChanged];
-	
+		
 	if (![[MobiListStore sharedStore] isEntrySyncedWithService:entry]) {
 		[[cell syncIndicator] startAnimating];
 	}
     
     return cell;
-}
-
-- (void)switchTapped:(id)sender forEvent:(UIEvent* )event {
-	UISwitch* theSwitch = (UISwitch*) sender;
-	// TODO this seems a bad solution …
-	TodoListEntryCell* cell = (TodoListEntryCell*) [[[theSwitch superview] superview] superview];
-	
-	MobiListEntry* entry = [cell entry];
-	[entry setDone:[theSwitch isOn]];
-	
-	EditEntryRequest* request = [[EditEntryRequest alloc] init];
-	[request setListId:[theList listId]];
-	[request setEntry:entry];
-	[connection sendBean:request];
-	
-	[[MobiListStore sharedStore] setSyncedStatus:NO
-									  forEntryId:[entry entryId]];
-	[[cell syncIndicator] startAnimating];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -272,6 +250,21 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [TodoListEntryCell expectedHeight];
+}
+
+#pragma mark - TodoListEntryCellDelegate
+
+- (void)checkedSwitchStateChange:(UISwitch *)theSwitch forEntry:(MobiListEntry *)entry
+{
+    [entry setDone:[theSwitch isOn]];
+	
+	EditEntryRequest* request = [[EditEntryRequest alloc] init];
+	[request setListId:[theList listId]];
+	[request setEntry:entry];
+	[connection sendBean:request];
+	
+	[[MobiListStore sharedStore] setSyncedStatus:NO
+									  forEntryId:[entry entryId]];
 }
 
 @end
