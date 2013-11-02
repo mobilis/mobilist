@@ -167,13 +167,11 @@
 	
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
-	NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
 	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
 	
 	MobiAppDelegate* appDelegate = (MobiAppDelegate*) [[UIApplication sharedApplication] delegate];
 	[appDelegate setAreXMPPSettingsSufficient:[appDelegate isSufficientJabberID:jabberIdFromDefaults
 																	   password:passwordFromDefaults
-																 coordinatorJID:coordinatorJIDFromDefaults
 															   serviceNamespace:serviceNamespaceFromDefaults]];
 	
 	dismissBlock();

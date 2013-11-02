@@ -50,7 +50,6 @@
 
 - (BOOL)isSufficientJabberID:(NSString* )jabberID
 					password:(NSString* )password
-			  coordinatorJID:(NSString* )coordinatorJID
 			serviceNamespace:(NSString* )serviceNamespace;
 
 @end

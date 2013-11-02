@@ -241,15 +241,15 @@
 
 - (BOOL)isSufficientJabberID:(NSString* )jabberID
 					password:(NSString* )password
-			  coordinatorJID:(NSString* )coordinatorJID
 			serviceNamespace:(NSString* )serviceNamespace {
 	if (jabberID && ![jabberID isEqualToString:@""] &&
 		password && ![password isEqualToString:@""] &&
-		coordinatorJID && ![coordinatorJID isEqualToString:@""] &&
 		serviceNamespace && ![serviceNamespace isEqualToString:@""]) {
+        self.areXMPPSettingsSufficient = YES;
 			return YES;
 	}
 	
+    self.areXMPPSettingsSufficient = NO;
 	return NO;
 }
 
@@ -262,12 +262,10 @@
 	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
 	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
 	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
-	NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
 	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
 	
 	[self setAreXMPPSettingsSufficient:[self isSufficientJabberID:jabberIdFromDefaults
 														 password:passwordFromDefaults
-												   coordinatorJID:coordinatorJIDFromDefaults
 												 serviceNamespace:serviceNamespaceFromDefaults]];
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
