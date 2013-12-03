@@ -1,10 +1,13 @@
 .DS_Store
 .classpath
+.idea/
 
 MobilistService/bin/
 MobilistService/dist/
 
 Mobilist_iOS/Pods/
 
+
 *.xcworkspace/
 xcuserdata/
+Settings.plist

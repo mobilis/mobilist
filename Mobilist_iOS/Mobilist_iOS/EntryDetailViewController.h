@@ -20,7 +20,6 @@
 
 @property (nonatomic, strong) MobiListEntry* entry;
 @property (nonatomic, strong) MobiList* parent;
-@property (nonatomic, strong) MXiConnection* connection;
 @property (nonatomic, copy) void (^dismissBlock)(void);
 
 - (id)initForNewEntry:(BOOL)isNew;

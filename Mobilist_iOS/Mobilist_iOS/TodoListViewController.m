@@ -7,14 +7,20 @@
 //
 
 #import "TodoListViewController.h"
+#import "CreateEntryResponse.h"
+#import "EditEntryResponse.h"
+#import "EntryCreatedInfo.h"
+#import "EntryEditedInfo.h"
+#import "EntryDeletedInfo.h"
+#import "EntryCreatedAccept.h"
+#import "EntryEditedAccept.h"
+#import "EntryDeletedAccept.h"
 
 @interface TodoListViewController () <TodoListEntryCellDelegate>
 
 @end
 
 @implementation TodoListViewController
-
-@synthesize theList, connection;
 
 - (id)initWithMobiList:(MobiList *)aList {
 	self = [super initWithStyle:UITableViewStyleGrouped];
@@ -24,9 +30,9 @@
 															 pathForResource:@"light_toast" ofType:@"png"]];
 		self.view.backgroundColor = [UIColor colorWithPatternImage:bgImage];
 		
-        theList = aList;
+        self.mobiList = aList;
 		
-		[[self navigationItem] setTitle:[theList listName]];
+		[[self navigationItem] setTitle:[self.mobiList listName]];
 		
 		UIBarButtonItem* addEntryItem = [[UIBarButtonItem alloc]
 			initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
@@ -34,42 +40,24 @@
 								 action:@selector(showComposeListEntryView:)];
         self.navigationItem.rightBarButtonItem = addEntryItem;
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryCreationConfirmed:)
-													 name:NotificationEntryCreationConfirmed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryEditingConfirmed:)
-													 name:NotificationEntryEditingConfirmed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryCreatedInfo:)
-													 name:NotificationEntryCreatedInformed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryEditedInfo:)
-													 name:NotificationEntryEditedInformed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryDeletedInfo:)
-													 name:NotificationEntryDeletedInformed
-												   object:nil];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryCreationConfirmed:)
+                                                             forBeanClass:[CreateEntryResponse class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryEditingConfirmed:)
+                                                             forBeanClass:[EditEntryResponse class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryCreatedInfo:)
+                                                             forBeanClass:[EntryCreatedInfo class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryEditedInfo:)
+                                                             forBeanClass:[EntryEditedInfo class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryDeletedInfo:)
+                                                             forBeanClass:[EntryDeletedInfo class]];
     }
 	
     return self;
-}
-
-- (id)init {
-	@throw [NSException exceptionWithName:@"Wrong initializer"
-								   reason:@"Use initWithMobiList"
-								 userInfo:nil];
-	
-	return nil;
-}
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    return [self init];
 }
 
 - (void)receivedEntryCreationConfirmed:(NSNotification* )notification {
@@ -90,15 +78,27 @@
 	[[self tableView] reloadData];
 }
 
-- (void)receivedEntryCreatedInfo:(NSNotification* )notification {
+- (void)receivedEntryCreatedInfo:(EntryCreatedInfo* )entryCreatedInfo {
+    EntryCreatedAccept* accept = [[EntryCreatedAccept alloc] init];
+    [accept setEntryId:entryCreatedInfo.entry.entryId];
+    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+
 	[[self tableView] reloadData];
 }
 
-- (void)receivedEntryEditedInfo:(NSNotification* )notification {
+- (void)receivedEntryEditedInfo:(EntryEditedInfo* )entryEditedInfo {
+    EntryEditedAccept* accept = [[EntryEditedAccept alloc] init];
+    [accept setEntryId:[[entryEditedInfo entry] entryId]];
+    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+
 	[[self tableView] reloadData];
 }
 
-- (void)receivedEntryDeletedInfo:(NSNotification* )notification {
+- (void)receivedEntryDeletedInfo:(EntryDeletedInfo* )entryDeletedInfo {
+    EntryDeletedAccept* accept = [[EntryDeletedAccept alloc] init];
+    [accept setEntryId:[entryDeletedInfo entryId]];
+    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+
 	[[self tableView] reloadData];
 }
 
@@ -136,7 +136,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[theList listEntries] count];
+    return [[self.mobiList listEntries] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,7 +144,7 @@
 	TodoListEntryCell* cell = [tableView dequeueReusableCellWithIdentifier:CellTodoListEntry
 															forIndexPath:indexPath];
     cell.delegate = self;
-	MobiListEntry* entry = [theList entryAtIndex:[indexPath row]];
+	MobiListEntry* entry = [self.mobiList entryAtIndex:[indexPath row]];
     
 	[cell setEntry:entry];
 	
@@ -176,7 +176,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 		entryIndexToBeDeleted = [indexPath row];
-		MobiListEntry* entryToBeDeleted = [theList entryAtIndex:entryIndexToBeDeleted];
+		MobiListEntry* entryToBeDeleted = [self.mobiList entryAtIndex:entryIndexToBeDeleted];
 		NSString* message = [[@"Do you really want to delete the entry '"
 							  stringByAppendingString:[entryToBeDeleted title]]
 							 stringByAppendingString:@"'?"];
@@ -196,16 +196,16 @@
 	if (buttonIndex == 1) {
 		// Delete button was pressed
 		DeleteEntryRequest* request = [[DeleteEntryRequest alloc] init];
-		[request setListId:[theList listId]];
-		[request setEntryId:[[[theList listEntries] objectAtIndex:entryIndexToBeDeleted] entryId]];
-		[connection sendBean:request];
+		[request setListId:[self.mobiList listId]];
+		[request setEntryId:[[[self.mobiList listEntries] objectAtIndex:entryIndexToBeDeleted] entryId]];
+		[[MXiConnectionHandler sharedInstance].connection sendBean:request];
 		
-		[[theList listEntries] removeObjectAtIndex:entryIndexToBeDeleted];
+		[[self.mobiList listEntries] removeObjectAtIndex:entryIndexToBeDeleted];
 		
 		NSIndexPath* indexPath = [NSIndexPath indexPathForRow:entryIndexToBeDeleted
 													inSection:0];
 		[[self tableView] deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-								withRowAnimation:YES];
+								withRowAnimation:UITableViewRowAnimationAutomatic];
 	}
 }
 
@@ -218,9 +218,8 @@
 	[edvc setDismissBlock:^{
 		[tableView reloadData];
 	}];
-	[edvc setParent:theList];
-	[edvc setEntry:[theList entryAtIndex:[indexPath row]]];
-	[edvc setConnection:connection];
+	[edvc setParent:self.mobiList];
+	[edvc setEntry:[self.mobiList entryAtIndex:[indexPath row]]];
 	
 	[[self navigationController] pushViewController:edvc animated:YES];
 }
@@ -230,11 +229,10 @@
 	
 	MobiListEntry* newEntry = [[MobiListEntry alloc] init];
 	[newEntry setEntryId:[UUIDCreator createUUID]];
-	
-	[edvc setConnection:connection];
-	[edvc setParent:theList];
+
+	[edvc setParent:self.mobiList];
 	[edvc setEntry:newEntry];
-	[theList addListEntry:newEntry];
+	[self.mobiList addListEntry:newEntry];
 	
 	[edvc setDismissBlock:^{
 		[[self tableView] reloadData];
@@ -259,9 +257,9 @@
     [entry setDone:[theSwitch isOn]];
 	
 	EditEntryRequest* request = [[EditEntryRequest alloc] init];
-	[request setListId:[theList listId]];
+	[request setListId:[self.mobiList listId]];
 	[request setEntry:entry];
-	[connection sendBean:request];
+	[[MXiConnectionHandler sharedInstance].connection sendBean:request];
 	
 	[[MobiListStore sharedStore] setSyncedStatus:NO
 									  forEntryId:[entry entryId]];

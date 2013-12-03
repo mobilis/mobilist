@@ -96,7 +96,7 @@
 		EditEntryRequest* request = [[EditEntryRequest alloc] init];
 		[request setListId:[self.parent listId]];
 		[request setEntry:self.entry];
-		[self.connection sendBean:request];
+		[[MXiConnectionHandler sharedInstance].connection sendBean:request];
 		
 		[[MobiListStore sharedStore] setSyncedStatus:NO
 										  forEntryId:[self.entry entryId]];
@@ -132,7 +132,7 @@
 	CreateEntryRequest* request = [[CreateEntryRequest alloc] init];
 	[request setListId:[self.parent listId]];
 	[request setEntry:self.entry];
-	[self.connection sendBean:request];
+	[[MXiConnectionHandler sharedInstance].connection sendBean:request];
 	
 	[[MobiListStore sharedStore] setSyncedStatus:NO
 									  forEntryId:[self.entry entryId]];

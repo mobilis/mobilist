@@ -45,15 +45,6 @@
 	return [self initForNewList:YES];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    @throw [NSException exceptionWithName:@"Wrong initializer"
-								   reason:@"Use initForNewList"
-								 userInfo:nil];
-	
-	return nil;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -83,7 +74,7 @@
 	
 		EditListRequest* request = [[EditListRequest alloc] init];
 		[request setList:self.list];
-		[self.connection sendBean:request];
+		[[MXiConnectionHandler sharedInstance] sendBean:request toService:nil];
 		
 		[[MobiListStore sharedStore] setSyncedStatus:NO
 										   forListId:[self.list listId]];
@@ -128,7 +119,7 @@
 	
 	CreateListRequest* request = [[CreateListRequest alloc] init];
 	[request setList:theNewList];
-	[self.connection sendBean:request];
+	[[MXiConnectionHandler sharedInstance] sendBean:request toService:nil];
 	
 	[[self navigationController] dismissViewControllerAnimated:YES completion:self.dismissBlock];
 }

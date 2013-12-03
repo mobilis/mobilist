@@ -21,8 +21,8 @@
 
 @property (nonatomic, copy) void (^dismissBlock)(void);
 @property (nonatomic) MobiList* list;
-@property (nonatomic) MXiConnection* connection;
 
 - (id)initForNewList:(BOOL)isNew;
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle __attribute__((unavailable("Use initForNewList instead")));
 
 @end

@@ -14,11 +14,9 @@
 #import "TodoListViewController.h"
 #import "DeleteListRequest.h"
 #import "MobiAppDelegate.h"
+#import <MXiServiceManager.h>
 
-@interface DashboardViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
-
-@property (strong, nonatomic, readonly) MXiConnection *connection;
-
+@interface DashboardViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MXiServiceManagerDelegate>
 
 - (void)showXMPPSettingsView:(id)sender;
 - (void)showCreateListView:(id)sender;

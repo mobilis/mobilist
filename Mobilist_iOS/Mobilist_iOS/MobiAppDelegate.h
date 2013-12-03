@@ -36,17 +36,10 @@
 
 @class DashboardViewController;
 
-@interface MobiAppDelegate : UIResponder <UIApplicationDelegate, MXiPresenceDelegate,
-		MXiStanzaDelegate, MXiBeanDelegate>
-{
-	MXiConnection* connection;
-}
+@interface MobiAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) DashboardViewController* dashBoardController;
 @property BOOL areXMPPSettingsSufficient;
-@property (nonatomic) BOOL authenticated;
-@property (nonatomic, strong) NSString* serviceJID;
 
 - (BOOL)isSufficientJabberID:(NSString* )jabberID
 					password:(NSString* )password

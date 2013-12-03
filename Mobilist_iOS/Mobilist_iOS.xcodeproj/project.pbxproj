@@ -87,6 +87,8 @@
 		79FF6A7E171D3C2F00A3202F /* bit-tile-blue.gif in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A7D171D3C2F00A3202F /* bit-tile-blue.gif */; };
 		79FF6A87171D3E3000A3202F /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF6A85171D3E3000A3202F /* DashboardViewController.m */; };
 		79FF6A88171D3E3000A3202F /* DashboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FF6A86171D3E3000A3202F /* DashboardViewController.xib */; };
+		BF8CB2AC265363134E649BBB /* Settings.plist.example in Resources */ = {isa = PBXBuildFile; fileRef = BF8CBC7D776EFBC07FDDFB26 /* Settings.plist.example */; };
+		BF8CB81B24E29E68056A69EB /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF8CB8DBE3504DFFF9F718EB /* Settings.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +220,8 @@
 		79FF6A84171D3E3000A3202F /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
 		79FF6A85171D3E3000A3202F /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
 		79FF6A86171D3E3000A3202F /* DashboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardViewController.xib; sourceTree = "<group>"; };
+		BF8CB8DBE3504DFFF9F718EB /* Settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Settings.plist; sourceTree = "<group>"; };
+		BF8CBC7D776EFBC07FDDFB26 /* Settings.plist.example */ = {isa = PBXFileReference; lastKnownFileType = file.example; path = Settings.plist.example; sourceTree = "<group>"; };
 		EE60EE39ACC5406184AF3F8B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -299,6 +303,8 @@
 				79768E95171AD42800F5DDA1 /* InfoPlist.strings */,
 				79768E98171AD42800F5DDA1 /* main.m */,
 				79768E9A171AD42800F5DDA1 /* Mobilist_iOS-Prefix.pch */,
+				BF8CB8DBE3504DFFF9F718EB /* Settings.plist */,
+				BF8CBC7D776EFBC07FDDFB26 /* Settings.plist.example */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -568,6 +574,8 @@
 				79AE3B871735AF22000A5CA8 /* mobilist-icon@2x.png in Resources */,
 				79C7ABA41766F4BD00AE4880 /* checked.png in Resources */,
 				79C7ABA51766F4BD00AE4880 /* not-checked.png in Resources */,
+				BF8CB81B24E29E68056A69EB /* Settings.plist in Resources */,
+				BF8CB2AC265363134E649BBB /* Settings.plist.example in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

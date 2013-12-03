@@ -12,11 +12,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *existingsListsTable;
 
-@property (strong, nonatomic, readwrite) MXiConnection *connection;
-
 @end
 
 @implementation DashboardViewController
+{
+    BOOL _isConnecting;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
 			   bundle:(NSBundle *)nibBundleOrNil
@@ -48,42 +49,34 @@
 												 selector:@selector(receivedListAddedNotification:)
 													 name:NotificationMobiListAdded
 												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedListCreationConfirmedNotification:)
-													 name:NotificationListCreationConfirmed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedListDeletionConfirmedNotification:)
-													 name:NotificationListDeletionConfirmed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedListEditingConfirmedNotification:)
-													 name:NotificationListEditingConfirmed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedListCreatedInfo:)
-													 name:NotificationListCreatedInformed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedListEditedInfo:)
-													 name:NotificationListEditedInformed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedListDeletedInfo:)
-													 name:NotificationListDeletedInformed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryCreatedInfo:)
-													 name:NotificationEntryCreatedInformed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryEditedInfo:)
-													 name:NotificationEntryEditedInformed
-												   object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(receivedEntryDeletedInfo:)
-													 name:NotificationEntryDeletedInformed
-												   object:nil];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedListCreationConfirmedNotification:)
+                                                             forBeanClass:[CreateListResponse class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedListDeletionConfirmedNotification:)
+                                                             forBeanClass:[DeleteListResponse class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedListEditingConfirmedNotification:)
+                                                             forBeanClass:[EditListResponse class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedListCreatedInfo:)
+                                                             forBeanClass:[ListCreatedInfo class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedListEditedInfo:)
+                                                             forBeanClass:[ListEditedInfo class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedListDeletedInfo:)
+                                                             forBeanClass:[ListDeletedInfo class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryCreatedInfo:)
+                                                             forBeanClass:[EntryCreatedInfo class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryEditedInfo:)
+                                                             forBeanClass:[EntryEditedInfo class]];
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(receivedEntryDeletedInfo:)
+                                                             forBeanClass:[EntryDeletedInfo class]];
+        _isConnecting = YES;
     }
     return self;
 }
@@ -99,7 +92,8 @@
 			  forCellReuseIdentifier:CellTodoList];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
 	[self.existingsListsTable reloadData];
 }
 
@@ -108,68 +102,83 @@
     return @"Mobilist";
 }
 
-- (void)connectionEstablished:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	self.connection = [userInfo objectForKey:@"connection"];
+#pragma mark - MXiServiceManagerDelegate
+
+- (void)serviceDiscoveryFinishedWithError:(NSError *)error
+{
+    if (!error) {
+        _isConnecting = NO;
+        [self.existingsListsTable reloadData];
+    }
 }
+
+#pragma mark - Bean Actions
 
 - (void)receivedListAddedNotification:(NSNotification* )notification {
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedListCreationConfirmedNotification:(NSNotification* )notification {
+- (void)receivedListCreationConfirmedNotification:(CreateListResponse* )createListResponse {
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedListDeletionConfirmedNotification:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* listId = [userInfo objectForKey:@"listId"];
+- (void)receivedListDeletionConfirmedNotification:(DeleteListResponse* )deleteListResponse {
+	NSString* listId = deleteListResponse.listId;
 	
 	[[MobiListStore sharedStore] setSyncedStatus:YES forListId:listId];
 }
 
-- (void)receivedListEditingConfirmedNotification:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	[[MobiListStore sharedStore] setSyncedStatus:YES forListId:[userInfo objectForKey:@"listId"]];
+- (void)receivedListEditingConfirmedNotification:(EditListResponse* )editListResponse
+{
+	[[MobiListStore sharedStore] setSyncedStatus:YES forListId:editListResponse.listId];
 	
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedListCreatedInfo:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	MobiList* list = [userInfo objectForKey:@"list"];
-	
-	[[MobiListStore sharedStore] addMobiList:list
-								newlyCreated:NO];
+- (void)receivedListCreatedInfo:(ListCreatedInfo* )listCreatedInfo
+{
+	MobiList* list = listCreatedInfo.list;
+	[[MobiListStore sharedStore] addMobiList:list newlyCreated:NO];
+
+    ListCreatedAccept* accept = [[ListCreatedAccept alloc] init];
+    [accept setListId:[[listCreatedInfo list] listId]];
+    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedListEditedInfo:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	MobiList* newList = [userInfo objectForKey:@"list"];
-	
+- (void)receivedListEditedInfo:(ListEditedInfo* )listEditedInfo
+{
+	MobiList* newList = listEditedInfo.list;
 	MobiList* oldList = [[MobiListStore sharedStore] listByListId:[newList listId]];
 	
 	[oldList setListName:[newList listName]];
 	[oldList setListEntries:[newList listEntries]];
-	
+
+    ListEditedAccept* accept = [[ListEditedAccept alloc] init];
+    [accept setListId:[[listEditedInfo list] listId]];
+    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedListDeletedInfo:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* listId = [userInfo objectForKey:@"listId"];
+- (void)receivedListDeletedInfo:(ListDeletedInfo* )listDeletedInfo
+{
+	NSString* listId = listDeletedInfo.listId;
 	
 	MobiList* listToBeDeleted = [[MobiListStore sharedStore] listByListId:listId];
 	[[MobiListStore sharedStore] removeMobiList:listToBeDeleted];
-	
+
+    ListDeletedAccept* accept = [[ListDeletedAccept alloc] init];
+    [accept setListId:[listDeletedInfo listId]];
+    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedEntryCreatedInfo:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* listId = [userInfo objectForKey:@"listId"];
-	MobiListEntry* entry = [userInfo objectForKey:@"entry"];
+- (void)receivedEntryCreatedInfo:(EntryCreatedInfo* )entryCreatedInfo {
+	NSString* listId = entryCreatedInfo.listId;
+	MobiListEntry* entry = entryCreatedInfo.entry;
 	
 	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
 	[listForEntry addListEntry:entry];
@@ -177,10 +186,10 @@
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedEntryEditedInfo:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* listId = [userInfo objectForKey:@"listId"];
-	MobiListEntry* entry = [userInfo objectForKey:@"entry"];
+- (void)receivedEntryEditedInfo:(EntryEditedInfo* )entryEditedInfo
+{
+	NSString* listId = entryEditedInfo.listId;
+	MobiListEntry* entry = entryEditedInfo.entry;
 	
 	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
 	MobiListEntry* oldEntry = [listForEntry entryById:[entry entryId]];
@@ -193,10 +202,10 @@
 	[self.existingsListsTable reloadData];
 }
 
-- (void)receivedEntryDeletedInfo:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* listId = [userInfo objectForKey:@"listId"];
-	NSString* entryId = [userInfo objectForKey:@"entryId"];
+- (void)receivedEntryDeletedInfo:(EntryDeletedInfo* )entryDeletedInfo
+{
+	NSString* listId = entryDeletedInfo.listId;
+	NSString* entryId = entryDeletedInfo.entryId;
 	
 	MobiList* listForEntry = [[MobiListStore sharedStore] listByListId:listId];
 	MobiListEntry* entryToBeDeleted = [listForEntry entryById:entryId];
@@ -225,7 +234,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView
   numberOfRowsInSection:(NSInteger)section {
-	return [[[MobiListStore sharedStore] allLists] count];
+	return [MXiConnectionHandler sharedInstance].connection ? [[[MobiListStore sharedStore] allLists] count] : 0;
 }
 
 #pragma mark - UITableViewDelegate
@@ -233,8 +242,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	TodoListViewController* tlvc = [[TodoListViewController alloc]
 				initWithMobiList:[[[MobiListStore sharedStore] allLists] objectAtIndex:[indexPath row]]];
-	[tlvc setConnection:self.connection];
-	
+
 	[[self navigationController] pushViewController:tlvc animated:YES];
 }
 
@@ -245,7 +253,7 @@
 		return @"Go to the settings view and supply your XMPP account information.";
 	}
 	
-	if (![delegate authenticated]) {
+	if (_isConnecting) {
 		return @"Connecting …";
 	}
 	
@@ -261,7 +269,6 @@
 	
 	ListDetailViewController* ldvc = [[ListDetailViewController alloc] initForNewList:NO];
 	[ldvc setList:selectedList];
-	[ldvc setConnection:self.connection];
 	
 	[[self navigationController] pushViewController:ldvc animated:YES];
 }
@@ -276,7 +283,7 @@
 		[store removeMobiList:selectedList];
 		DeleteListRequest* request = [[DeleteListRequest alloc] init];
 		[request setListId:[selectedList listId]];
-		[self.connection sendBean:request];
+		[[MXiConnectionHandler sharedInstance].connection sendBean:request];
 		
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
 						 withRowAnimation:UITableViewRowAnimationMiddle];
@@ -303,7 +310,6 @@
 		[[MobiListStore sharedStore] reset];
 		
 		if ([appDelegate areXMPPSettingsSufficient]) {
-			[appDelegate setAuthenticated:NO];
 			[self.existingsListsTable reloadData];
 			
 			NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
@@ -317,12 +323,12 @@
 				portFromDefaults = 5222;
 			}
 			
-			[self.connection reconnectWithJabberID:jabberIdFromDefaults
-									 password:passwordFromDefaults
-									 hostname:hostnameFromDefaults
-										 port:portFromDefaults
-							   coordinatorJID:coordinatorJIDFromDefaults
-							 serviceNamespace:serviceNamespaceFromDefaults];
+			[[MXiConnectionHandler sharedInstance].connection reconnectWithJabberID:jabberIdFromDefaults
+                                                                           password:passwordFromDefaults
+                                                                           hostname:hostnameFromDefaults
+                                                                               port:portFromDefaults
+                                                                     coordinatorJID:coordinatorJIDFromDefaults
+                                                                   serviceNamespace:serviceNamespaceFromDefaults];
 		}
 	}];
 	
@@ -335,7 +341,6 @@
 	[nlvc setDismissBlock:^{
 		[self.existingsListsTable reloadData];
 	}];
-	[nlvc setConnection:self.connection];
 	
 	UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:nlvc];
 	

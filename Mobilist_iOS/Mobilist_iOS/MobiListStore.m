@@ -6,7 +6,9 @@
 //  Copyright (c) 2013 TU Dresden. All rights reserved.
 //
 
+#import <MobilisMXi/MXi/MXiConnection.h>
 #import "MobiListStore.h"
+#import "CreateListResponse.h"
 
 @implementation MobiListStore
 
@@ -28,11 +30,10 @@
 		notYetSyncedListIds = [NSMutableArray array];
 		notYetSyncedEntryIds = [NSMutableArray array];
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(listCreationConfirmed:)
-													 name:NotificationListCreationConfirmed
-												   object:nil];
-	}
+        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                             withSelector:@selector(listCreationConfirmed:)
+                                                             forBeanClass:[CreateListResponse class]];
+    }
 	
 	return self;
 }
@@ -69,9 +70,9 @@
 	return YES;
 }
 
-- (void)listCreationConfirmed:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* listId = [userInfo objectForKey:@"listId"];
+- (void)listCreationConfirmed:(CreateListResponse* )createListResponse
+{
+	NSString* listId = createListResponse.listId;
 	
 	[notYetSyncedListIds removeObject:listId];
 }

@@ -21,8 +21,10 @@
 	NSInteger entryIndexToBeDeleted;
 }
 
-@property (nonatomic) MobiList* theList;
-@property (nonatomic) MXiConnection* connection;
+@property (nonatomic) MobiList* mobiList;
+
+- (id)init __attribute__((unavailable("init not available. Use initWithMobilist:")));
+- (id)initWithStyle:(UITableViewStyle)style __attribute__((unavailable("initWithStyle not availabel. Use initWithMobilist:")));
 
 - (id)initWithMobiList:(MobiList* )aList;
 - (void)showComposeListEntryView:(id)sender;

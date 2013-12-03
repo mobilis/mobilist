@@ -8,8 +8,6 @@
 
 #import "XMPPSettingsViewController.h"
 
-#define kOFFSET_FOR_KEYBOARD 80.0
-
 @interface XMPPSettingsViewController ()
 {
 	UITextField* currentlyEditingTextField;
@@ -28,8 +26,6 @@
 @end
 
 @implementation XMPPSettingsViewController
-
-@synthesize dismissBlock;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -174,7 +170,7 @@
 																	   password:passwordFromDefaults
 															   serviceNamespace:serviceNamespaceFromDefaults]];
 	
-	dismissBlock();
+	self.dismissBlock();
 }
 
 - (void)didReceiveMemoryWarning
