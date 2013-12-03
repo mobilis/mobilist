@@ -43,6 +43,6 @@
 
 - (BOOL)isSufficientJabberID:(NSString* )jabberID
 					password:(NSString* )password
-			serviceNamespace:(NSString* )serviceNamespace;
+                    hostName:(NSString* )hostName;
 
 @end

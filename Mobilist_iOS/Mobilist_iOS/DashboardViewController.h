@@ -21,6 +21,4 @@
 - (void)showXMPPSettingsView:(id)sender;
 - (void)showCreateListView:(id)sender;
 
-- (void)appIsConnected;
-
 @end

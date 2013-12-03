@@ -8,6 +8,8 @@
 
 #import "DashboardViewController.h"
 
+#import <AccountManager.h>
+
 @interface DashboardViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *existingsListsTable;
@@ -317,23 +319,11 @@
 		if ([appDelegate areXMPPSettingsSufficient]) {
 			[self.existingsListsTable reloadData];
 			
-			NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-			NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
-			NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
-			NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
-			NSString* coordinatorJIDFromDefaults = [userDefaults stringForKey:UserDefaultCoordinatorJID];
-			NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
-			NSInteger portFromDefaults = [userDefaults integerForKey:UserDefaultPort];
-			if (portFromDefaults == 0) {
-				portFromDefaults = 5222;
-			}
-			
-			[[MXiConnectionHandler sharedInstance].connection reconnectWithJabberID:jabberIdFromDefaults
-                                                                           password:passwordFromDefaults
-                                                                           hostname:hostnameFromDefaults
-                                                                               port:portFromDefaults
-                                                                     coordinatorJID:coordinatorJIDFromDefaults
-                                                                   serviceNamespace:serviceNamespaceFromDefaults];
+            Account *account = [AccountManager account];
+			[[MXiConnectionHandler sharedInstance] reconnectWithJID:account.jid
+                                                           password:account.password
+                                                           hostName:account.hostName
+                                                               port:account.port];
 		}
 	}];
 	

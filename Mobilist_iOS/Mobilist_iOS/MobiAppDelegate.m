@@ -8,6 +8,7 @@
 #import "MobiAppDelegate.h"
 #import "DashboardViewController.h"
 #import <MXiServiceManager.h>
+#import <AccountManager.h>
 
 @interface MobiAppDelegate () <MXiConnectionHandlerDelegate>
 
@@ -76,10 +77,10 @@
 
 - (BOOL)isSufficientJabberID:(NSString* )jabberID
 					password:(NSString* )password
-			serviceNamespace:(NSString* )serviceNamespace {
+                    hostName:(NSString *)hostName {
 	if (jabberID && ![jabberID isEqualToString:@""] &&
 		password && ![password isEqualToString:@""] &&
-		serviceNamespace && ![serviceNamespace isEqualToString:@""]) {
+		hostName && ![hostName isEqualToString:@""]) {
         self.areXMPPSettingsSufficient = YES;
 			return YES;
 	}
@@ -94,14 +95,11 @@
 {
     [MXiConnectionHandler sharedInstance].delegate = self;
     
-	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
-	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
-	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
+    Account *account = [AccountManager account];
 	
-	[self setAreXMPPSettingsSufficient:[self isSufficientJabberID:jabberIdFromDefaults
-														 password:passwordFromDefaults
-												 serviceNamespace:serviceNamespaceFromDefaults]];
+	[self setAreXMPPSettingsSufficient:[self isSufficientJabberID:account.jid
+														 password:account.password
+                                                         hostName:account.hostName]];
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	__rootViewController = [[DashboardViewController alloc] init];
@@ -133,21 +131,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
-	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
-	NSString* hostnameFromDefaults = [userDefaults stringForKey:UserDefaultHostname];
-	NSInteger portFromDefaults = [userDefaults integerForKey:UserDefaultPort];
-	if (portFromDefaults == 0) {
-		portFromDefaults = 5222;
-	}
-	
-	if (jabberIdFromDefaults && passwordFromDefaults && hostnameFromDefaults) {
-        [[MXiConnectionHandler sharedInstance] launchConnectionWithJID:jabberIdFromDefaults
-                                                              password:passwordFromDefaults
-                                                              hostName:hostnameFromDefaults
+	Account *account = [AccountManager account];
+	if (account.jid.length > 0 && account.password.length > 0 && account.hostName.length > 0) {
+        [[MXiConnectionHandler sharedInstance] launchConnectionWithJID:account.jid
+                                                              password:account.password
+                                                              hostName:account.hostName
                                                            serviceType:SINGLE
-                                                                  port:[NSNumber numberWithInteger:portFromDefaults]];
+                                                                  port:account.port];
 	}
 }
 

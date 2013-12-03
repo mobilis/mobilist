@@ -8,6 +8,8 @@
 
 #import "XMPPSettingsViewController.h"
 
+#import <AccountManager.h>
+
 @interface XMPPSettingsViewController ()
 {
 	UITextField* currentlyEditingTextField;
@@ -19,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *serviceNamespaceTextField;
 
 - (IBAction)backgroundTapped:(id)sender;
 
@@ -47,12 +48,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-	[self.jabberIDTextField setDelegate:self];
-	[self.passwordTextField setDelegate:self];
-	[self.hostNameTextField setDelegate:self];
-	[self.serviceNamespaceTextField setDelegate:self];
-	[self.portTextField setDelegate:self];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -125,12 +120,11 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-	[self.jabberIDTextField setText:[userDefaults stringForKey:UserDefaultJabberId]];
-	[self.passwordTextField setText:[userDefaults stringForKey:UserDefaultPassword]];
-	[self.hostNameTextField setText:[userDefaults stringForKey:UserDefaultHostname]];
-	[self.serviceNamespaceTextField setText:[userDefaults stringForKey:UserDefaultServiceNamespace]];
-	[self.portTextField setText:[userDefaults stringForKey:UserDefaultPort]];
+    Account *account = [AccountManager account];
+    self.jabberIDTextField.text = account.jid;
+    self.passwordTextField.text = account.password;
+    self.hostNameTextField.text = account.hostName;
+    self.portTextField.text = [account.port stringValue];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(keyboardWillShow:)
@@ -142,33 +136,28 @@
 											   object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
 	[super viewWillDisappear:animated];
-	
-	NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-	[userDefaults setObject:[self.jabberIDTextField text] forKey:UserDefaultJabberId];
-	[userDefaults setObject:[self.passwordTextField text] forKey:UserDefaultPassword];
-	[userDefaults setObject:[self.hostNameTextField text] forKey:UserDefaultHostname];
-	[userDefaults setObject:[self.serviceNamespaceTextField text] forKey:UserDefaultServiceNamespace];
-	[userDefaults setObject:[self.portTextField text] forKey:UserDefaultPort];
-	
-	[userDefaults synchronize];
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
 													name:UIKeyboardDidShowNotification
 												  object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:UIKeyboardDidHideNotification
 												  object:nil];
-	
-	NSString* jabberIdFromDefaults = [userDefaults stringForKey:UserDefaultJabberId];
-	NSString* passwordFromDefaults = [userDefaults stringForKey:UserDefaultPassword];
-	NSString* serviceNamespaceFromDefaults = [userDefaults stringForKey:UserDefaultServiceNamespace];
+    
+    Account *account = [AccountManager account];
+    account.jid = self.jabberIDTextField.text;
+    account.password = self.passwordTextField.text;
+    account.hostName = self.hostNameTextField.text;
+    account.port = [NSNumber numberWithInt:[self.portTextField.text intValue]];
+    [AccountManager storeAccount:account];
 	
 	MobiAppDelegate* appDelegate = (MobiAppDelegate*) [[UIApplication sharedApplication] delegate];
-	[appDelegate setAreXMPPSettingsSufficient:[appDelegate isSufficientJabberID:jabberIdFromDefaults
-																	   password:passwordFromDefaults
-															   serviceNamespace:serviceNamespaceFromDefaults]];
+	[appDelegate setAreXMPPSettingsSufficient:[appDelegate isSufficientJabberID:account.jid
+																	   password:account.password
+                                                                       hostName:account.hostName]];
 	
 	self.dismissBlock();
 }
