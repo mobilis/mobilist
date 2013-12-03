@@ -60,18 +60,16 @@
     return self;
 }
 
-- (void)receivedEntryCreationConfirmed:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* entryId = [userInfo objectForKey:@"entryId"];
+- (void)receivedEntryCreationConfirmed:(CreateEntryResponse* )createEntryResponse {
+	NSString* entryId = createEntryResponse.entryId;
 	
 	[[MobiListStore sharedStore] setSyncedStatus:YES
 									  forEntryId:entryId];
 	[[self tableView] reloadData];
 }
 
-- (void)receivedEntryEditingConfirmed:(NSNotification* )notification {
-	NSDictionary* userInfo = [notification userInfo];
-	NSString* entryId = [userInfo objectForKey:@"entryId"];
+- (void)receivedEntryEditingConfirmed:(EditEntryResponse* )editEntryResponse {
+	NSString* entryId = editEntryResponse.entryId;
 	
 	[[MobiListStore sharedStore] setSyncedStatus:YES
 									  forEntryId:entryId];
@@ -81,7 +79,7 @@
 - (void)receivedEntryCreatedInfo:(EntryCreatedInfo* )entryCreatedInfo {
     EntryCreatedAccept* accept = [[EntryCreatedAccept alloc] init];
     [accept setEntryId:entryCreatedInfo.entry.entryId];
-    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+    [[MXiConnectionHandler sharedInstance] sendBean:accept toService:nil];
 
 	[[self tableView] reloadData];
 }
@@ -89,7 +87,7 @@
 - (void)receivedEntryEditedInfo:(EntryEditedInfo* )entryEditedInfo {
     EntryEditedAccept* accept = [[EntryEditedAccept alloc] init];
     [accept setEntryId:[[entryEditedInfo entry] entryId]];
-    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+    [[MXiConnectionHandler sharedInstance] sendBean:accept toService:nil];
 
 	[[self tableView] reloadData];
 }
@@ -97,7 +95,7 @@
 - (void)receivedEntryDeletedInfo:(EntryDeletedInfo* )entryDeletedInfo {
     EntryDeletedAccept* accept = [[EntryDeletedAccept alloc] init];
     [accept setEntryId:[entryDeletedInfo entryId]];
-    [[MXiConnectionHandler sharedInstance].connection sendBean:accept];
+    [[MXiConnectionHandler sharedInstance] sendBean:accept toService:nil];
 
 	[[self tableView] reloadData];
 }
@@ -198,7 +196,7 @@
 		DeleteEntryRequest* request = [[DeleteEntryRequest alloc] init];
 		[request setListId:[self.mobiList listId]];
 		[request setEntryId:[[[self.mobiList listEntries] objectAtIndex:entryIndexToBeDeleted] entryId]];
-		[[MXiConnectionHandler sharedInstance].connection sendBean:request];
+		[[MXiConnectionHandler sharedInstance] sendBean:request toService:nil];
 		
 		[[self.mobiList listEntries] removeObjectAtIndex:entryIndexToBeDeleted];
 		
@@ -259,7 +257,7 @@
 	EditEntryRequest* request = [[EditEntryRequest alloc] init];
 	[request setListId:[self.mobiList listId]];
 	[request setEntry:entry];
-	[[MXiConnectionHandler sharedInstance].connection sendBean:request];
+	[[MXiConnectionHandler sharedInstance] sendBean:request toService:nil];
 	
 	[[MobiListStore sharedStore] setSyncedStatus:NO
 									  forEntryId:[entry entryId]];

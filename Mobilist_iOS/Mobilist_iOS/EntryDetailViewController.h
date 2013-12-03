@@ -22,6 +22,8 @@
 @property (nonatomic, strong) MobiList* parent;
 @property (nonatomic, copy) void (^dismissBlock)(void);
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil __attribute__((unavailable("Use initForNewEntry:")));
+
 - (id)initForNewEntry:(BOOL)isNew;
 - (IBAction)backgroundTapped:(id)sender;
 

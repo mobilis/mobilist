@@ -10,7 +10,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface EntryDetailViewController ()
+@interface EntryDetailViewController () <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIControl *contentView;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
@@ -43,14 +43,6 @@
 
 - (id)init {
 	return [self initForNewEntry:YES];
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    @throw [NSException exceptionWithName:@"Wrong initializer"
-								   reason:@"Use initForNewItem"
-								 userInfo:nil];
-	return nil;
 }
 
 - (void)viewDidLoad
@@ -96,7 +88,7 @@
 		EditEntryRequest* request = [[EditEntryRequest alloc] init];
 		[request setListId:[self.parent listId]];
 		[request setEntry:self.entry];
-		[[MXiConnectionHandler sharedInstance].connection sendBean:request];
+		[[MXiConnectionHandler sharedInstance] sendBean:request toService:nil];
 		
 		[[MobiListStore sharedStore] setSyncedStatus:NO
 										  forEntryId:[self.entry entryId]];
@@ -132,7 +124,7 @@
 	CreateEntryRequest* request = [[CreateEntryRequest alloc] init];
 	[request setListId:[self.parent listId]];
 	[request setEntry:self.entry];
-	[[MXiConnectionHandler sharedInstance].connection sendBean:request];
+	[[MXiConnectionHandler sharedInstance] sendBean:request toService:nil];
 	
 	[[MobiListStore sharedStore] setSyncedStatus:NO
 									  forEntryId:[self.entry entryId]];
@@ -145,6 +137,17 @@
 
 - (IBAction)backgroundTapped:(id)sender {
 	[[self view] endEditing:YES];
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 @end

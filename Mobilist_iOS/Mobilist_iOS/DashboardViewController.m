@@ -19,6 +19,37 @@
     BOOL _isConnecting;
 }
 
+- (void)setupBeanListeners
+{
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedListCreationConfirmedNotification:)
+                                                         forBeanClass:[CreateListResponse class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedListDeletionConfirmedNotification:)
+                                                         forBeanClass:[DeleteListResponse class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedListEditingConfirmedNotification:)
+                                                         forBeanClass:[EditListResponse class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedListCreatedInfo:)
+                                                         forBeanClass:[ListCreatedInfo class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedListEditedInfo:)
+                                                         forBeanClass:[ListEditedInfo class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedListDeletedInfo:)
+                                                         forBeanClass:[ListDeletedInfo class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedEntryCreatedInfo:)
+                                                         forBeanClass:[EntryCreatedInfo class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedEntryEditedInfo:)
+                                                         forBeanClass:[EntryEditedInfo class]];
+    [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
+                                                         withSelector:@selector(receivedEntryDeletedInfo:)
+                                                         forBeanClass:[EntryDeletedInfo class]];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil
 			   bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,33 +80,6 @@
 												 selector:@selector(receivedListAddedNotification:)
 													 name:NotificationMobiListAdded
 												   object:nil];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedListCreationConfirmedNotification:)
-                                                             forBeanClass:[CreateListResponse class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedListDeletionConfirmedNotification:)
-                                                             forBeanClass:[DeleteListResponse class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedListEditingConfirmedNotification:)
-                                                             forBeanClass:[EditListResponse class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedListCreatedInfo:)
-                                                             forBeanClass:[ListCreatedInfo class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedListEditedInfo:)
-                                                             forBeanClass:[ListEditedInfo class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedListDeletedInfo:)
-                                                             forBeanClass:[ListDeletedInfo class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedEntryCreatedInfo:)
-                                                             forBeanClass:[EntryCreatedInfo class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedEntryEditedInfo:)
-                                                             forBeanClass:[EntryEditedInfo class]];
-        [[MXiConnectionHandler sharedInstance].connection addBeanDelegate:self
-                                                             withSelector:@selector(receivedEntryDeletedInfo:)
-                                                             forBeanClass:[EntryDeletedInfo class]];
         _isConnecting = YES;
     }
     return self;
@@ -108,6 +112,7 @@
 {
     if (!error) {
         _isConnecting = NO;
+        [self setupBeanListeners];
         [self.existingsListsTable reloadData];
     }
 }
@@ -234,7 +239,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView
   numberOfRowsInSection:(NSInteger)section {
-	return [MXiConnectionHandler sharedInstance].connection ? [[[MobiListStore sharedStore] allLists] count] : 0;
+	return _isConnecting ? 0 : [[[MobiListStore sharedStore] allLists] count];
 }
 
 #pragma mark - UITableViewDelegate
